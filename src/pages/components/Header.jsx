@@ -4,9 +4,14 @@ import Link from 'next/link';
 
 const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleSearch = () => {
     setShowSearch(!showSearch);
+  };
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
   return (
@@ -22,7 +27,30 @@ const Header = () => {
             </Link>
           </div>
 
-          {/* Contenitore dei pulsanti centrato */}
+          {/* Menu Hamburger per Mobile */}
+          <div className="lg:hidden">
+            <button
+              onClick={toggleMenu}
+              className="text-gray-700 hover:text-blue-900 transition duration-300"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-8 h-8"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Contenitore dei pulsanti centrato - visibile solo su Desktop */}
           <nav className="hidden lg:flex space-x-6">
             <a href="/" className="text-gray-700 hover:text-blue-900 transition duration-300">
               Home
@@ -67,6 +95,30 @@ const Header = () => {
             </button>
           </div>
         </div>
+
+        {/* Menu Mobile */}
+        {menuOpen && (
+          <nav className="lg:hidden bg-white border-t border-gray-200 p-4 animate-slide-in">
+            <a href="/" className="block py-2 text-gray-700 hover:text-blue-900">
+              Home
+            </a>
+            <a href="/notizie" className="block py-2 text-gray-700 hover:text-blue-900">
+              Notizie
+            </a>
+            <a href="/eventi" className="block py-2 text-gray-700 hover:text-blue-900">
+              Eventi
+            </a>
+            <a href="/documenti" className="block py-2 text-gray-700 hover:text-blue-900">
+              Documenti
+            </a>
+            <a href="/organi" className="block py-2 text-gray-700 hover:text-blue-900">
+              Organi
+            </a>
+            <a href="/struttura" className="block py-2 text-gray-700 hover:text-blue-900">
+              Struttura
+            </a>
+          </nav>
+        )}
       </header>
 
       {/* Finestra di Ricerca a Schermo Intero */}
@@ -117,8 +169,21 @@ const Header = () => {
             transform: translateY(0);
           }
         }
+        @keyframes slide-in {
+          from {
+            transform: translateY(-10px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
         .animate-fade-in {
           animation: fade-in 0.5s ease-out;
+        }
+        .animate-slide-in {
+          animation: slide-in 0.3s ease-out;
         }
       `}</style>
     </>
