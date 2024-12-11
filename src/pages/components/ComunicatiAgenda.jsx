@@ -59,7 +59,7 @@ const ComunicatiAgenda = () => {
     <section ref={sectionRef} className="bg-white py-12">
       <div
         className={`container mx-auto px-4 flex flex-wrap lg:flex-nowrap gap-8 ${
-          isVisible ? "animate-fadeInUp" : "opacity-0"
+          isVisible ? "lg:animate-fadeInUp" : "opacity-0"
         }`}
       >
         {/* Sezione Comunicati Stampa */}
@@ -73,7 +73,7 @@ const ComunicatiAgenda = () => {
             <div
               key={index}
               className={`bg-gray-50 shadow-md rounded-none p-6 mb-4 flex justify-between items-start border border-gray-300 transition-all duration-1000 ${
-                isVisible ? "animate-slideInLeft" : "opacity-0"
+                isVisible ? "lg:animate-slideInLeft" : "opacity-0"
               } hover:shadow-lg hover:-translate-y-1`}
             >
               <div>
@@ -106,7 +106,7 @@ const ComunicatiAgenda = () => {
             <div
               key={index}
               className={`flex items-center bg-gray-50 shadow-md rounded-none mb-4 p-4 border border-gray-300 transition-all duration-1000 ${
-                isVisible ? "animate-slideInRight" : "opacity-0"
+                isVisible ? "lg:animate-slideInRight" : "opacity-0"
               } hover:shadow-lg hover:-translate-y-1`}
             >
               {/* Quadrato Data */}
