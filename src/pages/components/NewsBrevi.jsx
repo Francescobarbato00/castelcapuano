@@ -79,7 +79,10 @@ const NewsBrevi = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="container mx-auto px-4 py-8">
+    <section
+      ref={sectionRef}
+      className="container mx-auto px-4 py-8 bg-white" /* Sfondo bianco */
+    >
       <div
         className={`grid grid-cols-1 lg:grid-cols-3 gap-8 transition-opacity duration-1000 ${
           isVisible ? "opacity-100" : "opacity-0"
@@ -96,7 +99,7 @@ const NewsBrevi = () => {
                 style={{
                   transitionDelay: `${index * 150}ms`,
                 }}
-                className={`transition-all duration-700 transform ${
+                className={`bg-white transition-all duration-700 transform ${
                   isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
                 } hover:scale-105 hover:shadow-lg p-4 border border-gray-200 rounded-lg`}
               >
@@ -121,7 +124,7 @@ const NewsBrevi = () => {
                 style={{
                   transitionDelay: `${index * 150}ms`,
                 }}
-                className={`border-b border-gray-300 pb-2 transition-all duration-700 transform ${
+                className={`bg-white border border-gray-300 pb-2 rounded-lg p-4 transition-all duration-700 transform ${
                   isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
                 } hover:text-blue-900 cursor-pointer`}
               >

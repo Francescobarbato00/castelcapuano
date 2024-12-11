@@ -73,7 +73,7 @@ const NotizieList = () => {
   }, []);
 
   return (
-    <section className="container mx-auto px-4 py-8">
+    <section className="container mx-auto px-4 py-8 bg-white md:bg-transparent">
       {/* Titolo principale */}
       <h1 className="text-4xl font-bold text-blue-900 mb-6 text-center">
         TUTTE LE NOTIZIE
