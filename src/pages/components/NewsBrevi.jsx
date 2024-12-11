@@ -115,22 +115,23 @@ const NewsBrevi = () => {
 
         {/* BREVI */}
         <div>
-          <h2 className="text-3xl font-bold text-blue-900 mb-4">BREVI</h2>
-          <hr className="border-gray-300 mb-4" />
-          <ul className="space-y-4">
-            {brevi.map((item, index) => (
-              <li
-                key={item.id}
-                style={{
-                  transitionDelay: `${index * 150}ms`,
-                }}
-                className={`bg-white border border-gray-300 pb-2 rounded-lg p-4 transition-all duration-700 transform ${
-                  isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-                } hover:text-blue-900 cursor-pointer`}
-              >
-                <h3 className="text-lg font-semibold">{item.title}</h3>
-                <p className="text-sm italic text-gray-500">{item.date}</p>
-              </li>
+  <h2 className="text-3xl font-bold text-blue-900 mb-4">BREVI</h2>
+  <hr className="border-gray-300 mb-4" />
+  <ul className="space-y-4">
+    {brevi.map((item, index) => (
+      <li
+        key={item.id}
+        style={{
+          transitionDelay: `${index * 150}ms`,
+        }}
+        className={`bg-white border border-gray-300 pb-2 rounded-lg p-4 transition-all duration-700 transform ${
+          isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+        } cursor-pointer`}
+      >
+        {/* Titolo sempre blu */}
+        <h3 className="text-lg font-semibold text-blue-900">{item.title}</h3>
+        <p className="text-sm italic text-gray-500">{item.date}</p>
+      </li>
             ))}
           </ul>
           {/* Pulsante Archivio */}
