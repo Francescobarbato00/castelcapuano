@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Document = () => {
+const Doc = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -33,9 +33,10 @@ const Document = () => {
   ];
 
   return (
-    <section className="container mx-auto px-4 py-8">
+    <section className="container mx-auto px-4 py-8 bg-white">
       {/* Titolo Sezione */}
-      <div className={`text-center mb-12 transition-all duration-700 ${
+      <div
+        className={`text-center mb-12 transition-all duration-700 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
@@ -50,7 +51,7 @@ const Document = () => {
         {documents.map((doc, index) => (
           <div
             key={doc.id}
-            className={`flex flex-col lg:flex-row shadow-lg rounded-md overflow-hidden transform transition-transform duration-500 ${
+            className={`flex flex-col lg:flex-row bg-white shadow-lg rounded-md overflow-hidden transform transition-transform duration-500 ${
               isVisible ? "translate-y-0 opacity-100" : `translate-y-${(index + 1) * 8} opacity-0`
             }`}
           >
@@ -69,7 +70,8 @@ const Document = () => {
 
             {/* Contenuto Destro */}
             <div className="lg:w-2/3 p-6 flex flex-col justify-center">
-              <h3 className="text-xl font-bold text-gray-800 mb-2">{doc.title}</h3>
+              {/* Titolo - Blu o Nero */}
+              <h3 className="text-xl font-bold text-blue-900 mb-2">{doc.title}</h3>
               <p className="text-sm text-gray-500 mb-4">{doc.date}</p>
               <p className="text-gray-600 mb-4">{doc.description}</p>
               <a
@@ -86,4 +88,4 @@ const Document = () => {
   );
 };
 
-export default Document;
+export default Doc;

@@ -5,33 +5,24 @@ const Organi = () => {
     {
       id: "Il Consiglio di Amministrazione",
       title: "Consiglio di Amministrazione",
-      content: `
-`
+      content: `Contenuto del Consiglio di Amministrazione.`,
     },
-    
     {
-        id: "Comitato Esecutivo",
-        title: "Comitato Esecutivo",
-        content: `
-  
-  `
-      },
-    
-    
+      id: "Comitato Esecutivo",
+      title: "Comitato Esecutivo",
+      content: `Contenuto del Comitato Esecutivo.`,
+    },
     {
       id: "Comitato Scientifico",
       title: "Comitato Scientifico",
-      content: `
-
-`
+      content: `Contenuto del Comitato Scientifico.`,
     },
-         
   ];
 
   const [activeSection, setActiveSection] = useState(sections[0].id);
 
   return (
-    <div className="container mx-auto py-8 flex flex-col lg:flex-row px-4 sm:px-6">
+    <div className="container mx-auto py-8 flex flex-col lg:flex-row px-4 sm:px-6 bg-white lg:bg-transparent">
       {/* Indice Laterale */}
       <aside className="lg:w-1/4 lg:pr-8 border-r border-gray-300 mb-6 lg:mb-0">
         <h3 className="text-sm font-bold text-gray-700 uppercase mb-4">

@@ -50,7 +50,7 @@ const EventiFuturi = () => {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-8 px-4 bg-white">
       {/* Titolo Principale */}
       <h2 className="text-3xl font-bold text-blue-900 mb-6 text-center">
         Eventi Futuri
@@ -85,7 +85,7 @@ const EventiFuturi = () => {
                 : "border border-blue-800 text-blue-800 hover:bg-blue-100"
             }`}
           >
-            {category} {category === "Tutto" ? `(112)` : category === "Convegno" ? `(90)` : `(22)`}
+            {category}
           </button>
         ))}
       </div>
@@ -105,7 +105,7 @@ const EventiFuturi = () => {
               <span className="text-sm font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded">
                 {event.category}
               </span>
-              <h3 className="mt-4 text-lg font-bold text-gray-800">
+              <h3 className="mt-4 text-lg font-bold text-blue-900">
                 {event.title}
               </h3>
               <p className="text-gray-500 mt-2">{event.date}</p>
@@ -127,10 +127,10 @@ const EventiFuturi = () => {
           <button
             key={index}
             onClick={() => handlePageClick(index + 1)}
-            className={`w-10 h-10 rounded-md text-blue-800 font-semibold ${
+            className={`w-10 h-10 rounded-md text-blue-800 font-semibold bg-white ${
               currentPage === index + 1
-                ? "border-2 border-blue-600 bg-white"
-                : "bg-white hover:bg-blue-50"
+                ? "border-2 border-blue-600"
+                : "hover:bg-blue-50"
             }`}
           >
             {index + 1}
