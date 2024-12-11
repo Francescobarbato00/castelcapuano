@@ -11,23 +11,23 @@ const Article = () => {
 
   return (
     <section
-      className={`container mx-auto px-4 py-12 transition-all duration-1000 ${
+      className={`container mx-auto px-4 py-8 sm:py-12 transition-all duration-1000 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
       {/* Titolo principale su due righe */}
-      <h1 className="text-4xl md:text-5xl font-bold text-center text-blue-900 mb-6 leading-tight">
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-blue-900 mb-6 leading-tight">
         Fondazione Castel Capuano presenta <br />
         il Concerto di Natale 2024
       </h1>
 
       {/* Sottotitolo */}
-      <h2 className="text-lg md:text-xl text-center text-gray-700 mb-10">
+      <h2 className="text-base sm:text-lg md:text-xl text-center text-gray-700 mb-8 sm:mb-10">
         XI Edizione – Salone dei Busti, 16 dicembre 2024
       </h2>
 
       {/* Corpo del testo */}
-      <div className="max-w-4xl mx-auto leading-relaxed text-gray-800 space-y-6 text-justify">
+      <div className="max-w-4xl mx-auto leading-relaxed text-gray-800 space-y-6 text-justify text-sm sm:text-base">
         <p>
           La Fondazione Castel Capuano è lieta di annunciare la XI edizione del Concerto di Natale,
           un appuntamento musicale ormai tradizionale, che si terrà{" "}
@@ -36,7 +36,7 @@ const Article = () => {
         </p>
 
         <p>
-          La serata avrà inizio con una raffinata esecuzione dell'<strong>Ave Maria di Franz Schubert</strong>,
+          La serata avrà inizio con l'esecuzione dell'<strong>Ave Maria di Franz Schubert</strong>,
           proposta dal duo composto da Serena Ciriello (soprano) e Angelica Ciriello (pianoforte).
         </p>
 
@@ -56,7 +56,7 @@ const Article = () => {
         </p>
 
         <p className="font-semibold">Il gruppo di musicisti è composto da artisti di grande talento:</p>
-        <ul className="list-disc list-inside text-gray-800 ml-4">
+        <ul className="list-disc list-inside text-gray-800 ml-4 space-y-2">
           <li>Antonino Anastasia (percussioni a cornice)</li>
           <li>Enzo Minuto (percussioni)</li>
           <li>Gioacchino Conte (fisarmonica)</li>
@@ -83,7 +83,7 @@ const Article = () => {
       </div>
 
       {/* Immagine a fine articolo */}
-      <div className="w-full max-w-4xl mx-auto mt-10 shadow-lg rounded overflow-hidden">
+      <div className="w-full max-w-4xl mx-auto mt-8 sm:mt-10 shadow-lg rounded overflow-hidden">
         <Image
           src="/concerto.jpg" // Sostituire con il percorso reale dell'immagine
           alt="Concerto di Natale 2024"
