@@ -26,13 +26,15 @@ const StrutturaSection = () => {
       <div className="container mx-auto px-4">
         {/* Titolo della sezione */}
         <div className="mb-6">
-          <h2 className="text-4xl font-bold text-blue-900">La Fondazione</h2>
+          <h2 className="text-2xl sm:text-4xl font-bold text-blue-900 text-center sm:text-left">
+            La Fondazione
+          </h2>
         </div>
 
         {/* Tabs Estesi */}
-        <div className="flex mb-6">
+        <div className="flex flex-col sm:flex-row mb-6">
           <button
-            className={`flex-1 px-6 py-4 text-lg font-bold flex items-center justify-center ${
+            className={`flex-1 px-4 py-3 sm:px-6 sm:py-4 text-base sm:text-lg font-bold flex items-center justify-center ${
               activeTab === "Struttura" ? "bg-blue-900 text-white" : "border border-gray-300 text-blue-900"
             }`}
             onClick={() => setActiveTab("Struttura")}
@@ -40,7 +42,7 @@ const StrutturaSection = () => {
             <FaMinus className="mr-2" /> Struttura
           </button>
           <button
-            className={`flex-1 px-6 py-4 text-lg font-bold flex items-center justify-center ${
+            className={`flex-1 px-4 py-3 sm:px-6 sm:py-4 text-base sm:text-lg font-bold flex items-center justify-center ${
               activeTab === "Documenti" ? "bg-blue-900 text-white" : "border border-gray-300 text-blue-900"
             }`}
             onClick={() => setActiveTab("Documenti")}
@@ -48,7 +50,7 @@ const StrutturaSection = () => {
             <FaBookOpen className="mr-2" /> Storia
           </button>
           <button
-            className={`flex-1 px-6 py-4 text-lg font-bold flex items-center justify-center ${
+            className={`flex-1 px-4 py-3 sm:px-6 sm:py-4 text-base sm:text-lg font-bold flex items-center justify-center ${
               activeTab === "Avvisi" ? "bg-blue-900 text-white" : "border border-gray-300 text-blue-900"
             }`}
             onClick={() => setActiveTab("Avvisi")}
@@ -62,19 +64,19 @@ const StrutturaSection = () => {
           {contenuti[activeTab].map((item, index) => (
             <div
               key={index}
-              className="py-4 flex justify-between items-center hover:bg-gray-50 transition duration-300"
+              className="py-3 sm:py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center hover:bg-gray-50 transition duration-300"
             >
               <div>
-                <p className="text-blue-900 font-bold text-lg">{item.title}</p>
+                <p className="text-blue-900 font-bold text-base sm:text-lg">{item.title}</p>
                 <p className="text-gray-500 text-sm">{item.updated}</p>
               </div>
-              <div className="text-blue-900 text-2xl cursor-pointer">•••</div>
+              <div className="text-blue-900 text-2xl cursor-pointer mt-2 sm:mt-0">•••</div>
             </div>
           ))}
         </div>
 
         {/* Archivio */}
-        <div className="mt-6 text-right">
+        <div className="mt-6 text-center sm:text-right">
           <a href="#" className="text-blue-900 font-semibold hover:underline">
             CONSULTA L'ARCHIVIO &rsaquo;
           </a>
