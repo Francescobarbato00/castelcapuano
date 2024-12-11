@@ -11,7 +11,7 @@ const Article = () => {
 
   return (
     <section
-      className={`container mx-auto px-4 py-8 sm:py-12 transition-all duration-1000 ${
+      className={`bg-white container mx-auto px-4 py-8 sm:py-12 transition-all duration-1000 ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
@@ -27,7 +27,7 @@ const Article = () => {
       </h2>
 
       {/* Corpo del testo */}
-      <div className="max-w-4xl mx-auto leading-relaxed text-gray-800 space-y-6 text-justify text-sm sm:text-base">
+      <div className="bg-white max-w-4xl mx-auto leading-relaxed text-gray-800 space-y-6 text-justify text-sm sm:text-base">
         <p>
           La Fondazione Castel Capuano è lieta di annunciare la XI edizione del Concerto di Natale,
           un appuntamento musicale ormai tradizionale, che si terrà{" "}
@@ -83,7 +83,7 @@ const Article = () => {
       </div>
 
       {/* Immagine a fine articolo */}
-      <div className="w-full max-w-4xl mx-auto mt-8 sm:mt-10 shadow-lg rounded overflow-hidden">
+      <div className="w-full max-w-4xl mx-auto mt-8 sm:mt-10 shadow-lg rounded overflow-hidden bg-white">
         <Image
           src="/concerto.jpg" // Sostituire con il percorso reale dell'immagine
           alt="Concerto di Natale 2024"
