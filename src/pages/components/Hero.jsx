@@ -159,7 +159,37 @@ const Hero = () => {
         .swiper-slide-active .animated-image {
           animation: fadeInScale 1s ease-out;
         }
+
+        /* Freccia fuori immagine SOLO da mobile */
+        @media (max-width: 640px) {
+          .swiper-button-next {
+            position: absolute;
+            top: -10px; /* Spostamento in alto */
+            right: -10px; /* Spostamento a destra */
+            z-index: 10; /* Assicura che la freccia sia sopra */
+            background-color: white; /* Sfondo bianco per visibilità */
+            border: 2px solid #1e3a8a; /* Bordo blu */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #1e3a8a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+          }
+
+          .swiper-button-next:hover {
+            color: #003366;
+            border-color: #003366;
+          }
+        }
       `}</style>
+
+
+
     </section>
   );
 };
