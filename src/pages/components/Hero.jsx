@@ -41,13 +41,16 @@ const Hero = () => {
   return (
     <section className="bg-white py-8">
       <div className="container mx-auto px-4 relative">
-        {/* Titolo della sezione */}
+        {/* Titolo della sezione con Pulsante */}
         <div className="section-header flex flex-col sm:flex-row justify-between items-center mb-6">
           <div>
             <h2 className="text-3xl sm:text-5xl font-bold text-blue-900 text-center sm:text-left">
               In evidenza
             </h2>
             <div className="w-24 h-1 bg-blue-900 mt-2 mx-auto sm:mx-0"></div>
+          </div>
+          <div className="navigation-buttons mt-4 sm:mt-0">
+            <div className="swiper-button-next">&gt;</div>
           </div>
         </div>
 
@@ -64,15 +67,15 @@ const Hero = () => {
         >
           {newsData.map((news, index) => (
             <SwiperSlide key={index}>
-              <div className="flex flex-col items-center gap-4 lg:flex-row lg:gap-8 w-full h-auto relative">
-                {/* Immagine */}
-                <div className="relative w-full h-[300px] sm:h-[400px] lg:w-1/2 lg:h-[500px] shadow-lg">
+              <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-8 w-full relative">
+                {/* Immagine più grande su mobile */}
+                <div className="relative w-full h-[400px] sm:h-[450px] lg:w-1/2 lg:h-[500px] shadow-lg">
                   <Image
                     src={news.image}
                     alt={news.title}
                     layout="fill"
                     objectFit="cover"
-                    className="animated-image"
+                    className="rounded-none animated-image"
                     priority
                   />
                 </div>
@@ -82,13 +85,13 @@ const Hero = () => {
                   <p className="text-gray-500 text-sm sm:text-lg mb-2">
                     {news.date}
                   </p>
-                  <h2 className="text-lg sm:text-3xl font-bold text-blue-900 mb-4 leading-snug">
+                  <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-blue-900 mb-4 leading-snug">
                     {news.title}
                   </h2>
                   <p className="text-gray-700 text-sm sm:text-lg mb-6">
                     {news.description}
                   </p>
-                  <button className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded transition">
+                  <button className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 sm:px-8 sm:py-3 rounded-none transition">
                     Leggi tutto
                   </button>
                 </div>
@@ -99,11 +102,46 @@ const Hero = () => {
       </div>
 
       <style jsx>{`
-        /* Pulsante di Navigazione */
-        .swiper-button-next,
-        .swiper-button-prev {
-          color: #1e3a8a;
+        /* Pulsante di Navigazione - Freccia Destra */
+        .swiper-button-next {
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           font-size: 24px;
+          color: #1e3a8a;
+          cursor: pointer;
+          transition: color 0.3s ease;
+        }
+
+        .swiper-button-next:hover {
+          color: #003366;
+        }
+
+        .swiper-button-next::after {
+          content: "";
+        }
+
+        /* Risoluzione Sovrapposizione Slide */
+        .swiper-fix .swiper-slide {
+          opacity: 0;
+          pointer-events: none;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: opacity 0.5s ease;
+        }
+
+        .swiper-fix .swiper-slide-active {
+          opacity: 1;
+          pointer-events: auto;
+          position: relative;
         }
 
         /* Effetto di ingresso per le immagini */
@@ -118,7 +156,7 @@ const Hero = () => {
           }
         }
 
-        .animated-image {
+        .swiper-slide-active .animated-image {
           animation: fadeInScale 1s ease-out;
         }
       `}</style>
