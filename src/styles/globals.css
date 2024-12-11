@@ -19,3 +19,133 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* Contenitore dei pulsanti di navigazione */
+.swiper-button-prev,
+.swiper-button-next {
+  width: 40px; /* Dimensione del pulsante */
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px; /* Dimensione delle icone */
+  color: #1e3a8a; /* Colore blu-900 */
+  cursor: pointer;
+  transition: color 0.3s ease; /* Transizione solo sul colore */
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  color: #003366; /* Cambia colore icona al passaggio del mouse */
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  content: ''; /* Rimuove il contenuto di default di Swiper */
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  position: relative;
+}
+
+/* Contenitore principale con titolo e pulsanti allineati */
+.section-header {
+  display: flex;
+  justify-content: space-between; /* Allinea titolo a sinistra e icone a destra */
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Titolo della sezione */
+.section-header h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1e3a8a; /* Blu-900 */
+}
+
+/* Pulsanti Swiper allineati */
+.navigation-buttons {
+  display: flex;
+  gap: 1rem; /* Spaziatura tra le icone */
+}
+/* Effetto di Fade-In Up */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 1s ease-in-out;
+}
+
+/* Effetto di Slide-In Left */
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 1s ease-in-out;
+}
+
+/* Effetto di Slide-In Right */
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slideInRight {
+  animation: slideInRight 1s ease-in-out;
+}
+
+/* Effetto Hover nei comunicati */
+.hover-shadow-hover {
+  transition: all 0.5s ease;
+}
+
+.hover-shadow-hover:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-left: 4px solid #2563eb; /* Blu Tailwind */
+}
+/* Effetti Globali */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 1s ease-out forwards;
+  opacity: 0;
+}
+
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
