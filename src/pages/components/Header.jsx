@@ -17,40 +17,40 @@ const Header = () => {
         {/* Contenitore dei pulsanti centrato */}
         <nav className="hidden lg:flex space-x-6">
           <a
-            href="#"
+            href="/"
             className="text-gray-700 hover:text-blue-900 transition duration-300"
           >
             Home
           </a>
           <a
-            href="#"
+            href="/notizie"
             className="text-gray-700 hover:text-blue-900 transition duration-300"
           >
-            Struttura
+            Notizie
           </a>
           <a
-            href="#"
-            className="text-gray-700 hover:text-blue-900 transition duration-300"
-          >
-            Organi
-          </a>
-          <a
-            href="#"
+            href="eventi"
             className="text-gray-700 hover:text-blue-900 transition duration-300"
           >
             Eventi
           </a>
           <a
-            href="#"
+            href="documenti"
             className="text-gray-700 hover:text-blue-900 transition duration-300"
           >
             Documenti
           </a>
           <a
-            href="#"
+            href="organi"
             className="text-gray-700 hover:text-blue-900 transition duration-300"
           >
-            Notizie
+            Organi
+          </a>
+          <a
+            href="struttura"
+            className="text-gray-700 hover:text-blue-900 transition duration-300"
+          >
+            Struttura
           </a>
         </nav>
 
