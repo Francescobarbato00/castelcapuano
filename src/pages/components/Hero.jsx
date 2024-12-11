@@ -160,24 +160,26 @@ const Hero = () => {
           animation: fadeInScale 1s ease-out;
         }
 
-        /* Freccia fuori immagine SOLO da mobile */
+        /* Freccia accanto al tasto In evidenza SOLO da mobile */
         @media (max-width: 640px) {
-          .swiper-button-next {
+          .navigation-buttons {
             position: absolute;
-            top: -10px; /* Spostamento in alto */
-            right: -10px; /* Spostamento a destra */
-            z-index: 10; /* Assicura che la freccia sia sopra */
-            background-color: white; /* Sfondo bianco per visibilità */
-            border: 2px solid #1e3a8a; /* Bordo blu */
+            right: 0;
+            top: 0;
+            transform: translateY(10px);
+          }
+
+          .swiper-button-next {
+            width: 32px;
+            height: 32px;
+            font-size: 18px;
+            color: #1e3a8a;
+            border: 1px solid #1e3a8a;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            background-color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            color: #1e3a8a;
-            cursor: pointer;
             transition: all 0.3s ease;
           }
 
