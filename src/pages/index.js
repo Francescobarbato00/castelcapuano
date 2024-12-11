@@ -18,7 +18,9 @@ export default function Home() {
       <hr className="border-t border-gray-300 my-0 w-full" />
 
       <ComunicatiAgenda />
+      <hr className="border-t border-gray-300 my-0 w-full" />
       <NotizieSection />
+      <hr className="border-t border-gray-300 my-0 w-full" />
       <StrutturaSection />
       <Footer />
     </div>
