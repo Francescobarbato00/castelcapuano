@@ -1,11 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const NewsBrevi = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 100);
-    return () => clearTimeout(timer);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect(); // Disattiva l'observer dopo l'attivazione
+        }
+      },
+      {
+        threshold: 0.2, // Trigger quando il 20% della sezione è visibile
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
   }, []);
 
   const news = [
@@ -63,7 +79,7 @@ const NewsBrevi = () => {
   ];
 
   return (
-    <section className="container mx-auto px-4 py-8">
+    <section ref={sectionRef} className="container mx-auto px-4 py-8">
       <div
         className={`grid grid-cols-1 lg:grid-cols-3 gap-8 transition-opacity duration-1000 ${
           isVisible ? "opacity-100" : "opacity-0"
@@ -74,10 +90,15 @@ const NewsBrevi = () => {
           <h2 className="text-3xl font-bold text-blue-900 mb-4">NEWS</h2>
           <hr className="border-gray-300 mb-4" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {news.map((item) => (
+            {news.map((item, index) => (
               <div
                 key={item.id}
-                className="transition-transform transform hover:-translate-y-1 hover:shadow-lg p-4 border border-gray-200 rounded-lg"
+                style={{
+                  transitionDelay: `${index * 150}ms`,
+                }}
+                className={`transition-all duration-700 transform ${
+                  isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+                } hover:scale-105 hover:shadow-lg p-4 border border-gray-200 rounded-lg`}
               >
                 <h3 className="text-lg font-bold text-blue-900">
                   {item.title}
@@ -94,10 +115,15 @@ const NewsBrevi = () => {
           <h2 className="text-3xl font-bold text-blue-900 mb-4">BREVI</h2>
           <hr className="border-gray-300 mb-4" />
           <ul className="space-y-4">
-            {brevi.map((item) => (
+            {brevi.map((item, index) => (
               <li
                 key={item.id}
-                className="border-b border-gray-300 pb-2 transition duration-300 hover:text-blue-900 cursor-pointer"
+                style={{
+                  transitionDelay: `${index * 150}ms`,
+                }}
+                className={`border-b border-gray-300 pb-2 transition-all duration-700 transform ${
+                  isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+                } hover:text-blue-900 cursor-pointer`}
               >
                 <h3 className="text-lg font-semibold">{item.title}</h3>
                 <p className="text-sm italic text-gray-500">{item.date}</p>
@@ -106,7 +132,12 @@ const NewsBrevi = () => {
           </ul>
           {/* Pulsante Archivio */}
           <div className="mt-6">
-            <button className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition duration-300">
+            <button
+              className={`bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition-all duration-700 transform ${
+                isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+              }`}
+              style={{ transitionDelay: `${brevi.length * 150}ms` }}
+            >
               Archivio
             </button>
           </div>
