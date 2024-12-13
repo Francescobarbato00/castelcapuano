@@ -15,6 +15,7 @@ const Hero = () => {
       title: "Online il nuovo Portale della Fondazione di Castel Capuano!",
       description: "Ora disponibile per tutti i cittadini",
       image: "/home.jpg",
+      link: "https://esempio.com/nuovo-portale",
     },
     {
       date: "09 DICEMBRE 2024",
@@ -22,6 +23,7 @@ const Hero = () => {
       description:
         "Il tradizionale Concerto di Natale si terrà presso Castel Capuano.",
       image: "/2.png",
+      link: "https://castelcapuano.vercel.app/articles1",
     },
     {
       date: "08 DICEMBRE 2024",
@@ -29,6 +31,7 @@ const Hero = () => {
       description:
         "Scopri tutte le funzionalità del nuovo portale per una giustizia più efficiente.",
       image: "/3.jpg",
+      link: "https://esempio.com/scopri-funzionalita",
     },
   ];
 
@@ -91,9 +94,11 @@ const Hero = () => {
                   <p className="text-gray-700 text-sm sm:text-lg mb-6">
                     {news.description}
                   </p>
-                  <button className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 sm:px-8 sm:py-3 rounded-none transition">
-                    Leggi tutto
-                  </button>
+                  <a href={news.link} target="_blank" rel="noopener noreferrer">
+                    <button className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 sm:px-8 sm:py-3 rounded-none transition">
+                      Leggi tutto
+                    </button>
+                  </a>
                 </div>
               </div>
             </SwiperSlide>
@@ -189,9 +194,6 @@ const Hero = () => {
           }
         }
       `}</style>
-
-
-
     </section>
   );
 };
