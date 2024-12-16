@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 
 const EventiFuturi = () => {
   const allEvents = [
-    { id: 1, title: "Convegno Internazionale sulla Giustizia", date: "22/11/24", description: "Un dibattito internazionale sui sistemi giudiziari moderni.", category: "Convegno" },
-    { id: 2, title: "Workshop: Innovazione e Processi Civili", date: "05/12/24", description: "Soluzioni innovative per migliorare i processi civili.", category: "Evento" },
-    { id: 3, title: "Seminario: Proporzionalità Penale", date: "04/11/24", description: "Esplorazione delle nuove linee guida.", category: "Convegno" },
-    { id: 4, title: "Conferenza: Riforme Giuridiche", date: "17/10/24", description: "Riflessioni sulle riforme giuridiche.", category: "Evento" },
-    { id: 5, title: "Tavola Rotonda: Cumulo Soggettivo Passivo", date: "09/10/24", description: "Analisi approfondita sui cumuli passivi.", category: "Convegno" },
-    { id: 6, title: "Webinar: Privacy e Giurisprudenza", date: "01/10/24", description: "Tutela della sfera privata e dati informatici.", category: "Evento" },
-    { id: 7, title: "Forum sulla Tecnologia Giuridica", date: "15/09/24", description: "Impatto delle nuove tecnologie.", category: "Convegno" },
-    { id: 8, title: "Evento Speciale: Innovazioni nel Processo Telematico", date: "10/09/24", description: "Miglioramento del processo telematico.", category: "Evento" },
+    { id: 1, title: "Evento di Prova", date: "22/11/24", description: "Evento di Prova.", category: "Convegno" },
+    { id: 2, title: "Evento di Prova", date: "05/12/24", description: "Evento di Prova", category: "Evento" },
+    { id: 3, title: "Evento di Prova", date: "04/11/24", description: "Evento di Prova", category: "Convegno" },
+    { id: 4, title: "Evento di Prova", date: "17/10/24", description: "Evento di Prova", category: "Evento" },
+    { id: 5, title: "Evento di Prova", date: "09/10/24", description: "Evento di Prova.", category: "Convegno" },
+    { id: 6, title: "Evento di Prova", date: "01/10/24", description: "Evento di Prova.", category: "Evento" },
+    { id: 7, title: "Evento di Prova", date: "15/09/24", description: "Evento di Prova.", category: "Convegno" },
+    { id: 8, title: "Evento di Prova", date: "10/09/24", description: "Evento di Prova.", category: "Evento" },
   ];
 
   const tabs = ["Tutto", "News e comunicati stampa", "Eventi, convegni e seminari"];
