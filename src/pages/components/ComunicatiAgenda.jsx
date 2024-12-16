@@ -26,13 +26,13 @@ const ComunicatiAgenda = () => {
     {
       date: "09/12/2024",
       number: "N° 140",
-      title: "Titoli di Stato: 12 dicembre asta a medio-lungo termine e calendario aste dicembre",
+      title: "Comunicato di prova",
     },
     {
       date: "07/12/2024",
       number: "N° 139",
-      title: "PNRR: nuove regole per accelerare i pagamenti",
-      subtitle: "Giorgetti firma decreto attuativo che semplifica le procedure",
+      title: "Comunicato di prova",
+      subtitle: "Prova",
     },
   ];
 
