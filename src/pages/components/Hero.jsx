@@ -15,7 +15,7 @@ const Hero = () => {
       title: "Online il nuovo Portale della Fondazione di Castel Capuano!",
       description: "Ora disponibile per tutti i cittadini",
       image: "/home.jpg",
-      link: "https://esempio.com/nuovo-portale",
+      link: "/",
     },
     {
       date: "09 DICEMBRE 2024",
@@ -31,7 +31,7 @@ const Hero = () => {
       description:
         "Scopri tutte le funzionalità del nuovo portale per una giustizia più efficiente.",
       image: "/3.jpg",
-      link: "https://esempio.com/scopri-funzionalita",
+      link: "/",
     },
   ];
 
