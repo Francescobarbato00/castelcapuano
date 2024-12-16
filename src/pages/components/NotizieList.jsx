@@ -6,32 +6,32 @@ const NotizieList = () => {
     {
       id: 1,
       category: "CULTURA",
-      title: "Restauro completato della Biblioteca Alfredo De Marsico",
+      title: "Articolo di Prova",
       date: "12 Dicembre 2024",
       author: "Redazione",
       image: "/foto.jpg",
       description:
-        "La storica biblioteca è stata riportata all'antico splendore dopo anni di lavori di restauro.",
+        "Articolo di Prova.",
     },
     {
       id: 2,
       category: "EVENTI",
-      title: "Convegno internazionale: Giustizia e Innovazione Digitale",
+      title: "Articolo di Prova",
       date: "10 Dicembre 2024",
       author: "Redazione",
       image: "/foto.jpg",
       description:
-        "Un incontro con esperti internazionali per discutere delle nuove tecnologie applicate alla giustizia.",
+        "Articolo di Prova.",
     },
     {
       id: 3,
       category: "FORMAZIONE",
-      title: "Nuovi corsi per avvocati sulla mediazione giuridica",
+      title: "Articolo di Prova",
       date: "8 Dicembre 2024",
       author: "Redazione",
       image: "/foto.jpg",
       description:
-        "La Fondazione Castel Capuano promuove nuovi percorsi formativi per professionisti del settore legale.",
+        "Articolo di Prova.",
     },
     {
       id: 4,
@@ -41,7 +41,7 @@ const NotizieList = () => {
       author: "Redazione",
       image: "/foto.jpg",
       description:
-        "Lancio di una piattaforma innovativa per rendere più veloce il processo telematico in ambito giuridico.",
+        "Articolo di Prova.",
     },
     {
       id: 5,
@@ -51,7 +51,7 @@ const NotizieList = () => {
       author: "Redazione",
       image: "/foto.jpg",
       description:
-        "Cerimonia di apertura del nuovo anno giudiziario con la presenza delle alte cariche della giustizia.",
+        "Articolo di Prova.",
     },
     {
       id: 6,
@@ -61,7 +61,7 @@ const NotizieList = () => {
       author: "Redazione",
       image: "/foto.jpg",
       description:
-        "Una mostra dedicata alla storia e all'arte contenuta nel celebre complesso di Castel Capuano.",
+        "Articolo di Prova.",
     },
   ];
 

@@ -27,28 +27,28 @@ const NewsBrevi = () => {
   const news = [
     {
       id: 1,
-      title: "Lancio della piattaforma Giustizia 4.0",
+      title: "Articolo di Prova",
       date: "15 Dicembre 2024",
       description:
         "La nuova piattaforma digitale per l'informatizzazione dei procedimenti giudiziari sarà operativa dal prossimo anno.",
     },
     {
       id: 2,
-      title: "Concorso 300 nuovi magistrati: pubblicato il bando",
+      title: "Articolo di Prova",
       date: "12 Dicembre 2024",
       description:
         "È stato pubblicato il bando per il reclutamento di 300 nuovi magistrati. Scadenza prevista per gennaio 2025.",
     },
     {
       id: 3,
-      title: "Inaugurata la Sala Storica presso Castel Capuano",
+      title: "Articolo di Prova",
       date: "10 Dicembre 2024",
       description:
         "La storica sala restaurata è stata aperta al pubblico con un evento culturale e storico dedicato alla giustizia.",
     },
     {
       id: 4,
-      title: "Assemblea Generale dell'Ordine Forense 2024",
+      title: "Articolo di Prova",
       date: "8 Dicembre 2024",
       description:
         "I rappresentanti dell'Ordine Forense si riuniscono per discutere delle nuove normative.",
@@ -58,22 +58,22 @@ const NewsBrevi = () => {
   const brevi = [
     {
       id: 1,
-      title: "Corte di Cassazione: Nuove linee guida",
+      title: "Articolo di Prova",
       date: "1 Dicembre 2024",
     },
     {
       id: 2,
-      title: "Rinnovato il protocollo tra DAP e Avvocatura",
+      title: "Articolo di Prova",
       date: "20 Novembre 2024",
     },
     {
       id: 3,
-      title: "Workshop formativo sulla Giustizia Digitale",
+      title: "Articolo di Prova",
       date: "10 Novembre 2024",
     },
     {
       id: 4,
-      title: "Restauro della Cappella della Sommaria completato",
+      title: "Articolo di Prova",
       date: "1 Novembre 2024",
     },
   ];
