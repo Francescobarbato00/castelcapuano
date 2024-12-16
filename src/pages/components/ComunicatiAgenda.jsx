@@ -49,8 +49,8 @@ const ComunicatiAgenda = () => {
       day: "12",
       month: "DIC",
       weekday: "GIOVEDÌ",
-      title: "Evento Speciale",
-      location: "ROMA – Circo Massimo",
+      title: "Evento di Prova",
+      location: "NAPOLI",
       time: "19:00",
     },
   ];
