@@ -30,28 +30,28 @@ const NewsBrevi = () => {
       title: "Articolo di Prova",
       date: "15 Dicembre 2024",
       description:
-        "La nuova piattaforma digitale per l'informatizzazione dei procedimenti giudiziari sarà operativa dal prossimo anno.",
+        "Articolo di Prova.",
     },
     {
       id: 2,
       title: "Articolo di Prova",
       date: "12 Dicembre 2024",
       description:
-        "È stato pubblicato il bando per il reclutamento di 300 nuovi magistrati. Scadenza prevista per gennaio 2025.",
+        "Articolo di Prova.",
     },
     {
       id: 3,
       title: "Articolo di Prova",
       date: "10 Dicembre 2024",
       description:
-        "La storica sala restaurata è stata aperta al pubblico con un evento culturale e storico dedicato alla giustizia.",
+        "Articolo di Prova.",
     },
     {
       id: 4,
       title: "Articolo di Prova",
       date: "8 Dicembre 2024",
       description:
-        "I rappresentanti dell'Ordine Forense si riuniscono per discutere delle nuove normative.",
+        "Articolo di Prova.",
     },
   ];
 
