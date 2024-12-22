@@ -69,18 +69,18 @@ const Hero = () => {
         <Swiper
           ref={swiperRef}
           modules={[Navigation, EffectFade]}
-          navigation={{ nextEl: ".swiper-button-next" }} // Usa solo la freccia destra
+          navigation={{ nextEl: ".swiper-button-next" }}
           effect="fade"
           loop
-          spaceBetween={30}
+          spaceBetween={0}
           slidesPerView={1}
           className="relative swiper-fix"
         >
           {newsData.map((news, index) => (
             <SwiperSlide key={index}>
-              <div className="flex flex-col lg:flex-row items-stretch gap-4 lg:gap-8 w-full">
+              <div className="flex flex-col lg:flex-row items-center lg:items-stretch gap-4 lg:gap-8 w-full">
                 {/* Immagine */}
-                <div className="relative w-full lg:w-1/2 h-[400px] sm:h-[450px] lg:h-[500px] shadow-lg">
+                <div className="relative w-full h-[300px] sm:h-[400px] lg:w-1/2 lg:h-[500px] shadow-lg">
                   <Image
                     src={news.image}
                     alt={news.title}
@@ -150,13 +150,11 @@ const Hero = () => {
           position: relative;
         }
 
-        /* Media Query */
-        @media (max-width: 640px) {
-          .navigation-buttons {
-            position: absolute;
-            right: 0;
-            top: 0;
-            transform: translateY(10px);
+        /* Specifico per Mobile */
+        @media (max-width: 768px) {
+          .swiper-slide {
+            flex-direction: column; /* Disposizione verticale */
+            align-items: center; /* Centrare tutto */
           }
 
           .swiper-button-next {
@@ -171,6 +169,31 @@ const Hero = () => {
           .swiper-button-next:hover {
             color: #003366;
           }
+
+          .section-header {
+            flex-direction: column;
+            text-align: center;
+          }
+
+          .text-center {
+            text-align: center !important;
+          }
+        }
+
+        /* Effetto di Ingresso per le Immagini */
+        @keyframes fadeInScale {
+          0% {
+            opacity: 0;
+            transform: scale(0.9);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        .swiper-slide-active .animated-image {
+          animation: fadeInScale 0.5s ease-out;
         }
       `}</style>
     </section>
