@@ -11,6 +11,14 @@ const Hero = () => {
 
   const newsData = [
     {
+      date: "25 DICEMBRE 2024",
+      title: "Auguri di Buon Natale e Buone Feste dalla Fondazione di Castel Capuano!",
+      description:
+        "La Fondazione di Castel Capuano augura a tutti voi un sereno Natale e uno splendido anno nuovo. Che queste festività portino gioia, pace e felicità nelle vostre case. Buon 2025 a tutti!",
+      image: "/auguri.png",
+      link: "/auguri",
+    },
+    {
       date: "10 DICEMBRE 2024",
       title: "Online il nuovo Portale della Fondazione di Castel Capuano!",
       description: "Ora disponibile per tutti i cittadini",
@@ -20,8 +28,7 @@ const Hero = () => {
     {
       date: "09 DICEMBRE 2024",
       title: "Concerto di Natale 2024 - XI Edizione",
-      description:
-        "Il tradizionale Concerto di Natale si terrà presso Castel Capuano.",
+      description: "Il tradizionale Concerto di Natale si terrà presso Castel Capuano.",
       image: "/2.png",
       link: "https://castelcapuano.vercel.app/articles1",
     },
@@ -52,6 +59,7 @@ const Hero = () => {
             </h2>
             <div className="w-24 h-1 bg-blue-900 mt-2 mx-auto sm:mx-0"></div>
           </div>
+          {/* Pulsante di navigazione singolo */}
           <div className="navigation-buttons mt-4 sm:mt-0">
             <div className="swiper-button-next">&gt;</div>
           </div>
@@ -61,41 +69,39 @@ const Hero = () => {
         <Swiper
           ref={swiperRef}
           modules={[Navigation, EffectFade]}
-          navigation={{ nextEl: ".swiper-button-next" }}
+          navigation={{ nextEl: ".swiper-button-next" }} // Usa solo la freccia destra
           effect="fade"
           loop
-          spaceBetween={0}
+          spaceBetween={30}
           slidesPerView={1}
           className="relative swiper-fix"
         >
           {newsData.map((news, index) => (
             <SwiperSlide key={index}>
-              <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-8 w-full relative">
-                {/* Immagine più grande su mobile */}
-                <div className="relative w-full h-[400px] sm:h-[450px] lg:w-1/2 lg:h-[500px] shadow-lg">
+              <div className="flex flex-col lg:flex-row items-stretch gap-4 lg:gap-8 w-full">
+                {/* Immagine */}
+                <div className="relative w-full lg:w-1/2 h-[400px] sm:h-[450px] lg:h-[500px] shadow-lg">
                   <Image
                     src={news.image}
                     alt={news.title}
                     layout="fill"
                     objectFit="cover"
-                    className="rounded-none animated-image"
+                    className="rounded"
                     priority
                   />
                 </div>
 
                 {/* Testo */}
-                <div className="text-center lg:text-left px-4 sm:px-8 py-4 lg:w-1/2 bg-white">
-                  <p className="text-gray-500 text-sm sm:text-lg mb-2">
-                    {news.date}
-                  </p>
-                  <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-blue-900 mb-4 leading-snug">
+                <div className="w-full lg:w-1/2 flex flex-col justify-center px-4 sm:px-8 py-4 bg-white">
+                  <p className="text-gray-500 text-sm sm:text-lg mb-2">{news.date}</p>
+                  <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-blue-900 mb-4">
                     {news.title}
                   </h2>
                   <p className="text-gray-700 text-sm sm:text-lg mb-6">
                     {news.description}
                   </p>
                   <a href={news.link} target="_blank" rel="noopener noreferrer">
-                    <button className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 sm:px-8 sm:py-3 rounded-none transition">
+                    <button className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 sm:px-8 sm:py-3 rounded transition">
                       Leggi tutto
                     </button>
                   </a>
@@ -107,7 +113,7 @@ const Hero = () => {
       </div>
 
       <style jsx>{`
-        /* Pulsante di Navigazione - Freccia Destra */
+        /* Pulsante di Navigazione */
         .swiper-button-next {
           width: 40px;
           height: 40px;
@@ -128,44 +134,23 @@ const Hero = () => {
           content: "";
         }
 
-        /* Risoluzione Sovrapposizione Slide */
+        /* Slide */
         .swiper-fix .swiper-slide {
-          opacity: 0;
-          pointer-events: none;
-          position: absolute;
+          position: relative;
+          opacity: 1;
+          pointer-events: auto;
           width: 100%;
-          height: 100%;
-          top: 0;
-          left: 0;
+          height: auto;
           display: flex;
-          align-items: center;
+          align-items: stretch;
           justify-content: center;
-          transition: opacity 0.5s ease;
         }
 
         .swiper-fix .swiper-slide-active {
-          opacity: 1;
-          pointer-events: auto;
           position: relative;
         }
 
-        /* Effetto di ingresso per le immagini */
-        @keyframes fadeInScale {
-          0% {
-            opacity: 0;
-            transform: scale(0.9);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-
-        .swiper-slide-active .animated-image {
-          animation: fadeInScale 1s ease-out;
-        }
-
-        /* Freccia accanto al tasto In evidenza SOLO da mobile */
+        /* Media Query */
         @media (max-width: 640px) {
           .navigation-buttons {
             position: absolute;
@@ -178,19 +163,13 @@ const Hero = () => {
             width: 32px;
             height: 32px;
             font-size: 18px;
-            color: #1e3a8a;
             border: 1px solid #1e3a8a;
             border-radius: 50%;
             background-color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
           }
 
           .swiper-button-next:hover {
             color: #003366;
-            border-color: #003366;
           }
         }
       `}</style>
