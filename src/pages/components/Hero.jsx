@@ -15,7 +15,7 @@ const Hero = () => {
       title: "Auguri di Buon Natale e Buone Feste dalla Fondazione di Castel Capuano!",
       description:
         "La Fondazione di Castel Capuano augura a tutti voi un sereno Natale e uno splendido anno nuovo. Che queste festività portino gioia, pace e felicità nelle vostre case. Buon 2025 a tutti!",
-      image: "/auguri.png",
+      image: "/auguri.jpeg",
       link: "/auguri",
     },
     {
