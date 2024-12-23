@@ -5,6 +5,65 @@ import Link from "next/link";
 const NotizieList = () => {
   const [isVisible, setIsVisible] = useState(false);
 
+  // Supponendo che `newsItems` sia già disponibile:
+  const newsItems = [
+    // Inserisci qui gli oggetti delle tue notizie esistenti
+    {
+      id: "1",
+      title: "Titolo della Notizia 1",
+      date: "22 Dicembre 2024",
+      author: "Autore 1",
+      category: "Categoria 1",
+      image: "/foto.jpg",
+      description: "Breve descrizione della notizia 1.",
+    },
+    {
+      id: "2",
+      title: "Titolo della Notizia 2",
+      date: "21 Dicembre 2024",
+      author: "Autore 2",
+      category: "Categoria 2",
+      image: "/foto.jpg",
+      description: "Breve descrizione della notizia 2.",
+    },
+    {
+      id: "2",
+      title: "Titolo della Notizia 2",
+      date: "21 Dicembre 2024",
+      author: "Autore 2",
+      category: "Categoria 2",
+      image: "/foto.jpg",
+      description: "Breve descrizione della notizia 2.",
+    },
+    {
+      id: "4",
+      title: "Titolo della Notizia 2",
+      date: "21 Dicembre 2024",
+      author: "Autore 2",
+      category: "Categoria 2",
+      image: "/foto.jpg",
+      description: "Breve descrizione della notizia 2.",
+    },
+    {
+      id: "5",
+      title: "Titolo della Notizia 2",
+      date: "21 Dicembre 2024",
+      author: "Autore 2",
+      category: "Categoria 2",
+      image: "/foto.jpg",
+      description: "Breve descrizione della notizia 2.",
+    },
+    {
+      id: "6",
+      title: "Titolo della Notizia 2",
+      date: "21 Dicembre 2024",
+      author: "Autore 2",
+      category: "Categoria 2",
+      image: "/foto.jpg",
+      description: "Breve descrizione della notizia 2.",
+    },
+  ];
+
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
     return () => clearTimeout(timer);

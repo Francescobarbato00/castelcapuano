@@ -100,6 +100,9 @@ const Article = () => {
         <p>Che queste festività portino gioia, pace e felicità nelle vostre case. Buon 2025 a tutti!
         </p>
 
+
+
+
       </div>
 
       {/* Immagine a fine articolo */}
@@ -113,7 +116,13 @@ const Article = () => {
           objectFit="cover"
           className="transition-transform duration-500 hover:scale-105"
         />
+      
+      
       </div>
+      <p className="text-center text-gray-700 mt-8">
+  Articolo a cura di: <strong>Antonella Ciriello</strong>, <strong>Domenico De Luca</strong> e <strong>Francesco Barbato</strong>.
+</p>
+
     </section>
   );
 };
