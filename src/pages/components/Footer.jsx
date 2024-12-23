@@ -77,9 +77,24 @@ const Footer = () => {
 
           {/* Pec */}
           <div>
-            <h3 className="font-bold mb-2">Pec</h3>
+            <h3 className="font-bold mb-2">Sito a cura di:</h3>
             <p>
-              Indirizzi di posta elettronica certificata della fondazione di Castel Capuano.
+              
+              <a
+               
+                className="font-bold text-white hover:underline"
+              >
+                Antonella Ciriello
+              </a>
+            </p>
+            <p className="mt-2">
+              Collaboratori tecnici:<br />
+              <a
+               
+                className="font-bold text-white hover:underline"
+              >
+                Domenico De Luca e Francesco Barbato
+              </a>
             </p>
           </div>
         </div>

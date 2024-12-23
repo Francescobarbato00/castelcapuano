@@ -21,88 +21,47 @@ const Article = () => {
         il Concerto di Natale 2024
       </h1>
 
-      {/* Sottotitolo */}
-      <h2 className="text-base sm:text-lg md:text-xl text-center text-gray-700 mb-8 sm:mb-10">
-        XI Edizione – Salone dei Busti, 16 dicembre 2024
-      </h2>
-
       {/* Corpo del testo */}
       <div className="bg-white max-w-4xl mx-auto leading-relaxed text-gray-800 space-y-6 text-justify text-sm sm:text-base">
         <p>
-          La Fondazione Castel Capuano è lieta di annunciare la XI edizione del Concerto di Natale,
-          un appuntamento musicale ormai tradizionale, che si terrà{" "}
-          <strong>lunedì 16 dicembre alle ore 18:00</strong> presso il suggestivo Salone dei Busti
-          di Castel Capuano, uno dei luoghi più storici e prestigiosi di Napoli.
+          Il giorno <strong>lunedì 16 dicembre alle ore 18:00</strong> presso il suggestivo Salone dei Busti di Castel Capuano, luogo traboccante di storia e bellezza e simbolo della giustizia napoletana, si è tenuta la XI edizione del Concerto di Natale, un appuntamento musicale ormai tradizionale, organizzato dalla Fondazione Castel Capuano.
         </p>
-
         <p>
-          La serata avrà inizio con l'esecuzione dell'<strong>Ave Maria di Franz Schubert</strong>,
-          proposta dal duo composto da Serena Ciriello (soprano) e Angelica Ciriello (pianoforte).
+          La serata ha avuto inizio con l’indirizzo di augurio e saluto formulato dai vertici delle autorità giudiziare del distretto presenti, la Presidente della Corte di appello, d.ssa Maria Rosaria Covelli, la Presidente del Tribunale, d.ssa Elisabetta Garzo, il Procuratore generale presso la Corte di appello, dr. Aldo Policastro.
         </p>
-
         <p>
-          A seguire, il pubblico avrà l’opportunità di ascoltare le angeliche voci del{" "}
-          <strong>Coro di Voci Bianche del Teatro di San Carlo di Napoli</strong>, sotto la direzione
-          della maestra Stefania Rinaldi e con l'accompagnamento al pianoforte di Luigi del Prete.
-          Questo segmento, intitolato <em>"Natale, ma non solo, in musica"</em>, promette un
-          percorso emozionante tra melodie tradizionali e suggestioni natalizie.
+          A seguire ha presentato il concerto il Presidente della Fondazione dr. Aldo De Chiara e, alla presenza di autorità civili e militari e di oltre trecento spettatori, la serata ha avuto inizio, con l'esecuzione dell'<strong>Ave Maria di Franz Schubert</strong>, proposta dal duo composto dalle giovanissime Serena Ciriello (soprano) e Angelica Ciriello (pianoforte).
         </p>
-
         <p>
-          La serata proseguirà con l'esibizione del{" "}
-          <strong>Castel Capuano Libera Ensemble</strong>, che presenterà lo spettacolo{" "}
-          <em>“…E Pace in Terra agli Uomini…”</em>, un tributo alla cultura e alla devozione del
-          popolo di Napoli, particolarmente significativo in questo periodo dell'anno.
+          Si è poi esibito il <strong>Coro di Voci Bianche del Teatro di San Carlo di Napoli</strong>, sotto la direzione della maestra Stefania Rinaldi e con l'accompagnamento al pianoforte di Luigi del Prete. Il concerto, intitolato <em>"Natale, ma non solo, in musica"</em>, ha proposto un percorso emozionante e coinvolgente, tra melodie tradizionali e suggestioni natalizie, con un tocco di musica napoletana.
         </p>
-
-        <p className="font-semibold">Il gruppo di musicisti è composto da artisti di grande talento:</p>
-        <ul className="list-disc list-inside text-gray-800 ml-4 space-y-2">
-          <li>Antonino Anastasia (percussioni a cornice)</li>
-          <li>Enzo Minuto (percussioni)</li>
-          <li>Gioacchino Conte (fisarmonica)</li>
-          <li>Vincenzo Racioppi (mandolino)</li>
-          <li>Mariella La Rosa (voce e chitarra)</li>
-          <li>Corrado Velonà (voce e chitarra)</li>
-        </ul>
-
         <p>
-          La serata sarà arricchita dalla <strong>voce narrante di Andrea De Goyzueta</strong>, che
-          guiderà il pubblico attraverso un viaggio evocativo di parole e suoni.
+          Dopo un breve intervallo, la serata è proseguita con la seconda parte, che ha visto l'esibizione del <strong>Castel Capuano Libera Ensemble</strong>, con lo spettacolo <em>“…E Pace in Terra agli Uomini…”</em>, un tributo alla cultura e alla devozione del popolo di Napoli.
         </p>
-
-        <p className="font-semibold text-blue-700">
-          L’evento è a ingresso libero fino ad esaurimento posti, un'occasione imperdibile per
-          immergersi nella magia della musica natalizia in uno dei simboli storici della città di
-          Napoli.
-        </p>
-
         <p>
-          La Fondazione Castel Capuano invita tutti a partecipare a questo momento unico, dedicato
-          alla musica, alla tradizione e alla speranza di un Natale sereno per tutta la comunità.
+          Guidati dalla voce narrante di Andrea De Goyzueta, attraverso un viaggio evocativo di parole e suoni, si sono esibiti Antonino Anastasia (percussioni a cornice), Enzo Minuto (percussioni), Gioacchino Conte (fisarmonica), Vincenzo Racioppi (mandolino), Mariella La Rosa (voce e chitarra), Corrado Velonà (voce e chitarra).
         </p>
-       
-        <p className="text-base text-gray-800">
-  Il link per accedere alla registrazione del concerto è il seguente: 
-  <a 
-    href="https://youtu.be/qGWXgZ6KJmA?si=aLTZaIdh941SaUX2" 
-    target="_blank" 
-    rel="noopener noreferrer" 
-    className="text-blue-600 hover:text-blue-800 underline"
-  >
-    https://youtu.be/qGWXgZ6KJmA?si=aLTZaIdh941SaUX2
-  </a>
-</p>
-
-<p>
-<strong> La Fondazione di Castel Capuano </strong> augura a tutti voi un sereno Natale e uno splendido anno nuovo. 
+        <p>
+          Il concerto ha registrato una entusiastica partecipazione da parte del pubblico, che ha apprezzato come di consueto la qualità dell’offerta musicale il cui valore si è impreziosito per la magica cornice di Castel Capuano, e del Salone dei Busti, testimone di secoli di storia della nostra città.
         </p>
-       
-        <p>Che queste festività portino gioia, pace e felicità nelle vostre case. Buon 2025 a tutti!
+        <p>
+          E’ possibile accedere alla registrazione della prima parte del concerto al seguente link: 
+          <a 
+            href="https://youtu.be/qGWXgZ6KJmA?si=aLTZaIdh941SaUX2" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-blue-600 hover:text-blue-800 underline"
+          >
+            https://youtu.be/qGWXgZ6KJmA?si=aLTZaIdh941SaUX2
+          </a>
         </p>
-
-
-
-
+        <p>
+          La Fondazione Castel Capuano ringrazia per la partecipazione e augura a tutti un sereno Natale e uno splendido Anno nuovo, all’insegna della valorizzazione dello storico patrimonio culturale di Castel Capuano e della nostra Napoli.
+        </p>
+        <p>
+          <strong>Buon 2025 a tutti!</strong>
+        </p>
+        <p className="text-right text-sm text-gray-500">(info a cura di A.Ciriello)</p>
       </div>
 
       {/* Immagine a fine articolo */}
@@ -116,12 +75,7 @@ const Article = () => {
           objectFit="cover"
           className="transition-transform duration-500 hover:scale-105"
         />
-      
-      
       </div>
-      <p className="text-center text-gray-700 mt-8">
-  Articolo a cura di: <strong>Antonella Ciriello</strong>, <strong>Domenico De Luca</strong> e <strong>Francesco Barbato</strong>.
-</p>
 
     </section>
   );
