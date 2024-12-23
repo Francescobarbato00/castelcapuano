@@ -1,22 +1,9 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from ".lib/firabase";
 import Link from "next/link";
 
 const NotizieList = () => {
-  const [newsItems, setNewsItems] = useState([]);
   const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const fetchNews = async () => {
-      const snapshot = await getDocs(collection(db, "articles")); // Assicurati che "articles" sia il nome della tua collezione
-      const articles = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setNewsItems(articles);
-    };
-
-    fetchNews();
-  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
