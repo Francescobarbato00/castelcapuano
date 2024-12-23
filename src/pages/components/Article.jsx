@@ -80,6 +80,26 @@ const Article = () => {
           La Fondazione Castel Capuano invita tutti a partecipare a questo momento unico, dedicato
           alla musica, alla tradizione e alla speranza di un Natale sereno per tutta la comunità.
         </p>
+       
+        <p className="text-base text-gray-800">
+  Il link per accedere alla registrazione del concerto è il seguente: 
+  <a 
+    href="https://youtu.be/qGWXgZ6KJmA?si=aLTZaIdh941SaUX2" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="text-blue-600 hover:text-blue-800 underline"
+  >
+    https://youtu.be/qGWXgZ6KJmA?si=aLTZaIdh941SaUX2
+  </a>
+</p>
+
+<p>
+<strong> La Fondazione di Castel Capuano </strong> augura a tutti voi un sereno Natale e uno splendido anno nuovo. 
+        </p>
+       
+        <p>Che queste festività portino gioia, pace e felicità nelle vostre case. Buon 2025 a tutti!
+        </p>
+
       </div>
 
       {/* Immagine a fine articolo */}

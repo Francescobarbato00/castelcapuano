@@ -19,27 +19,13 @@ const Hero = () => {
       link: "/auguri",
     },
     {
-      date: "10 DICEMBRE 2024",
-      title: "Online il nuovo Portale della Fondazione di Castel Capuano!",
-      description: "Ora disponibile per tutti i cittadini",
-      image: "/home.jpg",
-      link: "/",
-    },
-    {
       date: "09 DICEMBRE 2024",
       title: "Concerto di Natale 2024 - XI Edizione",
       description: "Il tradizionale Concerto di Natale si terrà presso Castel Capuano.",
       image: "/2.png",
       link: "https://castelcapuano.vercel.app/articles1",
     },
-    {
-      date: "08 DICEMBRE 2024",
-      title: "Nuovo portale Fondazione Castel Capuano",
-      description:
-        "Scopri tutte le funzionalità del nuovo portale per una giustizia più efficiente.",
-      image: "/3.jpg",
-      link: "/",
-    },
+
   ];
 
   useEffect(() => {
