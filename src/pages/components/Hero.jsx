@@ -1,14 +1,12 @@
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, EffectFade } from "swiper/modules";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/effect-fade";
 
 const Hero = () => {
   const swiperRef = useRef(null);
 
+  // Dati aggiornati dagli articoli precedenti
   const newsData = [
     {
       date: "25 DICEMBRE 2024",
@@ -25,163 +23,80 @@ const Hero = () => {
       image: "/2.png",
       link: "https://castelcapuano.vercel.app/articles1",
     },
-
   ];
 
-  useEffect(() => {
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.navigation.update();
-    }
-  }, []);
-
   return (
-    <section className="bg-white py-8">
-      <div className="container mx-auto px-4 relative">
-        {/* Titolo della sezione con Pulsante */}
-        <div className="section-header flex flex-col sm:flex-row justify-between items-center mb-6">
-          <div>
-            <h2 className="text-3xl sm:text-5xl font-bold text-blue-900 text-center sm:text-left">
-              In evidenza
-            </h2>
-            <div className="w-24 h-1 bg-blue-900 mt-2 mx-auto sm:mx-0"></div>
-          </div>
-          {/* Pulsante di navigazione singolo */}
-          <div className="navigation-buttons mt-4 sm:mt-0">
-            <div className="swiper-button-next">&gt;</div>
+    <section className="bg-white py-12">
+      <div className="container mx-auto px-6 relative">
+        {/* Header con Titolo e Pulsanti di Navigazione */}
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-4xl font-bold text-blue-900">In evidenza</h2>
+
+          {/* Pulsanti di navigazione in linea al titolo */}
+          <div className="flex items-center space-x-4">
+            <button 
+              className="text-blue-700 hover:text-blue-900 transition text-2xl"
+              onClick={() => swiperRef.current?.swiper.slidePrev()}
+            >
+              &lt;
+            </button>
+            <button 
+              className="text-blue-700 hover:text-blue-900 transition text-2xl"
+              onClick={() => swiperRef.current?.swiper.slideNext()}
+            >
+              &gt;
+            </button>
           </div>
         </div>
 
-        {/* Swiper Carousel */}
-        <Swiper
-          ref={swiperRef}
-          modules={[Navigation, EffectFade]}
-          navigation={{ nextEl: ".swiper-button-next" }}
-          effect="fade"
-          loop
-          spaceBetween={0}
-          slidesPerView={1}
-          className="relative swiper-fix"
-        >
-          {newsData.map((news, index) => (
-            <SwiperSlide key={index}>
-              <div className="flex flex-col lg:flex-row items-center lg:items-stretch gap-4 lg:gap-8 w-full">
-                {/* Immagine */}
-                <div className="relative w-full h-[300px] sm:h-[400px] lg:w-1/2 lg:h-[500px] shadow-lg">
-                  <Image
-                    src={news.image}
-                    alt={news.title}
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded"
-                    priority
-                  />
-                </div>
+        {/* Swiper Carousel senza paginazione */}
+        <div className="relative">
+          <Swiper
+            ref={swiperRef}
+            loop={true}
+            spaceBetween={20}
+            slidesPerView={1}
+            className="relative"
+          >
+            {newsData.map((news, index) => (
+              <SwiperSlide key={index}>
+                <div className="flex flex-col lg:flex-row items-center gap-6 w-full">
+                  {/* Immagine */}
+                  <div className="relative w-full lg:w-1/2 h-[350px] sm:h-[450px] lg:h-[500px] overflow-hidden shadow-lg">
+                    <Image
+                      src={news.image}
+                      alt={news.title}
+                      layout="fill"
+                      objectFit="cover"
+                      className="transition-transform duration-500 hover:scale-105"
+                      priority
+                    />
+                  </div>
 
-                {/* Testo */}
-                <div className="w-full lg:w-1/2 flex flex-col justify-center px-4 sm:px-8 py-4 bg-white">
-                  <p className="text-gray-500 text-sm sm:text-lg mb-2">{news.date}</p>
-                  <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold text-blue-900 mb-4">
-                    {news.title}
-                  </h2>
-                  <p className="text-gray-700 text-sm sm:text-lg mb-6">
-                    {news.description}
-                  </p>
-                  <a href={news.link} target="_blank" rel="noopener noreferrer">
-                    <button className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 sm:px-8 sm:py-3 rounded transition">
-                      Leggi tutto
-                    </button>
-                  </a>
+                  {/* Testo */}
+                  <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 py-4">
+                    <p className="text-gray-500 text-sm mb-2">{news.date}</p>
+                    <h2 className="text-3xl font-bold text-blue-900 mb-4">{news.title}</h2>
+                    <p className="text-gray-700 text-lg mb-6">{news.description}</p>
+                    <a href={news.link} target="_blank" rel="noopener noreferrer">
+                      <button className="bg-blue-700 hover:bg-blue-900 text-white px-6 py-3 rounded-none transition shadow-md">
+                        Leggi tutto
+                      </button>
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+
+        {/* Link per tutte le notizie */}
+        <div className="text-right mt-6">
+          <a href="/notizie" className="text-blue-700 hover:text-blue-900 transition text-sm font-medium">
+            TUTTE LE NOTIZIE &gt;
+          </a>
+        </div>
       </div>
-
-      <style jsx>{`
-        /* Pulsante di Navigazione */
-        .swiper-button-next {
-          width: 40px;
-          height: 40px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 24px;
-          color: #1e3a8a;
-          cursor: pointer;
-          transition: color 0.3s ease;
-        }
-
-        .swiper-button-next:hover {
-          color: #003366;
-        }
-
-        .swiper-button-next::after {
-          content: "";
-        }
-
-        /* Slide */
-        .swiper-fix .swiper-slide {
-          position: relative;
-          opacity: 1;
-          pointer-events: auto;
-          width: 100%;
-          height: auto;
-          display: flex;
-          align-items: stretch;
-          justify-content: center;
-        }
-
-        .swiper-fix .swiper-slide-active {
-          position: relative;
-        }
-
-        /* Specifico per Mobile */
-        @media (max-width: 768px) {
-          .swiper-slide {
-            flex-direction: column; /* Disposizione verticale */
-            align-items: center; /* Centrare tutto */
-          }
-
-          .swiper-button-next {
-            width: 32px;
-            height: 32px;
-            font-size: 18px;
-            border: 1px solid #1e3a8a;
-            border-radius: 50%;
-            background-color: white;
-          }
-
-          .swiper-button-next:hover {
-            color: #003366;
-          }
-
-          .section-header {
-            flex-direction: column;
-            text-align: center;
-          }
-
-          .text-center {
-            text-align: center !important;
-          }
-        }
-
-        /* Effetto di Ingresso per le Immagini */
-        @keyframes fadeInScale {
-          0% {
-            opacity: 0;
-            transform: scale(0.9);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-
-        .swiper-slide-active .animated-image {
-          animation: fadeInScale 0.5s ease-out;
-        }
-      `}</style>
     </section>
   );
 };
