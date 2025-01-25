@@ -1,15 +1,17 @@
+// components/Header.jsx
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Search, Facebook, Linkedin, Instagram, Youtube, Mail, Rss, Twitter, Menu, X } from 'lucide-react';
-import ScrollableMenu from './ScrollableMenu'; // Importa il menu scorrevole
-import TopHeader from './TopHeader'; // Importa il TopHeader
+import ScrollableMenu from './ScrollableMenu';
+import TopHeader from './TopHeader';
 
 const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(110);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [showMobileMenu, setShowMobileMenu] = useState(false); // Stato per il menu mobile
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const toggleSearch = () => setShowSearch(!showSearch);
   const toggleMobileMenu = () => setShowMobileMenu(!showMobileMenu);
@@ -68,18 +70,16 @@ const Header = () => {
             id="main-header" 
             className={`fixed top-[36px] w-full z-50 transition-all duration-500 shadow-md bg-blue-900 text-white py-5 transform ${
               isTransitioning ? 'opacity-0 -translate-y-10 pointer-events-none' : 'animate-fade-in-down'
-            }`}
+            } hidden md:block`} // Aggiungi hidden md:block
           >
             <div className="container mx-auto flex items-center justify-between px-8">
-              {/* Titolo con più spazio sotto */}
               <div className="flex flex-col">
                 <h1 className="font-semibold text-2xl leading-tight">
                   Fondazione <br /> Castel Capuano
                 </h1>
-                <div className="mt-6 md:mt-10"></div> {/* Qui si aumenta lo spazio solo su desktop */}
+                <div className="mt-6 md:mt-10"></div>
               </div>
 
-              {/* Desktop: Icone Social e Ricerca */}
               <div className="hidden md:flex items-center gap-2">
                 <span className="text-lg">Seguici su:</span>
                 <div className="flex gap-2">
@@ -91,7 +91,6 @@ const Header = () => {
                   <a href="#" className="hover:opacity-80 transition"><Mail size={22} /></a>
                   <a href="#" className="hover:opacity-80 transition"><Rss size={22} /></a>
                 </div>
-                {/* Lente di ingrandimento */}
                 <button 
                   onClick={toggleSearch} 
                   className="w-10 h-10 flex items-center justify-center bg-white rounded-full border-2 border-blue-900 transition hover:bg-gray-200"
@@ -100,7 +99,6 @@ const Header = () => {
                 </button>
               </div>
 
-              {/* Mobile: Pulsante Menu Hamburger */}
               <button 
                 onClick={toggleMobileMenu} 
                 className="md:hidden text-white"
@@ -109,7 +107,6 @@ const Header = () => {
               </button>
             </div>
 
-            {/* Menu principale visibile solo su desktop */}
             <div className="container mx-auto px-8 pb-6 hidden md:flex">
               <nav className="flex space-x-10 text-[18px] font-normal leading-[28px] text-white">
                 {[ 
@@ -132,10 +129,9 @@ const Header = () => {
             </div>
           </header>
 
-          {/* Menu mobile */}
           {showMobileMenu && (
-            <div className="fixed top-[76px] left-0 w-full bg-blue-900 text-white z-50 flex flex-col items-center space-y-4 py-6">
-              {[ 
+            <div className="fixed top-[76px] left-0 w-full bg-blue-900 text-white z-50 flex flex-col items-center space-y-4 py-6 md:hidden">
+              {[
                 { href: "/", label: "Home" },
                 { href: "/notizie", label: "Notizie" },
                 { href: "/eventi", label: "Eventi" },
