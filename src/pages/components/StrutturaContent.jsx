@@ -1,11 +1,6 @@
 import { useState } from "react";
 
 const IndicePagina = () => {
-  // Stato per gestire la visibilità dell'indice laterale su mobile
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("chi-siamo");
-
-  // Definizione delle sezioni con contenuto formattato in JSX
   const sections = [
     {
       id: "chi-siamo",
@@ -92,7 +87,7 @@ const IndicePagina = () => {
             Con la dinastia aragonese, Castel Capuano perse definitivamente il suo carattere militare e continuò ad essere esclusivamente luogo di fasti. Alfonso d’Aragona, divenuto re, volle che le sale del castello fossero abbellite con affreschi commissionati al suo pittore di corte il valenzano Jacomart Baço. Verso la fine del XV secolo, Ferdinando I d’Aragona (1431 ca.-1494) commissionò al fiorentino Giuliano da Majano l’ampliamento delle mura della città inglobandovi anche il castello; fu elevata anche la nuova porta Capuana rivestita dalla elegante decorazione marmorea concepita dallo stesso architetto e completata dallo scultore Giovanni da Nola.
           </p>
           <p className="mb-4">
-            Nel 1535 vi dimorò, seppur per un breve periodo, Carlo V, il quale donò il castello al principe di Sulmona Filippo Lannoy. Nel 1537 il castello fu espropriato dal viceré spagnolo don Pedro de Toledo – il cui stemma campeggia nell’angolo della facciata Nord-Est del castello – che affidò a Ferdinando Manlio i lavori di adattamento del castello a sede dei Tribunali, in cui furono riunite la Gran Corte della Vicaria, divisa in quattro ruote, due civili e due criminali; il Sacro Regio Consiglio che esaminava le principali cause civili del Regno ed in ultimo appello le sentenze civili e criminali; la Regia Camera della Sommaria, che aveva competenza finanziaria e fiscale; il Tribunale della Zecca, addetto all’emanazione del bollo delle unità di misura; il Tribunale della Bagliva, che trattava le cause dei danni di minor rilievo. I sotterranei del castello furono adibiti a prigioni.
+            Nel 1535 vi dimorò, seppur per un breve periodo, Carlo V, il quale donò il castello al principe di Sulmona Filippo Lannoy. Nel 1537 il castello fu espropriato dal vicerè spagnolo don Pedro de Toledo – il cui stemma campeggia nell’angolo della facciata Nord-Est del castello – che affidò a Ferdinando Manlio i lavori di adattamento del castello a sede dei Tribunali, in cui furono riunite la Gran Corte della Vicaria, divisa in quattro ruote, due civili e due criminali; il Sacro Regio Consiglio che esaminava le principali cause civili del Regno ed in ultimo appello le sentenze civili e criminali; la Regia Camera della Sommaria, che aveva competenza finanziaria e fiscale; il Tribunale della Zecca, addetto all’emanazione del bollo delle unità di misura; il Tribunale della Bagliva, che trattava le cause dei danni di minor rilievo. I sotterranei del castello furono adibiti a prigioni.
           </p>
           <p className="mb-4">
             All’inizio del XVIII secolo, durante la congiura di Macchia, il castello fu assediato e devastato dal popolo, e così iniziò un periodo di decadenza per l’edificio. Sarà Carlo di Borbone a provvedere alla sua ristrutturazione. I successivi interventi di restauro, culminati con quello eseguito dall’architetto Giovanni Riegler dal 1858 al 1861, se da una parte hanno contribuito a portare alla luce antichi resti di epoca greco-romana, dall’altro hanno alterato l’originario aspetto del castello. Tuttavia ancora oggi nel castello è possibile leggere l’evoluzione storico-artistica che lo ha visto protagonista nei secoli.
@@ -101,7 +96,36 @@ const IndicePagina = () => {
             Emblematica in tal senso è la famosa Sala dei Busti, al secondo piano di Castel Capuano, che trae tale appellativo dalla presenza di una serie di sculture in marmo a mezzo busto, collocate lungo l’intero perimetro della sala, che celebrano i principali avvocati del foro napoletano. L’ampio salone fu decorato su tre lati intorno al 1770 con affreschi di Antonio Cacciapuoti (attivo dal 1747 al 1770) raffiguranti le Personificazioni delle dodici Province del Regno di Napoli entro Architetture prospettiche opera di Francesco De Ritis e Vincenzo Bruno detto l’Abate. A partire dalla porta d’ingresso si succedono le dodici allegorie personificate da figure femminili, le quali sono rappresentate con simboli di ciascuna provincia e ognuna con il nome di riferimento (es. la Campania ha il capo adornato da una corona di fiori e da fasci di grano, tralci di uva e frutta e ai cui piedi è visibile sul suo scudo sono le cornucopie, simbolo dell’abbondanza). Tali Allegorie si stagliano in una monumentale architettura prospettica costituita da colonne di ordine composito intramezzate da finte finestre strombate con festoni, cartocci e piedistalli. Le prospettive architettoniche continuano negli affreschi ottocenteschi risalenti al restauro del Rigler, dove in una balaustra dipinta da Ignazio Perricci (1834-19??) è l’Allegoria della Giustizia che trionfa sui Vizi opera di Biagio Molinaro (1825-1868). Dal Salone dei Busti si accede alla Cappella della Sommaria, che è uno dei pochi luoghi rimasti integri nell’edificio di estrema ricchezza decorativa.
           </p>
           <p className="mb-4">
-            La cappella, destinata a luogo di preghiera dei Presidenti della Sommaria prima di decidere sulle condanne da applicare ai sudditi, fu interamente decorata alla metà del Cinquecento da stucchi di raffinati artisti e da affreschi con Storie di Cristo e il Giudizio Universale realizzati da Pedro Rubiales detto Roviale Spagnolo[figg.1,2,3]. Quasi per una sorta di horror vacui, il Roviale tese a riempire tutti gli spazi restanti vuoti della volta con figure di Virtù e grottesche. In epoca imprecisata gli affreschi furono ricoperti con calce e pertanto non furono citati dagli autori delle guide napoletane tra XVII e XIX secolo. La riscoperta di questo straordinario ciclo avvenne verso 1860, quando l’intero castello fu oggetto di un più ampio restauro. Sono ancora da segnalare le volte di due sale del tribunale civile dipinte da Belisario Corenzio [fig.4],che meritano un attento recupero.
+            La cappella, destinata a luogo di preghiera dei Presidenti della Sommaria prima di decidere sulle condanne da applicare ai sudditi, fu interamente decorata alla metà del Cinquecento da stucchi di raffinati artisti e da affreschi con Storie di Cristo e il Giudizio Universale realizzati da Pedro Rubiales detto Roviale Spagnolo[figg.1,2,3]. Quasi per una sorta di horror vacui, il Roviale tese a riempire tutti gli spazi restanti vuoti della volta con figure di Virtù e grottesche. In epoca imprecisata gli affreschi furono ricoperti con calce e pertanto non furono citati dagli autori delle guide napoletane tra XVII e XIX secolo. La riscoperta di questo straordinario ciclo avvenne verso 1860, quando l’intero castello fu oggetto di un più ampio restauro. Sono ancora da segnalare le volte di due sale del tribunale civile dipinte da Belisario Corenzio [fig.4], che meritano un attento recupero.
+          </p>
+          <p className="mb-4">
+            Nella prima sala è Il giudizio di Salomone nel riquadro centrale della volta a padiglione, mentre nei pennacchi e nelle lunette sottostanti sono dipinte, entro grottesche, cinque allegorie di Virtù e vari stemmi tra i quali quello della casa di Spagna. Due pilastri mettono in comunicazione questa sala con la seconda, che presenta decorazioni molto simili. Nel riquadro centrale della volta a padiglione è la scena del Giudizio di Davide, mentre nei cinque pennacchi sono raffigurate altrettante Virtù entro riquadrature con finti fondali a mosaici dorati. Dal Salone dei Busti si accede alla splendida biblioteca di Castel Capuano intitolata ad Alfredo De Marsico; nell’attiguo salone sono custoditi preziosi incunaboli.
+          </p>
+          <p className="mb-4">(D.C.)</p>
+          <h4 className="text-lg font-semibold mb-2">Opere d’Arte nelle Sale della Corte d’Appello di Castel Capuano</h4>
+          <p className="mb-4">
+            Castel Capuano Nove secoli di storia (Clelia Abate, Daniela Castaldi)
+          </p>
+          <p className="mb-4">
+            Il castello, uno dei più antichi della città di Napoli, fu fondato secondo la tradizione dal re di Sicilia Guglielmo I il Malo (1120-1166), figlio di Ruggero il Normanno, e ultimato nel 1154, ma con ogni probabilità già in epoca greco-romana doveva esistere una struttura fortificata nei pressi della porta a quel tempo già detta “Capuana”. Collocato extra moenia in un punto nevralgico di controllo delle comunicazioni con l’entroterra, Castel Capuano assolveva – essenzialmente – a ruolo di difesa, anche se intorno al 1220, Federico II di Svevia volle adattarlo a sua dimora ampliandolo, mantenendone comunque inalterate le originarie caratteristiche di fortezza.
+          </p>
+          <p className="mb-4">
+            Con l’avvento degli Angioini, il castello fu ulteriormente ingrandito, tuttavia i nuovi sovrani non lo scelsero come loro unica dimora e avviarono nel 1279 la costruzione di Castel Nuovo. Castel Capuano, ormai non più sede reale, ospitò principi, alti dignitari, personaggi illustri – come ad esempio Francesco Petrarca – e divenne luogo deputato a feste e celebrazioni importanti come il matrimonio di Carlo III di Durazzo. Il castello fu molto amato dalla regina Giovanna I d’Angio che si circondò di una splendida corte e vi istituì un’Accademia detta Giuochi floreali.
+          </p>
+          <p className="mb-4">
+            Con la dinastia aragonese, Castel Capuano perse definitivamente il suo carattere militare e continuò ad essere esclusivamente luogo di fasti. Alfonso d’Aragona, divenuto re, volle che le sale del castello fossero abbellite con affreschi commissionati al suo pittore di corte il valenzano Jacomart Baço. Verso la fine del XV secolo, Ferdinando I d’Aragona (1431 ca.-1494) commissionò al fiorentino Giuliano da Majano l’ampliamento delle mura della città inglobandovi anche il castello; fu elevata anche la nuova porta Capuana rivestita dalla elegante decorazione marmorea concepita dallo stesso architetto e completata dallo scultore Giovanni da Nola.
+          </p>
+          <p className="mb-4">
+            Nel 1535 vi dimorò, seppur per un breve periodo, Carlo V, il quale donò il castello al principe di Sulmona Filippo Lannoy. Nel 1537 il castello fu espropriato dal vicerè spagnolo don Pedro de Toledo – il cui stemma campeggia nell’angolo della facciata Nord-Est del castello – che affidò a Ferdinando Manlio i lavori di adattamento del castello a sede dei Tribunali, in cui furono riunite la Gran Corte della Vicaria, divisa in quattro ruote, due civili e due criminali; il Sacro Regio Consiglio che esaminava le principali cause civili del Regno ed in ultimo appello le sentenze civili e criminali; la Regia Camera della Sommaria, che aveva competenza finanziaria e fiscale; il Tribunale della Zecca, addetto all’emanazione del bollo delle unità di misura; il Tribunale della Bagliva, che trattava le cause dei danni di minor rilievo. I sotterranei del castello furono adibiti a prigioni.
+          </p>
+          <p className="mb-4">
+            All’inizio del XVIII secolo, durante la congiura di Macchia, il castello fu assediato e devastato dal popolo, e così iniziò un periodo di decadenza per l’edificio. Sarà Carlo di Borbone a provvedere alla sua ristrutturazione. I successivi interventi di restauro, culminati con quello eseguito dall’architetto Giovanni Riegler dal 1858 al 1861, se da una parte hanno contribuito a portare alla luce antichi resti di epoca greco-romana, dall’altro hanno alterato l’originario aspetto del castello. Tuttavia ancora oggi nel castello è possibile leggere l’evoluzione storico-artistica che lo ha visto protagonista nei secoli.
+          </p>
+          <p className="mb-4">
+            Emblematica in tal senso è la famosa Sala dei Busti, al secondo piano di Castel Capuano, che trae tale appellativo dalla presenza di una serie di sculture in marmo a mezzo busto, collocate lungo l’intero perimetro della sala, che celebrano i principali avvocati del foro napoletano. L’ampio salone fu decorato su tre lati intorno al 1770 con affreschi di Antonio Cacciapuoti (attivo dal 1747 al 1770) raffiguranti le Personificazioni delle dodici Province del Regno di Napoli entro Architetture prospettiche opera di Francesco De Ritis e Vincenzo Bruno detto l’Abate. A partire dalla porta d’ingresso si succedono le dodici allegorie personificate da figure femminili, le quali sono rappresentate con simboli di ciascuna provincia e ognuna con il nome di riferimento (es. la Campania ha il capo adornato da una corona di fiori e da fasci di grano, tralci di uva e frutta e ai cui piedi è visibile sul suo scudo sono le cornucopie, simbolo dell’abbondanza). Tali Allegorie si stagliano in una monumentale architettura prospettica costituita da colonne di ordine composito intramezzate da finte finestre strombate con festoni, cartocci e piedistalli. Le prospettive architettoniche continuano negli affreschi ottocenteschi risalenti al restauro del Rigler, dove in una balaustra dipinta da Ignazio Perricci (1834-19??) è l’Allegoria della Giustizia che trionfa sui Vizi opera di Biagio Molinaro (1825-1868). Dal Salone dei Busti si accede alla Cappella della Sommaria, che è uno dei pochi luoghi rimasti integri nell’edificio di estrema ricchezza decorativa.
+          </p>
+          <p className="mb-4">
+            La cappella, destinata a luogo di preghiera dei Presidenti della Sommaria prima di decidere sulle condanne da applicare ai sudditi, fu interamente decorata alla metà del Cinquecento da stucchi di raffinati artisti e da affreschi con Storie di Cristo e il Giudizio Universale realizzati da Pedro Rubiales detto Roviale Spagnolo[figg.1,2,3]. Quasi per una sorta di horror vacui, il Roviale tese a riempire tutti gli spazi restanti vuoti della volta con figure di Virtù e grottesche. In epoca imprecisata gli affreschi furono ricoperti con calce e pertanto non furono citati dagli autori delle guide napoletane tra XVII e XIX secolo. La riscoperta di questo straordinario ciclo avvenne verso 1860, quando l’intero castello fu oggetto di un più ampio restauro. Sono ancora da segnalare le volte di due sale del tribunale civile dipinte da Belisario Corenzio [fig.4], che meritano un attento recupero.
           </p>
           <p className="mb-4">
             Nella prima sala è Il giudizio di Salomone nel riquadro centrale della volta a padiglione, mentre nei pennacchi e nelle lunette sottostanti sono dipinte, entro grottesche, cinque allegorie di Virtù e vari stemmi tra i quali quello della casa di Spagna. Due pilastri mettono in comunicazione questa sala con la seconda, che presenta decorazioni molto simili. Nel riquadro centrale della volta a padiglione è la scena del Giudizio di Davide, mentre nei cinque pennacchi sono raffigurate altrettante Virtù entro riquadrature con finti fondali a mosaici dorati. Dal Salone dei Busti si accede alla splendida biblioteca di Castel Capuano intitolata ad Alfredo De Marsico; nell’attiguo salone sono custoditi preziosi incunaboli.
@@ -193,7 +217,7 @@ const IndicePagina = () => {
           </p>
           <h4 className="text-lg font-semibold mb-2">ARTICOLO 3</h4>
           <p className="mb-4">
-            <strong>SCOPO.</strong> Scopo della Fondazione “CASTEL CAPUANO” – fermo rimanendo il mantenimento della antica sede alla funzione di giustizia – è quello di assicurare, nel rispetto delle caratteristiche del Monumento, una destinazione che ne esalti la tradizione giuridico-forense nonché la sua storica vocazione a luogo di studi e dibattiti giuridici, non solo della Città di Napoli, ma di tutta la Nazione e nel contesto dell’Unione Europea, nonché alla creazione in tale sede di un polo di alta formazione giuridica e professionale destinato, tra l’altro, alla formazione post-universitaria per le professioni forensi e notarili, alla formazione dei magistrati, alla formazione decentrata del personale amministrativo, con peculiare riferimento all’informatica giuridica ed e-justice (processo telematico, digitalizzazione e servizi connessi), alla formazione degli organismi di mediazione e conciliazione, anche con riferimento alle normative e prospettive dell’Unione Europea. A tal fine, scopo della Fondazione è altresì quello di provvedere al recupero conservativo e alla manutenzione straordinaria di Castel Capuano, relativamente agli spazi che verranno assegnati alla Fondazione stessa per il conseguimento delle finalità, tra cui vi è anche la valorizzazione del Centro storico di Napoli.
+            <strong>SCOPO.</strong> Scopo della Fondazione “CASTEL CAPUANO” – fermo rimanendo il mantenimento della antica sede alla funzione di giustizia – è quello di assicurare, nel rispetto delle caratteristiche del Monumento, una destinazione che ne esalti la tradizione giuridico-forense nonché la sua storica vocazione a luogo di studi e dibattiti giuridici, non solo della Città di Napoli, ma di tutta la Nazione e nel contesto dell’Unione Europea, nonché alla creazione in tale sede di un polo di alta formazione giuridica e professionale destinato, tra l’altro, alla formazione post-universitaria per le professioni forensi e notarili, alla formazione dei magistrati, alla formazione decentrata del personale amministrativo, con peculiare riferimento all’informatica giuridica ed e-justice (processo telematico, digitalizzazione e servizi connessi), alla formazione degli organismi di mediazione e conciliazione, anche con riferimento alle normative e prospettive dell’Unione Europea, conservando comunque Castel Capuano nell’ambito della Giustizia. A tal fine, scopo della Fondazione è altresì quello di provvedere al recupero conservativo e alla manutenzione straordinaria di Castel Capuano, relativamente agli spazi che verranno assegnati alla Fondazione stessa per il conseguimento delle finalità, tra cui vi è anche la valorizzazione del Centro storico di Napoli.
           </p>
           <p className="mb-4">
             La Fondazione, per una migliore, produttiva ed economica realizzazione di tali finalità, per consentire un positivo recupero delle attività sociali, economiche e commerciali del Centro storico può avvalersi di specifiche convenzioni con privati, persone fisiche e giuridiche ed enti di qualsivoglia natura, per la gestione di singole attività strumentali espressamente deliberate dal Consiglio di Amministrazione.
@@ -412,171 +436,49 @@ const IndicePagina = () => {
         </>
       ),
     },
- 
-    {
-      id: "amministrazione-trasparente",
-      title: "Amministrazione Trasparente",
-      content: (
-        <>
-          <p className="mb-4">
-            Ai sensi e per gli effetti di quanto previsto dalla Legge 124 del 4 agosto 2017 (art. 1 commi 125-129) il nostro Ente è stato beneficiario in totale di euro 14.494, l’importo è così composto:
-          </p>
-          <ul className="list-disc list-inside ml-4 mb-4">
-            <li>euro 5.634,00 a titolo di contributi 5*1000 incassati in data 30/07/2020</li>
-            <li>euro 3.860,00 a titolo di contributi 5*1000 incassati in data 06/10/2020</li>
-            <li>euro 5.000,00 contributo Regione Campania incassato in data 24/09/2020</li>
-            <li>euro 11.159,00 contributo Regione Campania incassato in data 24/02/2022</li>
-          </ul>
-          <p className="mb-4">
-            In questa sezione il decreto di nomina del Presidente della Fondazione Castel Capuano, i bilanci e i verbali.
-          </p>
-          <ul className="list-disc list-inside ml-4">
-            <li>Decreto nomina Presidente Aldo De Chiara</li>
-            <li>Verbale CdA 3/3/22</li>
-            <li>Verbale esecutivo 3/3/22</li>
-            <li>Nota integrativa 31/12/21</li>
-            <li>Bilancio al 31/12/21</li>
-            <li>Verbale comitato 30/4/21</li>
-            <li>Verbale CdA 30/4/21</li>
-            <li>Nota integrativa 31/12/20</li>
-            <li>Bilancio al 31/12/20</li>
-            <li>Verbale CdA di approvazione del bilancio 2018 del 30/4/19</li>
-            <li>Verbale CdA approvazione bilancio 2017 del 27/3/18</li>
-            <li>Nota integrativa 31/12/16</li>
-            <li>Nota integrativa 31/12/17</li>
-            <li>Nota integrativa 31/12/18</li>
-            <li>Bilancio consuntivo 31/12/18</li>
-            <li>Bilancio consuntivo al 31/12/17</li>
-            <li>Bilancio consuntivo 31/12/16</li>
-            <li>Verbale CdA 15072020</li>
-            <li>Nota integrativa 31/12/19</li>
-            <li>Bilancio al 31/12/19</li>
-          </ul>
-        </>
-      ),
-    }
-    
- 
- 
   ];
 
+  const [activeSection, setActiveSection] = useState(sections[0].id);
+
   return (
-    <div className="container mx-auto py-8 px-4 sm:px-6 bg-white lg:bg-transparent">
-      {/* Header per Mobile */}
-      <div className="flex justify-between items-center lg:hidden mb-4">
-        <h3 className="text-lg font-bold text-gray-700">Indice della Pagina</h3>
-        <button
-          onClick={() => setIsSidebarOpen(true)}
-          className="text-blue-700 focus:outline-none"
-          aria-label="Apri Indice"
-        >
-          {/* Icona hamburger */}
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-
-      <div className="flex flex-col lg:flex-row">
-        {/* Indice Laterale */}
-        {/* Sidebar mobile */}
-        {isSidebarOpen && (
-          <>
-            <div
-              className="fixed inset-0 z-30 bg-black bg-opacity-50 lg:hidden"
-              onClick={() => setIsSidebarOpen(false)}
-              aria-hidden="true"
-            ></div>
-            <aside
-              className="fixed inset-y-0 left-0 z-40 w-64 bg-white p-4 overflow-y-auto shadow-lg lg:hidden"
-              aria-label="Indice della Pagina"
+    <div className="container mx-auto py-8 flex flex-col lg:flex-row px-4 sm:px-6 bg-white lg:bg-transparent">
+      {/* Indice Laterale */}
+      <aside className="lg:w-1/4 lg:pr-8 border-r border-gray-300 mb-6 lg:mb-0">
+        <h3 className="text-sm font-bold text-gray-700 uppercase mb-4">
+          Indice della Pagina
+        </h3>
+        <ul className="space-y-2">
+          {sections.map((section) => (
+            <li
+              key={section.id}
+              className={`cursor-pointer transition duration-300 ${
+                activeSection === section.id
+                  ? "text-blue-900 font-bold"
+                  : "text-gray-500 hover:text-blue-700"
+              }`}
+              onClick={() => setActiveSection(section.id)}
             >
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-gray-700">Indice della Pagina</h3>
-                <button
-                  onClick={() => setIsSidebarOpen(false)}
-                  className="text-blue-700 focus:outline-none"
-                  aria-label="Chiudi Indice"
-                >
-                  {/* Icona X */}
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              <ul className="space-y-2">
-                {sections.map((section) => (
-                  <li
-                    key={section.id}
-                    className={`cursor-pointer transition duration-300 ${
-                      activeSection === section.id
-                        ? "text-blue-900 font-bold"
-                        : "text-gray-500 hover:text-blue-700"
-                    }`}
-                    onClick={() => {
-                      setActiveSection(section.id);
-                      setIsSidebarOpen(false);
-                      document.getElementById(section.id)?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                  >
-                    {section.title}
-                  </li>
-                ))}
-              </ul>
-            </aside>
-          </>
-        )}
+              {section.title}
+            </li>
+          ))}
+        </ul>
+      </aside>
 
-        {/* Sidebar desktop */}
-        <aside className="hidden lg:block lg:w-1/4 lg:pr-8 border-r border-gray-300">
-          <h3 className="text-sm font-bold text-gray-700 uppercase mb-4">
-            Indice della Pagina
-          </h3>
-          <ul className="space-y-2">
-            {sections.map((section) => (
-              <li
-                key={section.id}
-                className={`cursor-pointer transition duration-300 ${
-                  activeSection === section.id
-                    ? "text-blue-900 font-bold"
-                    : "text-gray-500 hover:text-blue-700"
-                }`}
-                onClick={() => setActiveSection(section.id)}
-              >
-                {section.title}
-              </li>
-            ))}
-          </ul>
-        </aside>
-
-        {/* Contenuto Centrale */}
-        <div className="lg:w-3/4 lg:pl-8">
-          {sections.map(
-            (section) =>
-              activeSection === section.id && (
-                <div key={section.id} id={section.id} className="mb-8">
-                  <h2 className="text-3xl font-bold text-blue-900 mb-4">
-                    {section.title}
-                  </h2>
-                  <div className="text-gray-700 leading-relaxed">
-                    {section.content}
-                  </div>
+      {/* Contenuto Centrale */}
+      <div className="lg:w-3/4 lg:pl-8">
+        {sections.map(
+          (section) =>
+            activeSection === section.id && (
+              <div key={section.id}>
+                <h2 className="text-3xl font-bold text-blue-900 mb-4">
+                  {section.title}
+                </h2>
+                <div className="text-gray-700 leading-relaxed">
+                  {section.content}
                 </div>
-              )
-          )}
-        </div>
+              </div>
+            )
+        )}
       </div>
     </div>
   );
