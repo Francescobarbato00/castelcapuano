@@ -1,181 +1,149 @@
-import { useState } from 'react';
-import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { Search, Facebook, Linkedin, Instagram, Youtube, Mail, Rss, Twitter } from 'lucide-react';
+import ScrollableMenu from './ScrollableMenu'; // Importa il menu scorrevole
+import TopHeader from './TopHeader'; // Importa il TopHeader
 
 const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(110);
+  const [fadeIn, setFadeIn] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false); // Nuovo stato per evitare il bug
 
-  const toggleSearch = () => {
-    setShowSearch(!showSearch);
-  };
+  const toggleSearch = () => setShowSearch(!showSearch);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  useEffect(() => {
+    const header = document.getElementById("main-header");
+    if (header) {
+      setHeaderHeight(header.offsetHeight);
+    }
+
+    const handleScroll = () => {
+      if (window.scrollY > 50 && !isScrolled) {
+        setIsTransitioning(true); // Attiva la transizione
+        setTimeout(() => {
+          setIsScrolled(true);
+          setIsTransitioning(false);
+        }, 100); // Piccolo delay per evitare il flickering
+      } else if (window.scrollY <= 50 && isScrolled) {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isScrolled]);
 
   return (
     <>
-      <header className="bg-white shadow-md sticky top-0 z-50">
-        <div className="container mx-auto flex items-center justify-between p-4">
-          {/* Logo a sinistra */}
-          <div className="flex-shrink-0">
-            <Link href="/" passHref>
-              <div className="cursor-pointer hover:scale-110 transition-transform duration-300">
-                <Image src="/header.png" alt="Logo" width={250} height={80} />
-              </div>
-            </Link>
-          </div>
+      {/* Mostra il TopHeader sopra il menu */}
+      <TopHeader />
 
-          {/* Menu Hamburger per Mobile */}
-          <div className="lg:hidden">
-            <button
-              onClick={toggleMenu}
-              className="text-gray-700 hover:text-blue-900 transition duration-300"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-8 h-8"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-          </div>
-
-          {/* Menu Desktop */}
-          <nav className="hidden lg:flex space-x-6">
-            <a href="/" className="text-gray-700 hover:text-blue-900 transition duration-300">
-              Home
-            </a>
-            <a href="/notizie" className="text-gray-700 hover:text-blue-900 transition duration-300">
-              Notizie
-            </a>
-            <a href="/eventi" className="text-gray-700 hover:text-blue-900 transition duration-300">
-              Eventi
-            </a>
-            <a href="/documenti" className="text-gray-700 hover:text-blue-900 transition duration-300">
-              Documenti
-            </a>
-            <a href="/organi" className="text-gray-700 hover:text-blue-900 transition duration-300">
-              Organi
-            </a>
-            <a href="/struttura" className="text-gray-700 hover:text-blue-900 transition duration-300">
-              Struttura
-            </a>
-          </nav>
-
-          {/* Icona Ricerca */}
-          <div>
-            <button
-              onClick={toggleSearch}
-              className="text-gray-600 hover:text-blue-900 transition duration-300"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-8 h-8"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-4.35-4.35m1.8-5.15a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Menu Mobile a Schermo Intero */}
-      {menuOpen && (
-        <div className="lg:hidden fixed inset-0 bg-white z-50 flex flex-col items-center justify-center animate-slide-down">
-          <button
-            onClick={toggleMenu}
-            className="absolute top-6 right-6 text-gray-700 text-3xl hover:text-blue-900"
-          >
-            &times;
-          </button>
-          <nav className="flex flex-col space-y-6 text-2xl text-center">
-            <a href="/" className="text-gray-700 hover:text-blue-900 transition duration-300">
-              Home
-            </a>
-            <a href="/notizie" className="text-gray-700 hover:text-blue-900 transition duration-300">
-              Notizie
-            </a>
-            <a href="/eventi" className="text-gray-700 hover:text-blue-900 transition duration-300">
-              Eventi
-            </a>
-            <a href="/documenti" className="text-gray-700 hover:text-blue-900 transition duration-300">
-              Documenti
-            </a>
-            <a href="/organi" className="text-gray-700 hover:text-blue-900 transition duration-300">
-              Organi
-            </a>
-            <a href="/struttura" className="text-gray-700 hover:text-blue-900 transition duration-300">
-              Struttura
-            </a>
-          </nav>
-        </div>
-      )}
-
-      {/* Barra di Ricerca Fullscreen */}
+      {/* Barra di Ricerca Fullscreen che copre tutto */}
       {showSearch && (
-        <div className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center animate-fade-in">
-          {/* Pulsante Chiudi */}
-          <button
-            onClick={toggleSearch}
-            className="absolute top-6 right-6 text-gray-700 text-3xl hover:text-gray-900"
+        <div className="fixed inset-0 bg-white z-[100] flex flex-col items-center justify-center animate-fade-in">
+          <button 
+            onClick={toggleSearch} 
+            className="absolute top-6 right-6 text-gray-700 text-3xl transition hover:text-gray-900"
           >
             &times;
           </button>
-          {/* Titolo */}
-          <h2 className="text-5xl font-bold text-gray-800 mb-8">Cerca nel sito</h2>
-          {/* Barra di Ricerca */}
-          <input
-            type="text"
-            placeholder="Cerca..."
-            className="w-3/4 md:w-1/2 px-6 py-3 border border-gray-300 rounded-full text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          <h2 className="text-4xl font-bold text-gray-800 mb-6">Cerca nel sito</h2>
+          <input 
+            type="text" 
+            placeholder="Cerca..." 
+            className="w-3/4 md:w-1/2 px-6 py-3 border border-gray-300 rounded-full text-lg focus:outline-none focus:ring-2 focus:ring-blue-500" 
           />
-          <button className="mt-6 bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition duration-300">
+          <button className="mt-6 bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition">
             Cerca
           </button>
         </div>
       )}
 
-      {/* Aggiunta Animazioni */}
+      {/* Spazio placeholder per evitare il salto del contenuto */}
+      <div style={{ height: `${headerHeight}px` }} className={`${showSearch ? "hidden" : ""}`}></div>
+
+      {/* Mostra SOLO il menu scorrevole quando si scorre */}
+      {!showSearch && (isScrolled ? <ScrollableMenu toggleSearch={toggleSearch} /> : (
+        <>
+          {/* Menu originale con animazione fluida */}
+          <header 
+            id="main-header" 
+            className={`fixed top-[36px] w-full z-50 transition-all duration-500 shadow-md bg-blue-900 text-white py-5 transform ${
+              isTransitioning ? 'opacity-0 -translate-y-10 pointer-events-none' : 'animate-fade-in-down'
+            }`}
+          >
+            <div className="container mx-auto flex items-center justify-between px-8">
+              {/* Titolo della Fondazione con più spazio sotto */}
+              <div className="flex flex-col">
+                <h1 className="font-semibold text-2xl leading-tight">
+                  Fondazione <br /> Castel Capuano
+                </h1>
+                <div className="mt-6"></div> {/* Aggiunto spazio tra il titolo e il menu */}
+              </div>
+
+              {/* Icone Social e Ricerca */}
+              <div className="flex items-center gap-2">
+                <span className="text-lg">Seguici su:</span>
+                <div className="flex gap-2">
+                  <a href="#" className="hover:opacity-80 transition"><Facebook size={22} /></a>
+                  <a href="#" className="hover:opacity-80 transition"><Linkedin size={22} /></a>
+                  <a href="#" className="hover:opacity-80 transition"><Twitter size={22} /></a>
+                  <a href="#" className="hover:opacity-80 transition"><Youtube size={22} /></a>
+                  <a href="#" className="hover:opacity-80 transition"><Instagram size={22} /></a>
+                  <a href="#" className="hover:opacity-80 transition"><Mail size={22} /></a>
+                  <a href="#" className="hover:opacity-80 transition"><Rss size={22} /></a>
+                </div>
+                {/* Lente di ingrandimento */}
+                <button 
+                  onClick={toggleSearch} 
+                  className="w-10 h-10 flex items-center justify-center bg-white rounded-full border-2 border-blue-900 transition hover:bg-gray-200"
+                >
+                  <Search size={20} strokeWidth={2} className="text-blue-900" />
+                </button>
+              </div>
+            </div>
+
+            {/* Seconda riga: Menu principale */}
+            <div className="container mx-auto px-8 pb-6">
+              <nav className="flex space-x-10 text-[18px] font-normal leading-[28px] text-white">
+                {[
+                  { href: "/", label: "Home" },
+                  { href: "/notizie", label: "Notizie" },
+                  { href: "/eventi", label: "Eventi" },
+                  { href: "/documenti", label: "Documenti" },
+                  { href: "/organi", label: "Organi" },
+                  { href: "/struttura", label: "Struttura" },
+                ].map((item, index) => (
+                  <a 
+                    key={index} 
+                    href={item.href} 
+                    className="relative pb-2 transition duration-300 hover:text-gray-300 after:block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-white after:transition-all after:duration-300 hover:after:w-full"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+          </header>
+        </>
+      ))}
+
+      {/* Stili di transizione */}
       <style jsx>{`
-        @keyframes slide-down {
-          from {
-            transform: translateY(-100%);
-          }
-          to {
-            transform: translateY(0);
-          }
-        }
-        @keyframes fade-in {
+        @keyframes fade-in-down {
           from {
             opacity: 0;
+            transform: translateY(-20px);
           }
           to {
             opacity: 1;
+            transform: translateY(0);
           }
         }
-        .animate-slide-down {
-          animation: slide-down 0.5s ease-out;
-        }
-        .animate-fade-in {
-          animation: fade-in 0.5s ease-out;
+        .animate-fade-in-down {
+          animation: fade-in-down 0.4s ease-out;
         }
       `}</style>
     </>

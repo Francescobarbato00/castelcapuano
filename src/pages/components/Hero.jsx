@@ -29,19 +29,19 @@ const Hero = () => {
     <section className="bg-white py-12">
       <div className="container mx-auto px-6 relative">
         {/* Header con Titolo e Pulsanti di Navigazione */}
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-4xl font-bold text-blue-900">In evidenza</h2>
+        <div className="flex justify-between items-center mt-12 mb-6">
+          <h2 className="text-[46px] font-bold text-blue-900">In evidenza</h2>
 
           {/* Pulsanti di navigazione in linea al titolo */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
             <button 
-              className="text-blue-700 hover:text-blue-900 transition text-2xl"
+              className="text-blue-700 hover:text-blue-900 transition text-[60px] font-bold"
               onClick={() => swiperRef.current?.swiper.slidePrev()}
             >
               &lt;
             </button>
             <button 
-              className="text-blue-700 hover:text-blue-900 transition text-2xl"
+              className="text-blue-700 hover:text-blue-900 transition text-[60px] font-bold"
               onClick={() => swiperRef.current?.swiper.slideNext()}
             >
               &gt;
@@ -76,8 +76,8 @@ const Hero = () => {
                   {/* Testo */}
                   <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 py-4">
                     <p className="text-gray-500 text-sm mb-2">{news.date}</p>
-                    <h2 className="text-3xl font-bold text-blue-900 mb-4">{news.title}</h2>
-                    <p className="text-gray-700 text-lg mb-6">{news.description}</p>
+                    <h2 className="text-[44px] font-bold text-blue-900 mb-4">{news.title}</h2>
+                    <p className="text-gray-700 text-[21px] leading-[31px] mb-6">{news.description}</p>
                     <a href={news.link} target="_blank" rel="noopener noreferrer">
                       <button className="bg-blue-700 hover:bg-blue-900 text-white px-6 py-3 rounded-none transition shadow-md">
                         Leggi tutto
