@@ -9,7 +9,7 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(110);
   const [fadeIn, setFadeIn] = useState(true);
-  const [isTransitioning, setIsTransitioning] = useState(false); // Nuovo stato per evitare il bug
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const toggleSearch = () => setShowSearch(!showSearch);
 
@@ -21,11 +21,11 @@ const Header = () => {
 
     const handleScroll = () => {
       if (window.scrollY > 50 && !isScrolled) {
-        setIsTransitioning(true); // Attiva la transizione
+        setIsTransitioning(true);
         setTimeout(() => {
           setIsScrolled(true);
           setIsTransitioning(false);
-        }, 100); // Piccolo delay per evitare il flickering
+        }, 100);
       } else if (window.scrollY <= 50 && isScrolled) {
         setIsScrolled(false);
       }
@@ -37,10 +37,8 @@ const Header = () => {
 
   return (
     <>
-      {/* Mostra il TopHeader sopra il menu */}
       <TopHeader />
 
-      {/* Barra di Ricerca Fullscreen che copre tutto */}
       {showSearch && (
         <div className="fixed inset-0 bg-white z-[100] flex flex-col items-center justify-center animate-fade-in">
           <button 
@@ -61,13 +59,10 @@ const Header = () => {
         </div>
       )}
 
-      {/* Spazio placeholder per evitare il salto del contenuto */}
       <div style={{ height: `${headerHeight}px` }} className={`${showSearch ? "hidden" : ""}`}></div>
 
-      {/* Mostra SOLO il menu scorrevole quando si scorre */}
       {!showSearch && (isScrolled ? <ScrollableMenu toggleSearch={toggleSearch} /> : (
         <>
-          {/* Menu originale con animazione fluida */}
           <header 
             id="main-header" 
             className={`fixed top-[36px] w-full z-50 transition-all duration-500 shadow-md bg-blue-900 text-white py-5 transform ${
@@ -75,12 +70,12 @@ const Header = () => {
             }`}
           >
             <div className="container mx-auto flex items-center justify-between px-8">
-              {/* Titolo della Fondazione con più spazio sotto */}
+              {/* Titolo con più spazio sotto */}
               <div className="flex flex-col">
                 <h1 className="font-semibold text-2xl leading-tight">
                   Fondazione <br /> Castel Capuano
                 </h1>
-                <div className="mt-6"></div> {/* Aggiunto spazio tra il titolo e il menu */}
+                <div className="mt-6 md:mt-10"></div> {/* Qui si aumenta lo spazio solo su desktop */}
               </div>
 
               {/* Icone Social e Ricerca */}
@@ -108,7 +103,7 @@ const Header = () => {
             {/* Seconda riga: Menu principale */}
             <div className="container mx-auto px-8 pb-6">
               <nav className="flex space-x-10 text-[18px] font-normal leading-[28px] text-white">
-                {[
+                {[ 
                   { href: "/", label: "Home" },
                   { href: "/notizie", label: "Notizie" },
                   { href: "/eventi", label: "Eventi" },
@@ -130,7 +125,6 @@ const Header = () => {
         </>
       ))}
 
-      {/* Stili di transizione */}
       <style jsx>{`
         @keyframes fade-in-down {
           from {
