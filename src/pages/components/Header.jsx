@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, Facebook, Linkedin, Instagram, Youtube, Mail, Rss, Twitter } from 'lucide-react';
+import { Search, Facebook, Linkedin, Instagram, Youtube, Mail, Rss, Twitter, Menu, X } from 'lucide-react';
 import ScrollableMenu from './ScrollableMenu'; // Importa il menu scorrevole
 import TopHeader from './TopHeader'; // Importa il TopHeader
 
@@ -8,10 +8,11 @@ const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [headerHeight, setHeaderHeight] = useState(110);
-  const [fadeIn, setFadeIn] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false); // Stato per il menu mobile
 
   const toggleSearch = () => setShowSearch(!showSearch);
+  const toggleMobileMenu = () => setShowMobileMenu(!showMobileMenu);
 
   useEffect(() => {
     const header = document.getElementById("main-header");
@@ -78,8 +79,8 @@ const Header = () => {
                 <div className="mt-6 md:mt-10"></div> {/* Qui si aumenta lo spazio solo su desktop */}
               </div>
 
-              {/* Icone Social e Ricerca */}
-              <div className="flex items-center gap-2">
+              {/* Desktop: Icone Social e Ricerca */}
+              <div className="hidden md:flex items-center gap-2">
                 <span className="text-lg">Seguici su:</span>
                 <div className="flex gap-2">
                   <a href="#" className="hover:opacity-80 transition"><Facebook size={22} /></a>
@@ -98,10 +99,18 @@ const Header = () => {
                   <Search size={20} strokeWidth={2} className="text-blue-900" />
                 </button>
               </div>
+
+              {/* Mobile: Pulsante Menu Hamburger */}
+              <button 
+                onClick={toggleMobileMenu} 
+                className="md:hidden text-white"
+              >
+                {showMobileMenu ? <X size={28} /> : <Menu size={28} />}
+              </button>
             </div>
 
-            {/* Seconda riga: Menu principale */}
-            <div className="container mx-auto px-8 pb-6">
+            {/* Menu principale visibile solo su desktop */}
+            <div className="container mx-auto px-8 pb-6 hidden md:flex">
               <nav className="flex space-x-10 text-[18px] font-normal leading-[28px] text-white">
                 {[ 
                   { href: "/", label: "Home" },
@@ -122,6 +131,24 @@ const Header = () => {
               </nav>
             </div>
           </header>
+
+          {/* Menu mobile */}
+          {showMobileMenu && (
+            <div className="fixed top-[76px] left-0 w-full bg-blue-900 text-white z-50 flex flex-col items-center space-y-4 py-6">
+              {[ 
+                { href: "/", label: "Home" },
+                { href: "/notizie", label: "Notizie" },
+                { href: "/eventi", label: "Eventi" },
+                { href: "/documenti", label: "Documenti" },
+                { href: "/organi", label: "Organi" },
+                { href: "/struttura", label: "Struttura" },
+              ].map((item, index) => (
+                <a key={index} href={item.href} className="text-lg" onClick={toggleMobileMenu}>
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          )}
         </>
       ))}
 
