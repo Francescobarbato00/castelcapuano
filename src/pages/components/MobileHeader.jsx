@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Search, Menu, X } from "lucide-react";
-import ScrollableMenu from "./ScrollableMenu"; // Assicurati che questo componente esista
+import ScrollableMenu from "./ScrollableMenu";
 
 const MobileHeader = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -34,28 +34,26 @@ const MobileHeader = () => {
 
       {/* Header Mobile (Visibile solo quando si è in cima) */}
       {isAtTop && (
-        <header
-          className="fixed top-[36px] left-0 w-full bg-blue-900 text-white z-[90] md:hidden shadow-lg transition-transform duration-200"
-        >
-          <div className="flex items-center justify-between p-4">
+        <header className="fixed top-[36px] left-0 w-full bg-blue-900 text-white z-[90] md:hidden shadow-lg transition-transform duration-200">
+          <div className="flex items-center justify-between px-6 py-3">
             {/* Logo o Titolo */}
-            <h1 className="text-xl font-semibold">Fondazione Castel Capuano</h1>
+            <h1 className="text-lg font-semibold">Fondazione Castel Capuano</h1>
 
-            {/* Icone di Azione */}
-            <div className="flex items-center space-x-4">
+            {/* Icone di Azione con Spaziatura Sistemata */}
+            <div className="flex items-center gap-3">
               <button
                 onClick={toggleSearch}
                 className="focus:outline-none"
                 aria-label="Cerca"
               >
-                <Search size={24} />
+                <Search size={22} />
               </button>
               <button
                 onClick={toggleMobileMenu}
                 className="focus:outline-none"
                 aria-label="Menu"
               >
-                {showMobileMenu ? <X size={24} /> : <Menu size={24} />}
+                {showMobileMenu ? <X size={26} /> : <Menu size={26} />}
               </button>
             </div>
           </div>
@@ -74,19 +72,19 @@ const MobileHeader = () => {
         {/* Pulsante Chiudi in alto a destra */}
         <button
           onClick={toggleMobileMenu}
-          className="absolute top-4 right-6 text-white text-3xl focus:outline-none"
+          className="absolute top-6 right-6 text-white text-3xl focus:outline-none"
           aria-label="Chiudi menu"
         >
-          <X size={32} />
+          <X size={30} />
         </button>
 
-        {/* Titolo centrato più in basso */}
-        <h2 className="absolute top-12 text-3xl font-bold text-center w-full">
+        {/* Titolo con Spaziatura Migliorata */}
+        <h2 className="absolute top-16 text-2xl font-bold text-center w-full">
           Fondazione Castel Capuano
         </h2>
 
         {/* Link del menu con sottolineatura al passaggio */}
-        <nav className="w-full h-full flex flex-col justify-center space-y-8 text-center">
+        <nav className="w-full h-full flex flex-col justify-center space-y-6 text-center">
           {[
             { href: "/", label: "Home" },
             { href: "/notizie", label: "Notizie" },
@@ -98,11 +96,10 @@ const MobileHeader = () => {
             <Link
               key={index}
               href={item.href}
-              className="block w-full py-4 text-2xl font-semibold transition relative"
+              className="block w-full py-3 text-xl font-semibold transition relative hover:underline"
               onClick={toggleMobileMenu}
             >
               {item.label}
-              <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-white transition-all duration-300 hover:w-full"></span>
             </Link>
           ))}
         </nav>
@@ -117,7 +114,7 @@ const MobileHeader = () => {
           >
             &times;
           </button>
-          <h2 className="text-4xl font-bold text-gray-800 mb-6">Cerca nel sito</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-6">Cerca nel sito</h2>
           <input
             type="text"
             placeholder="Cerca..."
@@ -143,26 +140,6 @@ const MobileHeader = () => {
         }
         .animate-fade-in {
           animation: fade-in 0.2s ease-out;
-        }
-        nav a {
-          position: relative;
-          display: inline-block;
-          text-decoration: none;
-        }
-        nav a::after {
-          content: "";
-          position: absolute;
-          left: 50%;
-          bottom: 0;
-          width: 0;
-          height: 2px;
-          background-color: white;
-          transition: all 0.3s ease-in-out;
-        }
-        nav a:hover::after,
-        nav a:focus::after {
-          width: 100%;
-          left: 0;
         }
       `}</style>
     </>
