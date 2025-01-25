@@ -38,14 +38,14 @@ const ScrollableMenu = () => {
 
       {/* MENU MOBILE A TUTTO SCHERMO CON ANIMAZIONE DA SINISTRA */}
       <div
-        className={`fixed inset-0 bg-blue-900 text-white z-[100] flex flex-col justify-center items-center transition-transform duration-300 ${
+        className={`fixed inset-0 bg-white text-blue-900 z-[100] flex flex-col justify-center items-start pl-8 transition-transform duration-300 ${
           showMobileMenu ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Pulsante Chiudi in alto a destra */}
         <button
           onClick={toggleMobileMenu}
-          className="absolute top-6 right-6 text-white text-3xl focus:outline-none"
+          className="absolute top-6 right-6 text-blue-900 text-3xl focus:outline-none"
           aria-label="Chiudi menu"
         >
           <X size={30} />
@@ -57,7 +57,7 @@ const ScrollableMenu = () => {
         </h2>
 
         {/* Link del menu con sottolineatura */}
-        <nav className="w-full h-full flex flex-col justify-center space-y-6 text-center">
+        <nav className="w-full h-full flex flex-col justify-center space-y-6 text-left">
           {[
             { href: "/", label: "Home" },
             { href: "/notizie", label: "Notizie" },
@@ -69,7 +69,7 @@ const ScrollableMenu = () => {
             <a
               key={index}
               href={item.href}
-              className="block w-full py-3 text-xl font-semibold transition relative hover:underline"
+              className="block w-full py-3 text-xl font-semibold text-blue-900 transition relative hover:underline hover:underline-offset-4 hover:decoration-blue-500 active:underline active:underline-offset-4 active:decoration-blue-500"
               onClick={toggleMobileMenu}
             >
               {item.label}
