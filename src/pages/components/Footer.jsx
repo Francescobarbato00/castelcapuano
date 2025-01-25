@@ -61,16 +61,16 @@ const Footer = () => {
                 href="mailto:"
                 className="font-bold text-white hover:underline"
               >
-                redazione@prova.it
+                info@fondazionecastelcapuano.org
               </a>
             </p>
             <p className="mt-2">
-              Segnalazioni sul malfunzionamento del sito:<br />
+              Posta certificata:<br />
               <a
                 href="mailto:"
                 className="font-bold text-white hover:underline"
               >
-                webmaster@prova.it
+                fondazionecastelcapuano@pec.it
               </a>
             </p>
           </div>

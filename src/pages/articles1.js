@@ -7,7 +7,7 @@ import ScrollableMenu from './components/ScrollableMenu';
 
 export default function Articolo1() {
   return (
-    <div>
+    <div className="bg-white">
       <TopHeader />
 
       {/* Header Desktop */}
@@ -16,12 +16,12 @@ export default function Articolo1() {
       </div>
       
       {/* Header Mobile */}
-      <div className="block md:hidden">
+      <div className="block md:hidden bg-white border-b border-gray-300">
         <MobileHeader />
       </div>
 
       {/* Spazio tra header e contenuto principale */}
-      <div className="mt-10 md:mt-16"></div>
+      <div className="mt-10 md:mt-16 bg-white"></div>
 
       {/* Contenuto Articolo */}
       <Article />
