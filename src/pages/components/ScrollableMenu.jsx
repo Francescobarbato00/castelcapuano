@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Menu, X } from 'lucide-react';
+import SearchComponent from './SearchComponent';
 
 const ScrollableMenu = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -36,8 +37,8 @@ const ScrollableMenu = () => {
             </button>
 
             {/* Pulsante Menu per Mobile */}
-            <button 
-              onClick={toggleMobileMenu} 
+            <button
+              onClick={toggleMobileMenu}
               className="md:hidden text-blue-900"
             >
               {showMobileMenu ? <X size={26} strokeWidth={2} /> : <Menu size={26} strokeWidth={2} />}
@@ -89,25 +90,7 @@ const ScrollableMenu = () => {
       </div>
 
       {/* MODALE DI RICERCA */}
-      {showSearch && (
-        <div className="fixed inset-0 bg-white z-[150] flex flex-col items-center justify-center animate-fade-in">
-          <button
-            onClick={toggleSearch}
-            className="absolute top-6 right-6 text-gray-700 text-3xl transition hover:text-gray-900"
-          >
-            &times;
-          </button>
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Cerca nel sito</h2>
-          <input
-            type="text"
-            placeholder="Cerca..."
-            className="w-3/4 md:w-1/2 px-6 py-3 border border-gray-300 rounded-full text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          <button className="mt-6 bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition">
-            Cerca
-          </button>
-        </div>
-      )}
+      {showSearch && <SearchComponent onClose={toggleSearch} />}
 
       {/* Stili per animazione */}
       <style jsx>{`
