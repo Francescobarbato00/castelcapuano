@@ -19,7 +19,6 @@ const ComunicatiAgenda = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 📜 Recupera comunicati stampa
         const comunicatiSnapshot = await getDocs(collection(db, "press_releases"));
         const comunicatiData = comunicatiSnapshot.docs.map(doc => ({
           id: doc.id,
@@ -27,7 +26,6 @@ const ComunicatiAgenda = () => {
           date: dayjs(doc.data().date.toDate()).locale("it").format("DD/MM/YYYY"),
         }));
 
-        // 📅 Recupera eventi dell’agenda
         const agendaSnapshot = await getDocs(collection(db, "agenda_events"));
         const agendaData = agendaSnapshot.docs.map(doc => ({
           id: doc.id,
@@ -44,7 +42,6 @@ const ComunicatiAgenda = () => {
     fetchData();
   }, []);
 
-  // Funzioni per la navigazione tra gli elementi
   const nextComunicati = () => {
     if (comunicatiIndex + ITEMS_PER_PAGE < comunicati.length) {
       setComunicatiIndex(comunicatiIndex + ITEMS_PER_PAGE);
@@ -70,34 +67,33 @@ const ComunicatiAgenda = () => {
   };
 
   return (
-    <section className="bg-white py-12">
+    <section className="bg-white py-12 overflow-hidden">
       <div className="container mx-auto px-4 flex flex-wrap lg:flex-nowrap gap-8">
         
         {/* 📜 Sezione Comunicati Stampa */}
         <div className="w-full lg:w-3/5">
-          <h2 className="text-3xl font-bold text-blue-900 mb-6 uppercase border-b-2 border-gray-300 pb-2">Comunicati Stampa</h2>
+          <h2 className="text-4xl font-extrabold text-blue-900 mb-4 uppercase">Comunicati Stampa</h2>
 
-          <motion.div
-            key={comunicatiIndex}
-            initial={{ opacity: 0, x: 50 }}
+          <motion.div 
+            className="overflow-hidden"
+            initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.5 }}
           >
             {comunicati.slice(comunicatiIndex, comunicatiIndex + ITEMS_PER_PAGE).map((item) => (
               <div 
                 key={item.id} 
                 onClick={() => router.push(`/comunicati/${item.id}`)} 
-                className="cursor-pointer bg-gray-100 shadow-md p-6 mb-4 flex justify-between items-start border border-gray-300 hover:shadow-lg hover:scale-105 transition-all duration-300"
+                className="cursor-pointer bg-gray-50 shadow-md p-6 mb-4 flex justify-between items-start border border-gray-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
               >
                 <div>
                   <p className="text-gray-600 text-sm font-semibold mb-1">
-                    {item.date} • N° {item.number}
+                    {item.date} {item.number}
                   </p>
-                  <h3 className="text-blue-800 font-bold text-lg hover:underline">{item.title}</h3>
+                  <h3 className="text-blue-800 font-bold text-lg">{item.title}</h3>
                   {item.subtitle && <p className="text-gray-600 mt-2 text-sm">{item.subtitle}</p>}
                 </div>
-                <FaFileAlt className="text-gray-500 text-2xl" />
+                <FaFileAlt className="text-gray-400 text-3xl" />
               </div>
             ))}
           </motion.div>
@@ -119,26 +115,27 @@ const ComunicatiAgenda = () => {
 
         {/* 📅 Sezione Agenda */}
         <div className="w-full lg:w-2/5">
-          <h2 className="text-3xl font-bold text-blue-900 mb-6 uppercase border-b-2 border-gray-300 pb-2">Agenda</h2>
+          <h2 className="text-4xl font-extrabold text-blue-900 mb-4 uppercase">Agenda</h2>
 
-          <motion.div
-            key={agendaIndex}
-            initial={{ opacity: 0, x: -50 }}
+          <motion.div 
+            className="overflow-hidden"
+            initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 50 }}
             transition={{ duration: 0.5 }}
           >
             {agenda.slice(agendaIndex, agendaIndex + ITEMS_PER_PAGE).map((event) => (
               <div 
                 key={event.id} 
-                className="flex items-center bg-gray-100 shadow-md mb-4 p-4 border border-gray-300 hover:shadow-lg hover:scale-105 transition-all duration-300"
+                className="flex items-center bg-gray-50 shadow-md mb-4 p-4 border border-gray-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
               >
+                {/* Quadrato Data */}
                 <div className="w-20 h-24 bg-blue-900 text-white flex flex-col justify-center items-center">
                   <p className="text-xs uppercase font-bold">{event.month}</p>
                   <p className="text-3xl font-extrabold">{event.day}</p>
                   <p className="text-xs uppercase font-semibold">{event.weekday}</p>
                 </div>
                 
+                {/* Dettagli Evento */}
                 <div className="ml-4">
                   <p className="text-gray-800 font-semibold text-lg">{event.title}</p>
                   <p className="text-gray-500 text-sm flex items-center gap-2">
