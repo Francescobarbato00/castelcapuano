@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 // Configurazione Firebase con variabili d'ambiente
 const firebaseConfig = {
@@ -12,8 +12,27 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// Inizializza Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export { db };
+const getNews = async () => {
+  const newsCollection = collection(db, "news");
+  const newsSnapshot = await getDocs(newsCollection);
+  
+  const newsData = newsSnapshot.docs.map(doc => {
+    const data = doc.data();
+    
+    // Controlla se "date" è un timestamp e lo converte in stringa
+    if (data.date && data.date.seconds) {
+      const date = new Date(data.date.seconds * 1000); // Converte in millisecondi
+      data.date = date.toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" });
+    }
+
+    return { id: doc.id, ...data };
+  });
+
+  console.log("Dati ricevuti da Firestore:", newsData); // Log per debug
+  return newsData;
+};
+
+export { db, getNews };

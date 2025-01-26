@@ -1,133 +1,167 @@
-import { FaCalendarAlt, FaMapMarkerAlt, FaClock, FaFileAlt } from "react-icons/fa";
+import { FaCalendarAlt, FaMapMarkerAlt, FaClock, FaFileAlt, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { useEffect, useState, useRef } from "react";
+import { db } from "../../lib/firebase"; 
+import { collection, getDocs } from "firebase/firestore";
+import dayjs from "dayjs";
+import "dayjs/locale/it"; 
+import { useRouter } from "next/router";
+import { motion } from "framer-motion"; // Per effetto di scorrimento fluido
 
 const ComunicatiAgenda = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef(null);
+  const [comunicati, setComunicati] = useState([]);
+  const [agenda, setAgenda] = useState([]);
+  const [comunicatiIndex, setComunicatiIndex] = useState(0);
+  const [agendaIndex, setAgendaIndex] = useState(0);
+  const router = useRouter();
+
+  const ITEMS_PER_PAGE = 2; // Mostra solo 2 comunicati e 2 eventi alla volta
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect(); // Stoppa l'osservazione dopo l'attivazione
-        }
-      },
-      { threshold: 0.3 } // Attiva quando il 30% della sezione è visibile
-    );
+    const fetchData = async () => {
+      try {
+        // 📜 Recupera comunicati stampa
+        const comunicatiSnapshot = await getDocs(collection(db, "press_releases"));
+        const comunicatiData = comunicatiSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+          date: dayjs(doc.data().date.toDate()).locale("it").format("DD/MM/YYYY"),
+        }));
 
-    if (sectionRef.current) observer.observe(sectionRef.current);
+        // 📅 Recupera eventi dell’agenda
+        const agendaSnapshot = await getDocs(collection(db, "agenda_events"));
+        const agendaData = agendaSnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
 
-    return () => observer.disconnect();
+        setComunicati(comunicatiData);
+        setAgenda(agendaData);
+      } catch (error) {
+        console.error("Errore nel recupero dei dati:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  const comunicati = [
-    {
-      date: "09/12/2024",
-      number: "N° 140",
-      title: "Comunicato di prova",
-    },
-    {
-      date: "07/12/2024",
-      number: "N° 139",
-      title: "Comunicato di prova",
-      subtitle: "Prova",
-    },
-  ];
+  // Funzioni per la navigazione tra gli elementi
+  const nextComunicati = () => {
+    if (comunicatiIndex + ITEMS_PER_PAGE < comunicati.length) {
+      setComunicatiIndex(comunicatiIndex + ITEMS_PER_PAGE);
+    }
+  };
 
-  const agenda = [
-    {
-      day: "16",
-      month: "DIC",
-      weekday: "MERCOLEDÌ",
-      title: "Concerto di Natale",
-      location: "Castel Capuano",
-      time: "18:00",
-    },
-    {
-      day: "12",
-      month: "DIC",
-      weekday: "GIOVEDÌ",
-      title: "Evento di Prova",
-      location: "NAPOLI",
-      time: "19:00",
-    },
-  ];
+  const prevComunicati = () => {
+    if (comunicatiIndex > 0) {
+      setComunicatiIndex(comunicatiIndex - ITEMS_PER_PAGE);
+    }
+  };
+
+  const nextAgenda = () => {
+    if (agendaIndex + ITEMS_PER_PAGE < agenda.length) {
+      setAgendaIndex(agendaIndex + ITEMS_PER_PAGE);
+    }
+  };
+
+  const prevAgenda = () => {
+    if (agendaIndex > 0) {
+      setAgendaIndex(agendaIndex - ITEMS_PER_PAGE);
+    }
+  };
 
   return (
-    <section ref={sectionRef} className="bg-white py-12">
-      <div
-        className={`container mx-auto px-4 flex flex-wrap lg:flex-nowrap gap-8 ${
-          isVisible ? "lg:animate-fadeInUp" : "opacity-0"
-        }`}
-      >
-        {/* Sezione Comunicati Stampa */}
+    <section className="bg-white py-12">
+      <div className="container mx-auto px-4 flex flex-wrap lg:flex-nowrap gap-8">
+        
+        {/* 📜 Sezione Comunicati Stampa */}
         <div className="w-full lg:w-3/5">
-          <div className="border-b-2 border-gray-300 pb-2 mb-6">
-            <h2 className="text-4xl font-extrabold text-blue-900 mb-4 uppercase">Comunicati stampa</h2>
-            <div className="w-20 h-1 bg-blue-900"></div>
-          </div>
+          <h2 className="text-3xl font-bold text-blue-900 mb-6 uppercase border-b-2 border-gray-300 pb-2">Comunicati Stampa</h2>
 
-          {comunicati.map((item, index) => (
-            <div
-              key={index}
-              className={`bg-gray-50 shadow-md rounded-none p-6 mb-4 flex justify-between items-start border border-gray-300 transition-all duration-1000 ${
-                isVisible ? "lg:animate-slideInLeft" : "opacity-0"
-              } hover:shadow-lg hover:-translate-y-1`}
-            >
-              <div>
-                <p className="text-gray-600 text-sm font-semibold mb-1">
-                  {item.date} {item.number}
-                </p>
-                <h3 className="text-blue-800 font-bold text-lg">{item.title}</h3>
-                {item.subtitle && <p className="text-gray-600 mt-2 text-sm">{item.subtitle}</p>}
+          <motion.div
+            key={comunicatiIndex}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.5 }}
+          >
+            {comunicati.slice(comunicatiIndex, comunicatiIndex + ITEMS_PER_PAGE).map((item) => (
+              <div 
+                key={item.id} 
+                onClick={() => router.push(`/comunicati/${item.id}`)} 
+                className="cursor-pointer bg-gray-100 shadow-md p-6 mb-4 flex justify-between items-start border border-gray-300 hover:shadow-lg hover:scale-105 transition-all duration-300"
+              >
+                <div>
+                  <p className="text-gray-600 text-sm font-semibold mb-1">
+                    {item.date} • N° {item.number}
+                  </p>
+                  <h3 className="text-blue-800 font-bold text-lg hover:underline">{item.title}</h3>
+                  {item.subtitle && <p className="text-gray-600 mt-2 text-sm">{item.subtitle}</p>}
+                </div>
+                <FaFileAlt className="text-gray-500 text-2xl" />
               </div>
-              <FaFileAlt className="text-gray-400 text-3xl" />
-            </div>
-          ))}
+            ))}
+          </motion.div>
 
-          <p className="text-right text-blue-800 font-semibold mt-4 cursor-pointer hover:underline">
-            TUTTI I COMUNICATI &gt;
-          </p>
+          {/* Frecce di navigazione per i comunicati */}
+          <div className="flex justify-between mt-4">
+            {comunicatiIndex > 0 && (
+              <button onClick={prevComunicati} className="text-blue-700 text-lg hover:text-blue-900 flex items-center">
+                <FaArrowLeft className="mr-2" /> Precedenti
+              </button>
+            )}
+            {comunicatiIndex + ITEMS_PER_PAGE < comunicati.length && (
+              <button onClick={nextComunicati} className="text-blue-700 text-lg hover:text-blue-900 flex items-center">
+                Successivi <FaArrowRight className="ml-2" />
+              </button>
+            )}
+          </div>
         </div>
 
-        {/* Divisore verticale */}
-        <div className="hidden lg:block w-1 bg-gray-300"></div>
-
-        {/* Sezione Agenda */}
+        {/* 📅 Sezione Agenda */}
         <div className="w-full lg:w-2/5">
-          <div className="border-b-2 border-gray-300 pb-2 mb-6">
-            <h2 className="text-4xl font-extrabold text-blue-900 mb-4 uppercase">Agenda</h2>
-            <div className="w-20 h-1 bg-blue-900"></div>
+          <h2 className="text-3xl font-bold text-blue-900 mb-6 uppercase border-b-2 border-gray-300 pb-2">Agenda</h2>
+
+          <motion.div
+            key={agendaIndex}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 50 }}
+            transition={{ duration: 0.5 }}
+          >
+            {agenda.slice(agendaIndex, agendaIndex + ITEMS_PER_PAGE).map((event) => (
+              <div 
+                key={event.id} 
+                className="flex items-center bg-gray-100 shadow-md mb-4 p-4 border border-gray-300 hover:shadow-lg hover:scale-105 transition-all duration-300"
+              >
+                <div className="w-20 h-24 bg-blue-900 text-white flex flex-col justify-center items-center">
+                  <p className="text-xs uppercase font-bold">{event.month}</p>
+                  <p className="text-3xl font-extrabold">{event.day}</p>
+                  <p className="text-xs uppercase font-semibold">{event.weekday}</p>
+                </div>
+                
+                <div className="ml-4">
+                  <p className="text-gray-800 font-semibold text-lg">{event.title}</p>
+                  <p className="text-gray-500 text-sm flex items-center gap-2">
+                    <FaMapMarkerAlt /> {event.location} <FaClock /> {event.time}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Frecce di navigazione per l'agenda */}
+          <div className="flex justify-between mt-4">
+            {agendaIndex > 0 && (
+              <button onClick={prevAgenda} className="text-blue-700 text-lg hover:text-blue-900 flex items-center">
+                <FaArrowLeft className="mr-2" /> Precedenti
+              </button>
+            )}
+            {agendaIndex + ITEMS_PER_PAGE < agenda.length && (
+              <button onClick={nextAgenda} className="text-blue-700 text-lg hover:text-blue-900 flex items-center">
+                Successivi <FaArrowRight className="ml-2" />
+              </button>
+            )}
           </div>
-
-          {agenda.map((event, index) => (
-            <div
-              key={index}
-              className={`flex items-center bg-gray-50 shadow-md rounded-none mb-4 p-4 border border-gray-300 transition-all duration-1000 ${
-                isVisible ? "lg:animate-slideInRight" : "opacity-0"
-              } hover:shadow-lg hover:-translate-y-1`}
-            >
-              {/* Quadrato Data */}
-              <div className="w-20 h-24 bg-blue-900 text-white flex flex-col justify-center items-center rounded-none">
-                <p className="text-xs uppercase font-bold">{event.month}</p>
-                <p className="text-3xl font-extrabold">{event.day}</p>
-                <p className="text-xs uppercase font-semibold">{event.weekday}</p>
-              </div>
-              {/* Dettagli Evento */}
-              <div className="ml-4">
-                <p className="text-gray-800 font-semibold text-lg">{event.title}</p>
-                <p className="text-gray-500 text-sm flex items-center gap-2">
-                  <FaMapMarkerAlt /> {event.location} <FaClock /> {event.time}
-                </p>
-              </div>
-            </div>
-          ))}
-
-          <p className="text-blue-800 font-semibold mt-4 cursor-pointer flex items-center gap-2 hover:underline">
-            PROSSIMI APPUNTAMENTI <FaCalendarAlt />
-          </p>
         </div>
       </div>
     </section>
