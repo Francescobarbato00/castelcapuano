@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiMessageSquare, FiX } from "react-icons/fi";
 
 const ChatBot = () => {
@@ -7,6 +7,18 @@ const ChatBot = () => {
     { id: 1, text: "Benvenuto! Come posso aiutarti oggi?", sender: "bot" },
   ]);
   const [input, setInput] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Controlla se il dispositivo è mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const toggleChat = () => setIsOpen((prev) => !prev);
 
@@ -14,7 +26,6 @@ const ChatBot = () => {
     if (input.trim()) {
       setMessages([...messages, { id: Date.now(), text: input, sender: "user" }]);
       setInput("");
-      // Risposta del bot dopo un breve ritardo
       setTimeout(() => {
         setMessages((prev) => [
           ...prev,
@@ -31,40 +42,44 @@ const ChatBot = () => {
   return (
     <>
       {/* Icona Chat */}
-      <div className="fixed bottom-8 right-8 z-50">
+      <div className="fixed bottom-6 right-6 z-[100]">
         <button
           onClick={toggleChat}
-          className="bg-blue-600 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg hover:bg-blue-700 transition duration-300"
+          className="bg-blue-600 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-xl hover:bg-blue-700 transition duration-300"
         >
           {isOpen ? <FiX size={28} /> : <FiMessageSquare size={28} />}
         </button>
       </div>
 
-      {/* Finestra Chat */}
+      {/* Overlay oscurato su mobile */}
+      {isOpen && isMobile && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-lg z-[99] animate-fadeInOverlay"></div>
+      )}
+
+      {/* Finestra Chat con animazione estetica */}
       {isOpen && (
         <div
-          className="fixed bottom-24 right-8 w-80 h-96 bg-white shadow-2xl rounded-lg flex flex-col z-50 animate-slideUp"
-          style={{ animation: "slideUp 0.3s ease-in-out" }}
+          className={`fixed ${isMobile ? "inset-0 w-full h-full" : "bottom-24 right-8 w-96 h-[500px] rounded-lg"}
+            bg-white shadow-2xl flex flex-col z-[101] transition-all duration-500 
+            ${isMobile ? "animate-fadeInMobile" : "animate-fadeInDesktop"}`}
         >
           {/* Header */}
-          <div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
+          <div className="bg-blue-600 text-white p-4 flex justify-between items-center">
             <h3 className="text-lg font-semibold">ChatBot</h3>
-            <button onClick={toggleChat}>
-              <FiX size={20} />
+            <button onClick={toggleChat} className="hover:opacity-80 transition">
+              <FiX size={22} />
             </button>
           </div>
 
           {/* Messaggi */}
-          <div className="flex-1 p-3 overflow-y-auto bg-gray-50">
+          <div className="flex-1 p-4 overflow-y-auto bg-gray-100">
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`mb-2 flex ${
-                  msg.sender === "user" ? "justify-end" : "justify-start"
-                }`}
+                className={`mb-3 flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`p-2 rounded-lg max-w-xs ${
+                  className={`p-3 rounded-xl max-w-xs shadow-md ${
                     msg.sender === "user"
                       ? "bg-blue-600 text-white"
                       : "bg-gray-200 text-gray-800"
@@ -77,17 +92,17 @@ const ChatBot = () => {
           </div>
 
           {/* Input */}
-          <div className="p-3 border-t border-gray-200 flex items-center">
+          <div className="p-3 border-t border-gray-300 flex items-center bg-white">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Scrivi un messaggio..."
-              className="flex-1 border rounded-l-lg p-2 text-sm focus:outline-none"
+              className="flex-1 border border-gray-300 rounded-l-full p-2 text-sm focus:outline-none text-black"
             />
             <button
               onClick={sendMessage}
-              className="bg-blue-600 text-white px-4 rounded-r-lg hover:bg-blue-700 transition duration-300"
+              className="bg-blue-600 text-white px-6 rounded-r-full hover:bg-blue-700 transition duration-300"
             >
               Invia
             </button>
@@ -95,9 +110,32 @@ const ChatBot = () => {
         </div>
       )}
 
-      {/* Animazione CSS */}
+      {/* Animazioni CSS migliorate */}
       <style jsx>{`
-        @keyframes slideUp {
+        /* Effetto Overlay Oscurato su Mobile */
+        @keyframes fadeInOverlay {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        
+        /* Effetto di entrata Desktop */
+        @keyframes fadeInDesktop {
+          from {
+            transform: translateY(50px) scale(0.9);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+          }
+        }
+
+        /* Effetto di entrata Mobile (schermo intero) */
+        @keyframes fadeInMobile {
           from {
             transform: translateY(100%);
             opacity: 0;
@@ -106,6 +144,18 @@ const ChatBot = () => {
             transform: translateY(0);
             opacity: 1;
           }
+        }
+
+        .animate-fadeInOverlay {
+          animation: fadeInOverlay 0.4s ease-in-out forwards;
+        }
+
+        .animate-fadeInDesktop {
+          animation: fadeInDesktop 0.4s ease-out forwards;
+        }
+
+        .animate-fadeInMobile {
+          animation: fadeInMobile 0.5s ease-out forwards;
         }
       `}</style>
     </>
