@@ -18,6 +18,16 @@ const ScrollableMenu = () => {
             Fondazione Castel Capuano
           </div>
 
+          {/* Pulsanti per Desktop allineati a sinistra */}
+          <div className="hidden md:flex items-center gap-6 ml-0">
+            <a href="/" className="text-blue-900 font-semibold hover:underline">Home</a>
+            <a href="/notizie" className="text-blue-900 font-semibold hover:underline">Notizie</a>
+            <a href="/eventi" className="text-blue-900 font-semibold hover:underline">Eventi</a>
+            <a href="/documenti" className="text-blue-900 font-semibold hover:underline">Documenti</a>
+            <a href="/organi" className="text-blue-900 font-semibold hover:underline">Organi</a>
+            <a href="/struttura" className="text-blue-900 font-semibold hover:underline">Struttura</a>
+          </div>
+
           {/* Pulsante Ricerca e Menu Mobile */}
           <div className="flex items-center gap-3">
             {/* Bottone Ricerca per Mobile */}
@@ -38,7 +48,7 @@ const ScrollableMenu = () => {
 
       {/* MENU MOBILE A TUTTO SCHERMO CON ANIMAZIONE DA SINISTRA */}
       <div
-        className={`fixed inset-0 bg-white text-blue-900 z-[100] flex flex-col justify-center items-start pl-8 transition-transform duration-300 ${
+        className={`fixed inset-0 bg-white text-blue-900 z-[100] flex flex-col justify-start items-start pl-8 transition-transform duration-300 ${
           showMobileMenu ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -51,13 +61,13 @@ const ScrollableMenu = () => {
           <X size={30} />
         </button>
 
-        {/* Titolo Centrato con Maggiore Spaziatura */}
-        <h2 className="absolute top-16 text-2xl font-bold text-center w-full">
+        {/* Titolo Allineato a Sinistra */}
+        <h2 className="absolute top-16 left-8 text-2xl font-bold">
           Fondazione Castel Capuano
         </h2>
 
         {/* Link del menu con sottolineatura */}
-        <nav className="w-full h-full flex flex-col justify-center space-y-6 text-left">
+        <nav className="w-full h-full flex flex-col justify-center space-y-6 mt-24 text-left">
           {[
             { href: "/", label: "Home" },
             { href: "/notizie", label: "Notizie" },
@@ -113,6 +123,18 @@ const ScrollableMenu = () => {
         }
         .animate-slide-down {
           animation: slide-down 0.4s ease-out forwards;
+        }
+
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.3s ease-out forwards;
         }
       `}</style>
     </>
