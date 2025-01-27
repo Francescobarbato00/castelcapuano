@@ -8,9 +8,8 @@ const SearchComponent = ({ onClose }) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
 
-  // ✅ Mappatura delle categorie con i nickname
+  // ✅ Mappatura delle categorie con i nickname (Agenda rimossa)
   const categoryNames = {
-    agenda_events: "Agenda",
     events: "Eventi",
     highlighted_news: "Notizie in evidenza",
     news: "News",
@@ -68,8 +67,6 @@ const SearchComponent = ({ onClose }) => {
         return `/comunicati/${slug}`;
       case "News brevi":
         return `/smallnews/${slug}`;
-      case "Agenda":
-        return `/agenda/${slug}`;
       case "Notizie in evidenza":
         return `/notizie/${slug}`;
       default:
