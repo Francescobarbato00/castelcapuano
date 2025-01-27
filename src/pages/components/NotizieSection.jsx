@@ -5,6 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+const MAX_PREVIEW_LENGTH = 180; // 🔹 Limite massimo caratteri per la preview
+const ARTICLES_PER_PAGE = 3; // 🔹 Numero massimo di articoli visibili per pagina
+
 const NotizieSection = () => {
   const [articles, setArticles] = useState([]);
   const [page, setPage] = useState(0); // Pagina iniziale
@@ -12,9 +15,9 @@ const NotizieSection = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const q = query(collection(db, "news"), orderBy("date", "desc"), limit(6)); // Ultimi 6 articoli
+        const q = query(collection(db, "news"), orderBy("date", "desc"), limit(12)); // Ultimi 12 articoli totali
         const querySnapshot = await getDocs(q);
-        const articlesArray = querySnapshot.docs.map(doc => ({
+        const articlesArray = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
           date: doc.data().date?.seconds
@@ -31,10 +34,15 @@ const NotizieSection = () => {
     fetchArticles();
   }, []);
 
-  // Divide gli articoli in gruppi da 3
-  const articlesPerPage = 3;
-  const totalPages = Math.ceil(articles.length / articlesPerPage);
-  const paginatedArticles = articles.slice(page * articlesPerPage, (page + 1) * articlesPerPage);
+  // 📌 Divide gli articoli in gruppi da 3 per pagina
+  const totalPages = Math.ceil(articles.length / ARTICLES_PER_PAGE);
+  const paginatedArticles = articles.slice(page * ARTICLES_PER_PAGE, (page + 1) * ARTICLES_PER_PAGE);
+
+  // 📌 Funzione per troncare il testo della preview
+  const truncateText = (text, maxLength) => {
+    if (!text) return "";
+    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+  };
 
   return (
     <section className="bg-white py-12">
@@ -49,10 +57,10 @@ const NotizieSection = () => {
         <div className="relative overflow-hidden">
           <div key={page} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 fade-in">
             {paginatedArticles.length > 0 ? (
-              paginatedArticles.map(article => (
+              paginatedArticles.map((article) => (
                 <Link key={article.id} href={`/articolo/${article.slug || article.id}`} passHref>
                   <div className="cursor-pointer flex flex-col items-start text-left group">
-                    <div className="w-full h-[350px] relative overflow-hidden shadow-md mb-4">
+                    <div className="w-full h-[300px] relative overflow-hidden shadow-md mb-4 rounded-lg">
                       <Image
                         src={article.imageUrl || "/default-news.jpg"} // Immagine di default se mancante
                         alt={article.title}
@@ -65,7 +73,7 @@ const NotizieSection = () => {
                     <h3 className="text-lg font-bold text-blue-900 mb-2 group-hover:text-blue-700">
                       {article.title}
                     </h3>
-                    <p className="text-gray-700">{article.description}</p>
+                    <p className="text-gray-700">{truncateText(article.description, MAX_PREVIEW_LENGTH)}</p>
                   </div>
                 </Link>
               ))
@@ -79,17 +87,23 @@ const NotizieSection = () => {
         {totalPages > 1 && (
           <div className="flex justify-center items-center mt-6 space-x-6">
             <button
-              onClick={() => setPage(prev => Math.max(prev - 1, 0))}
+              onClick={() => setPage((prev) => Math.max(prev - 1, 0))}
               disabled={page === 0}
-              className={`p-2 rounded-full transition ${page === 0 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"}`}
+              className={`p-2 rounded-full transition ${
+                page === 0 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"
+              }`}
             >
               <ChevronLeft size={30} />
             </button>
-            <span className="text-lg mx-4">Pagina {page + 1} di {totalPages}</span>
+            <span className="text-lg mx-4">
+              Pagina {page + 1} di {totalPages}
+            </span>
             <button
-              onClick={() => setPage(prev => Math.min(prev + 1, totalPages - 1))}
+              onClick={() => setPage((prev) => Math.min(prev + 1, totalPages - 1))}
               disabled={page === totalPages - 1}
-              className={`p-2 rounded-full transition ${page === totalPages - 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"}`}
+              className={`p-2 rounded-full transition ${
+                page === totalPages - 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"
+              }`}
             >
               <ChevronRight size={30} />
             </button>
