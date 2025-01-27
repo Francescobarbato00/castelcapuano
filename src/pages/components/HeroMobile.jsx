@@ -97,8 +97,8 @@ const HeroMobile = () => {
                       {news.title}
                     </h2>
 
-                    {/* Bottone "Leggi tutto" più grande e quadrato */}
-                    <a href={`/notizie/${news.id}`} className="block mt-4">
+                    {/* ✅ Bottone "Leggi tutto" con slug */}
+                    <a href={`/notizie/${news.slug || news.id}`} className="block mt-4">
                       <button className="bg-blue-700 hover:bg-blue-900 text-white px-6 py-3 text-[18px] font-bold rounded-none transition shadow-md">
                         Leggi tutto
                       </button>

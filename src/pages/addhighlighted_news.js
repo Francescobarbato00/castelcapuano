@@ -25,6 +25,15 @@ export default function AddHighlightedNews() {
     return () => unsubscribe();
   }, []);
 
+  // 🔹 Funzione per creare lo slug in automatico dal titolo
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s]/g, "") // Rimuove caratteri speciali
+      .replace(/\s+/g, "-"); // Sostituisce gli spazi con trattini
+  };
+
   const handleAddArticle = async () => {
     if (!newArticle.title || !newArticle.description || !newArticle.image || !newArticle.content || !newArticle.category) {
       alert("Compila tutti i campi!");
@@ -34,9 +43,13 @@ export default function AddHighlightedNews() {
     // 📌 Formattiamo la data prima di salvarla
     const formattedDate = dayjs(newArticle.date).locale("it").format("DD MMMM YYYY");
 
-    // ✅ Salviamo la notizia in evidenza su Firestore
+    // 🔹 Creiamo lo slug automaticamente
+    const slug = generateSlug(newArticle.title);
+
+    // ✅ Salviamo la notizia in evidenza su Firestore con lo slug generato
     await addDoc(collection(db, "highlighted_news"), {
       ...newArticle,
+      slug: slug, // 🔹 Salviamo lo slug
       date: formattedDate,
       createdAt: serverTimestamp(), // Timestamp per ordinamento
       content: newArticle.content.replace(/\n/g, "<br>"), // Mantenere gli a capo
@@ -89,14 +102,14 @@ export default function AddHighlightedNews() {
           onChange={(e) => setNewArticle({ ...newArticle, title: e.target.value })}
           className="border p-3 rounded w-full"
         />
-        
+
         <textarea
           placeholder="Descrizione breve"
           value={newArticle.description}
           onChange={(e) => setNewArticle({ ...newArticle, description: e.target.value })}
           className="border p-3 rounded w-full h-24"
         />
-        
+
         <input
           type="text"
           placeholder="URL Immagine"

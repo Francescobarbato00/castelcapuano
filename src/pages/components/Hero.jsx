@@ -94,7 +94,8 @@ const Hero = () => {
                       <p className="text-gray-700 text-[16px] md:text-[21px] leading-[24px] md:leading-[31px] mb-4 md:mb-6">
                         {news.description}
                       </p>
-                      <a href={`/notizie/${news.id}`}>
+                      {/* ✅ Link corretto con slug */}
+                      <a href={`/notizie/${news.slug || news.id}`}>
                         <button className="bg-blue-700 hover:bg-blue-900 text-white px-4 md:px-6 py-2 md:py-3 rounded-none transition shadow-md">
                           Leggi tutto
                         </button>

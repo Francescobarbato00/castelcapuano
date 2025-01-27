@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../lib/firebase"; // Assicurati che il percorso sia corretto
+import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
+import { db } from "../../lib/firebase";
 import TopHeader from "../components/TopHeader";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -10,7 +10,7 @@ import Image from "next/image";
 
 const ArticoloInEvidenza = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const { id } = router.query; // Può essere ID Firestore o Slug
   const [article, setArticle] = useState(null);
 
   useEffect(() => {
@@ -18,15 +18,33 @@ const ArticoloInEvidenza = () => {
 
     const fetchArticle = async () => {
       try {
-        const docRef = doc(db, "highlighted_news", id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          let data = docSnap.data();
+        let data = null;
 
+        // 🔹 Cerca prima usando lo slug
+        const q = query(collection(db, "highlighted_news"), where("slug", "==", id));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          data = querySnapshot.docs[0].data();
+        } else {
+          // 🔹 Se lo slug non esiste, prova con l'ID Firestore
+          const docRef = doc(db, "highlighted_news", id);
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            data = docSnap.data();
+          }
+        }
+
+        if (data) {
           // 📌 Formattiamo la data in italiano leggibile
           if (data.date && data.date.seconds) {
             const date = new Date(data.date.seconds * 1000);
-            data.date = date.toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" });
+            data.date = date.toLocaleDateString("it-IT", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            });
           }
 
           setArticle(data);
@@ -51,7 +69,7 @@ const ArticoloInEvidenza = () => {
       <div className="hidden md:block">
         <Header />
       </div>
-      
+
       {/* Header Mobile */}
       <div className="block md:hidden bg-white border-b border-gray-300">
         <MobileHeader />
@@ -72,23 +90,22 @@ const ArticoloInEvidenza = () => {
           {article.date} {article.author ? `• di ${article.author}` : ""}
         </p>
 
-        {/* 📸 Immagine principale quadrata con dimensione fissa */}
+        {/* 📸 Immagine principale */}
         {article.image && (
           <div className="w-full max-w-md mx-auto mb-8">
             <Image
               src={article.image}
               alt={article.title}
-              width={500}  // Grandezza uniforme
-              height={500} // Quadrata
+              width={500}
+              height={500}
               objectFit="cover"
               className="rounded-lg shadow-lg"
             />
           </div>
         )}
 
-        {/* Corpo del testo formattato */}
+        {/* Corpo del testo */}
         <div className="bg-white max-w-4xl mx-auto leading-relaxed text-gray-800 space-y-6 text-justify text-sm sm:text-base">
-          {/* ✅ Ora il testo mantiene i ritorni a capo */}
           <p dangerouslySetInnerHTML={{ __html: article.content.replace(/\n/g, "<br>") }} />
         </div>
       </section>
