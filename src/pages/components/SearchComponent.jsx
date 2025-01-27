@@ -33,8 +33,9 @@ const SearchComponent = ({ onClose }) => {
           const snapshot = await getDocs(collection(db, col));
           const data = snapshot.docs.map((doc) => ({
             id: doc.id,
+            slug: doc.data().slug || doc.id, // ✅ Usa lo slug, se disponibile
             title: doc.data().title,
-            category: categoryNames[col] || col, // Usa il nickname o il nome originale se non presente
+            category: categoryNames[col] || col, // Usa il nickname o il nome originale
             date: doc.data().date?.seconds
               ? new Date(doc.data().date.seconds * 1000).toLocaleDateString("it-IT")
               : doc.data().date || "Senza data",
@@ -56,21 +57,21 @@ const SearchComponent = ({ onClose }) => {
     fetchData();
   }, [query]);
 
-  // ✅ Funzione per determinare il percorso corretto in base alla categoria
-  const getCorrectPath = (category, id) => {
+  // ✅ Funzione per determinare il percorso corretto in base alla categoria (usando lo slug)
+  const getCorrectPath = (category, slug) => {
     switch (category) {
       case "News":
-        return `/articolo/${id}`;
+        return `/articolo/${slug}`;
       case "Eventi":
-        return `/eventi/${id}`;
+        return `/eventi/${slug}`;
       case "Comunicati stampa":
-        return `/comunicati/${id}`;
+        return `/comunicati/${slug}`;
       case "News brevi":
-        return `/smallnews/${id}`;
+        return `/smallnews/${slug}`;
       case "Agenda":
-        return `/agenda/${id}`;
+        return `/agenda/${slug}`;
       case "Notizie in evidenza":
-        return `/notizie/${id}`;
+        return `/notizie/${slug}`;
       default:
         return "/";
     }
@@ -98,7 +99,7 @@ const SearchComponent = ({ onClose }) => {
       <div className="mt-6 w-3/4 md:w-1/2 bg-white shadow-lg rounded-lg max-h-[300px] overflow-y-auto">
         {results.length > 0 ? (
           results.map((item) => (
-            <Link key={item.id} href={getCorrectPath(item.category, item.id)} passHref>
+            <Link key={item.slug} href={getCorrectPath(item.category, item.slug)} passHref>
               <div className="p-4 border-b last:border-0 hover:bg-gray-100 cursor-pointer">
                 <p className="text-blue-600 font-semibold">{item.title}</p>
                 <p className="text-sm text-gray-500">
