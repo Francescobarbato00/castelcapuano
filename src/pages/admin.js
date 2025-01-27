@@ -43,7 +43,23 @@ export default function AdminDashboard() {
 
       {/* 🛠️ Opzioni di Gestione */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl">
-        
+
+        {/* ⭐ Aggiungi Notizia in Evidenza */}
+        <div
+          onClick={() => router.push("/addhighlighted_news")}
+          className="cursor-pointer bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-4 rounded-lg text-lg flex items-center justify-center shadow-lg transition-transform transform hover:scale-105"
+        >
+          <span className="text-2xl mr-2">⭐</span> Aggiungi Notizia in Evidenza
+        </div>
+
+        {/* 📝 Modifica / Elimina Notizie in Evidenza */}
+        <div
+          onClick={() => router.push("/managehighlighted_news")}
+          className="cursor-pointer bg-yellow-700 hover:bg-yellow-800 text-white px-6 py-4 rounded-lg text-lg flex items-center justify-center shadow-lg transition-transform transform hover:scale-105"
+        >
+          <span className="text-2xl mr-2">📝</span> Modifica / Elimina Notizie in Evidenza
+        </div>
+
         {/* 📰 Aggiungi Notizia */}
         <div
           onClick={() => router.push("/addnews")}

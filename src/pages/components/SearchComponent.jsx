@@ -15,7 +15,7 @@ const SearchComponent = ({ onClose }) => {
     }
 
     const fetchData = async () => {
-      const collections = ["news", "events", "press_releases", "small_news", "agenda_events"];
+      const collections = ["news", "events", "press_releases", "small_news", "agenda_events", "highlighted_news"];
       let allResults = [];
 
       try {
@@ -25,7 +25,9 @@ const SearchComponent = ({ onClose }) => {
             id: doc.id,
             title: doc.data().title,
             category: col,
-            date: doc.data().date?.toDate?.()?.toLocaleDateString("it-IT") || "Senza data"
+            date: doc.data().date?.seconds
+              ? new Date(doc.data().date.seconds * 1000).toLocaleDateString("it-IT")
+              : doc.data().date || "Senza data",
           }));
 
           allResults = [...allResults, ...data];
@@ -44,7 +46,7 @@ const SearchComponent = ({ onClose }) => {
     fetchData();
   }, [query]);
 
-  // Funzione per determinare il percorso corretto in base alla categoria
+  // ✅ Funzione per determinare il percorso corretto in base alla categoria
   const getCorrectPath = (category, id) => {
     switch (category) {
       case "news":
@@ -55,8 +57,12 @@ const SearchComponent = ({ onClose }) => {
         return `/comunicati/${id}`; // ✅ Percorso per i comunicati stampa
       case "small_news":
         return `/smallnews/${id}`; // ✅ Percorso per le small news
+      case "agenda_events":
+        return `/agenda/${id}`; // ✅ Percorso per gli eventi in agenda
+      case "highlighted_news":
+        return `/notizie/${id}`; // ✅ Percorso per le notizie in evidenza
       default:
-        return "/"; // Se la categoria non esiste
+        return "/"; // ✅ Se la categoria non esiste
     }
   };
 
