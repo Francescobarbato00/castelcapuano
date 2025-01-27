@@ -35,7 +35,7 @@ const NotizieList = () => {
       {/* Griglia delle notizie */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {newsItems.map((item) => (
-          <Link href={`/articolo/${item.id}`} key={item.id}>
+          <Link href={`/articolo/${item.slug || item.id}`} key={item.id}>
             <div className="bg-white shadow-md rounded overflow-hidden transform hover:-translate-y-2 hover:shadow-xl transition-transform duration-500">
               {/* Immagine */}
               <div className="relative h-56 overflow-hidden">

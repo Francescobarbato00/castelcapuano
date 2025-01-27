@@ -25,21 +25,38 @@ export default function AddNews() {
     return () => unsubscribe();
   }, []);
 
+  // 🔹 Funzione per generare lo slug automaticamente dal titolo
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s]/g, "") // Rimuove caratteri speciali
+      .replace(/\s+/g, "-"); // Sostituisce gli spazi con trattini
+  };
+
   const handleAddArticle = async () => {
     if (!newArticle.title || !newArticle.description || !newArticle.author || !newArticle.category || !newArticle.imageUrl) {
       alert("Compila tutti i campi!");
       return;
     }
 
-    // Formattiamo la data in italiano prima di salvarla
+    // 📌 Generiamo lo slug dal titolo
+    const slug = generateSlug(newArticle.title);
+
+    // 📌 Formattiamo la data in italiano prima di salvarla
     const formattedDate = dayjs(newArticle.date).locale("it").format("DD MMMM YYYY");
 
-    await addDoc(collection(db, "news"), { ...newArticle, date: formattedDate });
+    // ✅ Salviamo la notizia nel database con lo slug generato
+    await addDoc(collection(db, "news"), {
+      ...newArticle,
+      slug: slug, // 🔹 Salviamo lo slug
+      date: formattedDate,
+    });
 
-    // Mostra la notifica di successo
+    // ✅ Mostra la notifica di successo
     setShowNotification(true);
 
-    // Pulisce il form dopo l'aggiunta
+    // ✅ Pulisce il form dopo l'aggiunta
     setNewArticle({
       title: "",
       description: "",
@@ -49,7 +66,7 @@ export default function AddNews() {
       imageUrl: "",
     });
 
-    // Dopo 3 secondi, reindirizza alla dashboard
+    // ✅ Dopo 3 secondi, reindirizza alla dashboard
     setTimeout(() => {
       router.push("/admin");
     }, 3000);

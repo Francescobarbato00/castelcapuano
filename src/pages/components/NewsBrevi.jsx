@@ -4,11 +4,16 @@ import { collection, getDocs } from "firebase/firestore";
 import dayjs from "dayjs";
 import "dayjs/locale/it"; // Localizzazione italiana
 import { useRouter } from "next/router";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa"; // Icone per frecce
+
+const MAX_PREVIEW_LENGTH = 100; // 🔹 Limite massimo caratteri per la preview
+const ITEMS_PER_PAGE = 6; // 🔹 Numero massimo di articoli visibili per pagina
 
 const NewsBrevi = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [news, setNews] = useState([]);
   const [brevi, setBrevi] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
   const sectionRef = useRef(null);
   const router = useRouter();
 
@@ -18,6 +23,12 @@ const NewsBrevi = () => {
       return dayjs(date.toDate()).locale("it").format("DD MMMM YYYY");
     }
     return "Data non disponibile";
+  };
+
+  // Funzione per troncare il testo in anteprima
+  const truncateText = (text, maxLength) => {
+    if (!text) return "";
+    return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
   };
 
   // Recupera le news da Firebase
@@ -38,9 +49,8 @@ const NewsBrevi = () => {
         // Ordina le news per data (dal più recente al meno recente)
         const sortedNews = newsData.sort((a, b) => dayjs(b.date).unix() - dayjs(a.date).unix());
 
-        // Dividiamo tra "News" e "Brevi"
-        setNews(sortedNews.slice(0, 4)); // Primi 4 articoli
-        setBrevi(sortedNews.slice(4, 8)); // Successivi 4 articoli
+        setNews(sortedNews);
+        setBrevi(sortedNews); // Stessa lista per news brevi
       } catch (error) {
         console.error("Errore nel recupero delle news:", error);
       }
@@ -70,6 +80,16 @@ const NewsBrevi = () => {
     return () => observer.disconnect();
   }, []);
 
+  // 📌 Calcola il numero di pagine totali
+  const totalPages = Math.ceil(news.length / ITEMS_PER_PAGE);
+
+  // 📌 Funzione per cambiare pagina
+  const changePage = (direction) => {
+    setCurrentPage((prev) =>
+      direction === "next" ? Math.min(prev + 1, totalPages - 1) : Math.max(prev - 1, 0)
+    );
+  };
+
   return (
     <section ref={sectionRef} className="container mx-auto px-4 py-8 bg-white">
       <div className={`grid grid-cols-1 lg:grid-cols-3 gap-8 transition-opacity duration-1000 ${isVisible ? "opacity-100" : "opacity-0"}`}>
@@ -78,11 +98,12 @@ const NewsBrevi = () => {
         <div className="lg:col-span-2">
           <h2 className="text-3xl font-bold text-blue-900 mb-4">NEWS</h2>
           <hr className="border-gray-300 mb-4" />
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {news.map((item, index) => (
+            {news.slice(currentPage * ITEMS_PER_PAGE, (currentPage + 1) * ITEMS_PER_PAGE).map((item, index) => (
               <div
                 key={item.id}
-                onClick={() => router.push(`/smallnews/${item.id}`)}
+                onClick={() => router.push(`/smallnews/${item.slug || item.id}`)}
                 style={{ transitionDelay: `${index * 150}ms` }}
                 className={`bg-white transition-all duration-700 transform cursor-pointer ${
                   isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
@@ -90,21 +111,38 @@ const NewsBrevi = () => {
               >
                 <h3 className="text-lg font-bold text-blue-900">{item.title}</h3>
                 <p className="text-sm italic text-gray-500 mb-2">{item.date}</p>
-                <p className="text-gray-700">{item.description}</p>
+                <p className="text-gray-700">{truncateText(item.description, MAX_PREVIEW_LENGTH)}</p>
               </div>
             ))}
           </div>
+
+          {/* Frecce di navigazione in basso */}
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center mt-6 space-x-4">
+              {currentPage > 0 && (
+                <button onClick={() => changePage("prev")} className="text-blue-600 p-2 rounded-full hover:bg-blue-200">
+                  <FaChevronLeft size={20} />
+                </button>
+              )}
+              {currentPage < totalPages - 1 && (
+                <button onClick={() => changePage("next")} className="text-blue-600 p-2 rounded-full hover:bg-blue-200">
+                  <FaChevronRight size={20} />
+                </button>
+              )}
+            </div>
+          )}
         </div>
 
         {/* NEWS BREVI */}
         <div>
           <h2 className="text-3xl font-bold text-blue-900 mb-4">BREVI</h2>
           <hr className="border-gray-300 mb-4" />
+
           <ul className="space-y-4">
-            {brevi.map((item, index) => (
+            {brevi.slice(currentPage * ITEMS_PER_PAGE, (currentPage + 1) * ITEMS_PER_PAGE).map((item, index) => (
               <li
                 key={item.id}
-                onClick={() => router.push(`/smallnews/${item.id}`)}
+                onClick={() => router.push(`/smallnews/${item.slug || item.id}`)}
                 style={{ transitionDelay: `${index * 150}ms` }}
                 className={`bg-white border border-gray-300 pb-2 rounded-lg p-4 transition-all duration-700 transform cursor-pointer ${
                   isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
@@ -115,18 +153,6 @@ const NewsBrevi = () => {
               </li>
             ))}
           </ul>
-
-          {/* Pulsante Archivio */}
-          <div className="mt-6">
-            <button
-              className={`bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition-all duration-700 transform ${
-                isVisible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-              }`}
-              style={{ transitionDelay: `${brevi.length * 150}ms` }}
-            >
-              Archivio
-            </button>
-          </div>
         </div>
       </div>
     </section>

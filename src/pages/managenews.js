@@ -11,13 +11,11 @@ export default function ManageNews() {
   const [showNotification, setShowNotification] = useState({ type: "", message: "" });
   const router = useRouter();
 
-  // Controllo autenticazione
   useEffect(() => {
     const unsubscribe = checkAuth(setUser);
     return () => unsubscribe();
   }, []);
 
-  // Caricamento notizie
   useEffect(() => {
     if (user) {
       const fetchNews = async () => {
@@ -29,36 +27,55 @@ export default function ManageNews() {
     }
   }, [user]);
 
-  // Eliminazione articolo con conferma
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s]/g, "") // Rimuove caratteri speciali
+      .replace(/\s+/g, "-"); // Sostituisce gli spazi con trattini
+  };
+
   const handleDeleteArticle = async (id) => {
     if (!confirm("Sei sicuro di voler eliminare questa notizia?")) return;
 
-    await deleteDoc(doc(db, "news", id));
-    setNews(news.filter(article => article.id !== id));
+    try {
+      await deleteDoc(doc(db, "news", id));
+      setNews(news.filter(article => article.id !== id));
+      setShowNotification({ type: "delete", message: "🗑️ Notizia eliminata con successo!" });
 
-    setShowNotification({ type: "delete", message: "Notizia eliminata con successo!" });
-
-    setTimeout(() => {
-      setShowNotification({ type: "", message: "" });
-    }, 3000);
+      setTimeout(() => {
+        setShowNotification({ type: "", message: "" });
+      }, 3000);
+    } catch (error) {
+      console.error("Errore nell'eliminazione:", error);
+    }
   };
 
-  // Modifica articolo
   const handleEditArticle = async () => {
     if (!editArticle.title || !editArticle.description || !editArticle.author) {
       alert("Compila tutti i campi!");
       return;
     }
 
-    const articleRef = doc(db, "news", editArticle.id);
-    await updateDoc(articleRef, editArticle);
-    setEditArticle(null);
+    try {
+      const updatedSlug = generateSlug(editArticle.title);
 
-    setShowNotification({ type: "edit", message: "Modifiche salvate con successo!" });
+      const articleRef = doc(db, "news", editArticle.id);
+      await updateDoc(articleRef, {
+        ...editArticle,
+        slug: updatedSlug, // 🔹 Aggiorna lo slug quando si modifica il titolo
+      });
 
-    setTimeout(() => {
-      setShowNotification({ type: "", message: "" });
-    }, 3000);
+      setNews(news.map(article => (article.id === editArticle.id ? { ...editArticle, slug: updatedSlug } : article)));
+      setEditArticle(null);
+      setShowNotification({ type: "edit", message: "✅ Modifiche salvate con successo!" });
+
+      setTimeout(() => {
+        setShowNotification({ type: "", message: "" });
+      }, 3000);
+    } catch (error) {
+      console.error("Errore nell'aggiornamento:", error);
+    }
   };
 
   if (!user) {
@@ -126,8 +143,15 @@ export default function ManageNews() {
             <input
               type="text"
               value={editArticle.title}
-              onChange={(e) => setEditArticle({ ...editArticle, title: e.target.value })}
+              onChange={(e) => setEditArticle({ ...editArticle, title: e.target.value, slug: generateSlug(e.target.value) })}
               className="border p-2 rounded w-full mb-2"
+            />
+            <input
+              type="text"
+              value={editArticle.slug}
+              disabled
+              className="border p-2 rounded w-full mb-2 bg-gray-100"
+              placeholder="Slug (Generato automaticamente)"
             />
             <textarea
               value={editArticle.description}

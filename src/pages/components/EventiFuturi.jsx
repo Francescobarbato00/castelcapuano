@@ -57,6 +57,13 @@ const EventiFuturi = () => {
     }, 300);
   }, [selectedCategory, events]);
 
+  // 📌 Funzione per troncare la descrizione a 150 caratteri
+  const truncateText = (text, maxLength = 150) => {
+    if (!text) return "";
+    const strippedText = text.replace(/<br\s*\/?>/g, " "); // Rimuove i <br> dalla preview
+    return strippedText.length > maxLength ? strippedText.substring(0, maxLength) + "..." : strippedText;
+  };
+
   // 📌 Paginazione
   const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
   const currentEvents = filteredEvents.slice(
@@ -101,8 +108,8 @@ const EventiFuturi = () => {
             {currentEvents.map((event) => (
               <div
                 key={event.id}
-                onClick={() => router.push(`/eventi/${event.id}`)} // ✅ Naviga alla pagina dell'evento
-                className="cursor-pointer bg-white h-64 p-6 shadow-lg rounded-md flex flex-col justify-between hover:scale-105 transition-transform duration-300"
+                onClick={() => router.push(`/eventi/${event.slug || event.id}`)} // 🔹 Ora punta allo slug
+                className="cursor-pointer bg-white h-72 p-6 shadow-lg rounded-md flex flex-col justify-between hover:scale-105 transition-transform duration-300"
               >
                 <div>
                   <span className="text-sm font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded">
@@ -112,7 +119,7 @@ const EventiFuturi = () => {
                     {event.title}
                   </h3>
                   <p className="text-gray-500 mt-2">{event.date}</p>
-                  <p className="text-gray-600 mt-2">{event.description}</p>
+                  <p className="text-gray-600 mt-2">{truncateText(event.description)}</p>
                 </div>
                 <a className="text-blue-600 font-semibold mt-4 hover:underline">
                   Scopri l'evento →

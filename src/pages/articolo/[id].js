@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "../../lib/firebase"; // Assicurati che il percorso sia corretto
 import TopHeader from "../components/TopHeader";
 import Header from "../components/Header";
@@ -10,7 +10,7 @@ import Image from "next/image";
 
 const Articolo = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const { id } = router.query; // Può essere ID Firestore o Slug
   const [article, setArticle] = useState(null);
 
   useEffect(() => {
@@ -18,15 +18,33 @@ const Articolo = () => {
 
     const fetchArticle = async () => {
       try {
-        const docRef = doc(db, "news", id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          let data = docSnap.data();
+        let data = null;
 
+        // 🔹 Prima prova a cercare per slug
+        const q = query(collection(db, "news"), where("slug", "==", id));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          data = querySnapshot.docs[0].data();
+        } else {
+          // 🔹 Se lo slug non esiste, prova con l'ID Firestore
+          const docRef = doc(db, "news", id);
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            data = docSnap.data();
+          }
+        }
+
+        if (data) {
           // 📌 Formattiamo la data in italiano leggibile
           if (data.date && data.date.seconds) {
             const date = new Date(data.date.seconds * 1000);
-            data.date = date.toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" });
+            data.date = date.toLocaleDateString("it-IT", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            });
           }
 
           setArticle(data);

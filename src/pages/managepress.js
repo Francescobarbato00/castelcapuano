@@ -29,13 +29,24 @@ export default function ManagePress() {
           pressSnapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
-            date: dayjs(doc.data().date.toDate()).locale("it").format("DD/MM/YYYY"),
+            date: doc.data().date?.seconds
+              ? dayjs(doc.data().date.toDate()).locale("it").format("YYYY-MM-DD")
+              : doc.data().date || "",
           }))
         );
       };
       fetchPressReleases();
     }
   }, [user]);
+
+  // 🔹 Funzione per generare lo slug automaticamente dal titolo
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s]/g, "") // Rimuove caratteri speciali
+      .replace(/\s+/g, "-"); // Sostituisce gli spazi con trattini
+  };
 
   // ❌ Eliminazione comunicato con conferma
   const handleDeletePress = async (id) => {
@@ -58,23 +69,34 @@ export default function ManagePress() {
       return;
     }
 
-    const pressRef = doc(db, "press_releases", editPress.id);
-    await updateDoc(pressRef, {
-      title: editPress.title,
-      subtitle: editPress.subtitle,
-      content: editPress.content,
-      author: editPress.author,
-      number: editPress.number,
-      date: dayjs(editPress.date, "DD/MM/YYYY").toDate(),
-    });
+    try {
+      // Generiamo lo slug aggiornato
+      const updatedSlug = generateSlug(editPress.title);
 
-    setEditPress(null);
+      // 📌 Converte la data correttamente per Firestore
+      const formattedDate = editPress.date ? dayjs(editPress.date, "YYYY-MM-DD").toDate() : null;
 
-    setShowNotification({ type: "edit", message: "Modifiche salvate con successo!" });
+      const pressRef = doc(db, "press_releases", editPress.id);
+      await updateDoc(pressRef, {
+        title: editPress.title,
+        slug: updatedSlug, // 🔹 Aggiorna lo slug se il titolo cambia
+        subtitle: editPress.subtitle,
+        content: editPress.content,
+        author: editPress.author,
+        number: editPress.number,
+        date: formattedDate,
+      });
 
-    setTimeout(() => {
-      setShowNotification({ type: "", message: "" });
-    }, 3000);
+      setEditPress(null);
+      setShowNotification({ type: "edit", message: "Modifiche salvate con successo!" });
+
+      setTimeout(() => {
+        setShowNotification({ type: "", message: "" });
+      }, 3000);
+    } catch (error) {
+      console.error("❌ Errore durante l'aggiornamento del comunicato:", error);
+      alert("Errore durante l'aggiornamento del comunicato. Controlla i dati e riprova.");
+    }
   };
 
   if (!user) {
@@ -144,7 +166,9 @@ export default function ManagePress() {
             <input
               type="text"
               value={editPress.title}
-              onChange={(e) => setEditPress({ ...editPress, title: e.target.value })}
+              onChange={(e) =>
+                setEditPress({ ...editPress, title: e.target.value, slug: generateSlug(e.target.value) })
+              }
               className="border p-2 rounded w-full mb-2"
             />
             <input
@@ -159,20 +183,8 @@ export default function ManagePress() {
               className="border p-2 rounded w-full mb-2 h-24"
             />
             <input
-              type="text"
-              value={editPress.author}
-              onChange={(e) => setEditPress({ ...editPress, author: e.target.value })}
-              className="border p-2 rounded w-full mb-2"
-            />
-            <input
-              type="text"
-              value={editPress.number}
-              onChange={(e) => setEditPress({ ...editPress, number: e.target.value })}
-              className="border p-2 rounded w-full mb-2"
-            />
-            <input
               type="date"
-              value={dayjs(editPress.date, "DD/MM/YYYY").format("YYYY-MM-DD")}
+              value={editPress.date}
               onChange={(e) => setEditPress({ ...editPress, date: e.target.value })}
               className="border p-2 rounded w-full mb-2"
             />
@@ -183,16 +195,6 @@ export default function ManagePress() {
               ✅ Salva Modifiche
             </button>
           </div>
-        </div>
-      )}
-
-      {/* 📌 Notifiche */}
-      {showNotification.type && (
-        <div className={`fixed top-5 right-5 px-4 py-3 rounded-lg shadow-lg transition-all ${showNotification.type === "edit" ? "bg-blue-500" : "bg-red-500"} text-white`}>
-          {showNotification.message}
-          <button onClick={() => setShowNotification({ type: "", message: "" })} className="ml-4 text-sm font-bold">
-            ✖
-          </button>
         </div>
       )}
     </div>

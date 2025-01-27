@@ -13,9 +13,10 @@ export default function AddEvent() {
     description: "",
     date: dayjs().format("YYYY-MM-DD"),
     category: "",
+    slug: "",
   });
 
-  const [showNotification, setShowNotification] = useState(false); // Stato per la notifica
+  const [showNotification, setShowNotification] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -23,35 +24,58 @@ export default function AddEvent() {
     return () => unsubscribe();
   }, []);
 
+  // 🔹 Funzione per generare lo slug automaticamente dal titolo
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s]/g, "") // Rimuove caratteri speciali
+      .replace(/\s+/g, "-"); // Sostituisce gli spazi con trattini
+  };
+
   const handleAddEvent = async () => {
     if (!newEvent.title || !newEvent.description || !newEvent.category) {
       alert("Compila tutti i campi obbligatori!");
       return;
     }
 
-    // Formattiamo la data in formato Timestamp per Firebase
-    const formattedDate = dayjs(newEvent.date).toDate();
+    try {
+      // 📌 Generiamo lo slug dal titolo
+      const slug = generateSlug(newEvent.title);
 
-    await addDoc(collection(db, "events"), { 
-      ...newEvent, 
-      date: formattedDate 
-    });
+      // 📌 Formattiamo la data in formato Firestore
+      const formattedDate = dayjs(newEvent.date).toDate();
 
-    // Mostra la notifica di successo
-    setShowNotification(true);
+      // 📌 Convertiamo gli a capo per la descrizione
+      const formattedDescription = newEvent.description.replace(/\n/g, "<br>");
 
-    // Pulisce il form dopo l'aggiunta
-    setNewEvent({
-      title: "",
-      description: "",
-      date: dayjs().format("YYYY-MM-DD"),
-      category: "",
-    });
+      // ✅ Salviamo l'evento nel database con lo slug generato e descrizione formattata
+      await addDoc(collection(db, "events"), { 
+        ...newEvent, 
+        slug: slug, // 🔹 Salviamo lo slug
+        date: formattedDate,
+        description: formattedDescription, // 🔹 Descrizione con <br> per gli a capo
+      });
 
-    // Dopo 3 secondi, reindirizza alla dashboard
-    setTimeout(() => {
-      router.push("/admin");
-    }, 3000);
+      // ✅ Mostra la notifica di successo
+      setShowNotification(true);
+
+      // 🔄 Pulisce il form dopo l'aggiunta
+      setNewEvent({
+        title: "",
+        description: "",
+        date: dayjs().format("YYYY-MM-DD"),
+        category: "",
+        slug: "",
+      });
+
+      // 🔄 Dopo 3 secondi, reindirizza alla dashboard
+      setTimeout(() => {
+        router.push("/admin");
+      }, 3000);
+    } catch (error) {
+      console.error("❌ Errore nell'aggiunta dell'evento:", error);
+    }
   };
 
   if (!user) {
@@ -79,7 +103,13 @@ export default function AddEvent() {
           type="text"
           placeholder="Titolo"
           value={newEvent.title}
-          onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
+          onChange={(e) =>
+            setNewEvent({
+              ...newEvent,
+              title: e.target.value,
+              slug: generateSlug(e.target.value), // 🔹 Aggiorna slug in tempo reale
+            })
+          }
           className="border p-3 rounded w-full"
         />
         <textarea

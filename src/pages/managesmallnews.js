@@ -29,36 +29,59 @@ export default function ManageSmallNews() {
     }
   }, [user]);
 
+  // Funzione per generare lo slug dal titolo
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s]/g, "") // Rimuove caratteri speciali
+      .replace(/\s+/g, "-"); // Sostituisce gli spazi con trattini
+  };
+
   // Eliminazione articolo con conferma
   const handleDeleteArticle = async (id) => {
     if (!confirm("Sei sicuro di voler eliminare questa Small News?")) return;
 
-    await deleteDoc(doc(db, "small_news", id));
-    setSmallNews(smallNews.filter(article => article.id !== id));
+    try {
+      await deleteDoc(doc(db, "small_news", id));
+      setSmallNews(smallNews.filter(article => article.id !== id));
 
-    setShowNotification({ type: "delete", message: "Small News eliminata con successo!" });
+      setShowNotification({ type: "delete", message: "🗑️ Small News eliminata con successo!" });
 
-    setTimeout(() => {
-      setShowNotification({ type: "", message: "" });
-    }, 3000);
+      setTimeout(() => {
+        setShowNotification({ type: "", message: "" });
+      }, 3000);
+    } catch (error) {
+      console.error("Errore nell'eliminazione:", error);
+    }
   };
 
-  // Modifica articolo
+  // Modifica articolo e aggiorna lo slug se cambia il titolo
   const handleEditArticle = async () => {
     if (!editArticle.title || !editArticle.description) {
       alert("Compila tutti i campi!");
       return;
     }
 
-    const articleRef = doc(db, "small_news", editArticle.id);
-    await updateDoc(articleRef, editArticle);
-    setEditArticle(null);
+    try {
+      const updatedSlug = generateSlug(editArticle.title);
 
-    setShowNotification({ type: "edit", message: "Modifiche salvate con successo!" });
+      const articleRef = doc(db, "small_news", editArticle.id);
+      await updateDoc(articleRef, {
+        ...editArticle,
+        slug: updatedSlug, // 🔹 Aggiorna lo slug quando si modifica il titolo
+      });
 
-    setTimeout(() => {
-      setShowNotification({ type: "", message: "" });
-    }, 3000);
+      setSmallNews(smallNews.map(article => (article.id === editArticle.id ? { ...editArticle, slug: updatedSlug } : article)));
+      setEditArticle(null);
+      setShowNotification({ type: "edit", message: "✅ Modifiche salvate con successo!" });
+
+      setTimeout(() => {
+        setShowNotification({ type: "", message: "" });
+      }, 3000);
+    } catch (error) {
+      console.error("Errore nell'aggiornamento:", error);
+    }
   };
 
   if (!user) {
@@ -126,8 +149,15 @@ export default function ManageSmallNews() {
             <input
               type="text"
               value={editArticle.title}
-              onChange={(e) => setEditArticle({ ...editArticle, title: e.target.value })}
+              onChange={(e) => setEditArticle({ ...editArticle, title: e.target.value, slug: generateSlug(e.target.value) })}
               className="border p-2 rounded w-full mb-2"
+            />
+            <input
+              type="text"
+              value={editArticle.slug}
+              disabled
+              className="border p-2 rounded w-full mb-2 bg-gray-100"
+              placeholder="Slug (Generato automaticamente)"
             />
             <textarea
               value={editArticle.description}

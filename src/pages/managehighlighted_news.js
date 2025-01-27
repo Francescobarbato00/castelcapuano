@@ -39,13 +39,25 @@ export default function ManageHighlightedNews() {
     fetchNews();
   }, []);
 
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s]/g, "") // Rimuove caratteri speciali
+      .replace(/\s+/g, "-"); // Sostituisce gli spazi con trattini
+  };
+
   const handleSelectNews = (news) => {
     setSelectedNews(news.id);
-    setEditedNews({ ...news }); // Copia della notizia selezionata per modificarla
+    setEditedNews({ ...news });
   };
 
   const handleInputChange = (field, value) => {
-    setEditedNews(prev => ({ ...prev, [field]: value }));
+    setEditedNews(prev => ({
+      ...prev,
+      [field]: value,
+      ...(field === "title" && { slug: generateSlug(value) }), // Aggiorna lo slug se cambia il titolo
+    }));
   };
 
   const handleSaveChanges = async () => {
@@ -53,6 +65,7 @@ export default function ManageHighlightedNews() {
       const newsRef = doc(db, "highlighted_news", editedNews.id);
       await updateDoc(newsRef, {
         title: editedNews.title,
+        slug: editedNews.slug, // 🔹 Aggiorna lo slug
         description: editedNews.description,
         image: editedNews.image,
         content: editedNews.content.replace(/\n/g, "<br>"),
@@ -111,11 +124,22 @@ export default function ManageHighlightedNews() {
           newsList.map((news) => (
             <div
               key={news.id}
-              className="border p-4 rounded-lg shadow-md bg-gray-50 cursor-pointer hover:bg-gray-100 transition"
+              className="border p-4 rounded-lg shadow-md bg-gray-50 cursor-pointer hover:bg-gray-100 transition flex justify-between items-center"
               onClick={() => handleSelectNews(news)}
             >
-              <h2 className="text-xl font-bold text-blue-900">{news.title}</h2>
-              <p className="text-gray-600">{news.date}</p>
+              <div>
+                <h2 className="text-xl font-bold text-blue-900">{news.title}</h2>
+                <p className="text-gray-600">{news.date}</p>
+              </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete(news.id);
+                }}
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition-all"
+              >
+                ❌ Elimina
+              </button>
             </div>
           ))
         )}
@@ -132,6 +156,14 @@ export default function ManageHighlightedNews() {
             onChange={(e) => handleInputChange("title", e.target.value)}
             className="border p-3 rounded w-full max-w-lg mb-4"
             placeholder="Titolo"
+          />
+
+          <input
+            type="text"
+            value={editedNews.slug}
+            disabled
+            className="border p-3 rounded w-full max-w-lg mb-4 bg-gray-100"
+            placeholder="Slug (Generato automaticamente)"
           />
 
           <textarea
@@ -154,21 +186,6 @@ export default function ManageHighlightedNews() {
             onChange={(e) => handleInputChange("content", e.target.value)}
             className="border p-3 rounded w-full max-w-lg h-40 mb-4"
             placeholder="Contenuto completo"
-          />
-
-          <input
-            type="text"
-            value={editedNews.category}
-            onChange={(e) => handleInputChange("category", e.target.value)}
-            className="border p-3 rounded w-full max-w-lg mb-4"
-            placeholder="Categoria"
-          />
-
-          <input
-            type="date"
-            value={dayjs(editedNews.date, "DD MMMM YYYY").format("YYYY-MM-DD")}
-            onChange={(e) => handleInputChange("date", e.target.value)}
-            className="border p-3 rounded w-full max-w-lg mb-4"
           />
 
           <div className="flex space-x-4">

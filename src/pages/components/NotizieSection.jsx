@@ -50,7 +50,7 @@ const NotizieSection = () => {
           <div key={page} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 fade-in">
             {paginatedArticles.length > 0 ? (
               paginatedArticles.map(article => (
-                <Link key={article.id} href={`/articolo/${article.id}`} passHref>
+                <Link key={article.id} href={`/articolo/${article.slug || article.id}`} passHref>
                   <div className="cursor-pointer flex flex-col items-start text-left group">
                     <div className="w-full h-[350px] relative overflow-hidden shadow-md mb-4">
                       <Image

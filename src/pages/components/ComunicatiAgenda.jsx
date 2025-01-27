@@ -1,5 +1,5 @@
 import { FaCalendarAlt, FaMapMarkerAlt, FaClock, FaFileAlt, FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../../lib/firebase"; 
 import { collection, getDocs } from "firebase/firestore";
 import dayjs from "dayjs";
@@ -83,7 +83,7 @@ const ComunicatiAgenda = () => {
             {comunicati.slice(comunicatiIndex, comunicatiIndex + ITEMS_PER_PAGE).map((item) => (
               <div 
                 key={item.id} 
-                onClick={() => router.push(`/comunicati/${item.id}`)} 
+                onClick={() => router.push(`/comunicati/${item.slug || item.id}`)} // 🔹 Ora punta allo slug
                 className="cursor-pointer bg-gray-50 shadow-md p-6 mb-4 flex justify-between items-start border border-gray-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
               >
                 <div>

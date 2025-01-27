@@ -15,6 +15,7 @@ export default function AddPressRelease() {
     author: "",
     number: "",
     date: dayjs().format("YYYY-MM-DD"),
+    slug: "",
   });
 
   const [showNotification, setShowNotification] = useState(false);
@@ -25,6 +26,15 @@ export default function AddPressRelease() {
     return () => unsubscribe();
   }, []);
 
+  // 🔹 Funzione per generare lo slug automaticamente dal titolo
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s]/g, "") // Rimuove caratteri speciali
+      .replace(/\s+/g, "-"); // Sostituisce gli spazi con trattini
+  };
+
   const handleAddPress = async () => {
     if (!newPress.title || !newPress.content || !newPress.number || !newPress.author) {
       alert("Compila tutti i campi!");
@@ -32,12 +42,21 @@ export default function AddPressRelease() {
     }
 
     try {
+      // 📌 Generiamo lo slug dal titolo
+      const slug = generateSlug(newPress.title);
+
       // 📌 Formattiamo la data in formato Firestore
       const formattedDate = dayjs(newPress.date).locale("it").toDate();
 
+      // 📌 Convertiamo il contenuto per preservare gli a capo
+      const formattedContent = newPress.content.replace(/\n/g, "<br>");
+
+      // ✅ Salviamo il comunicato nel database con lo slug generato
       await addDoc(collection(db, "press_releases"), {
         ...newPress,
+        slug: slug, // 🔹 Salviamo lo slug
         date: formattedDate,
+        content: formattedContent, // 🔹 Contenuto formattato con a capo
       });
 
       // ✅ Mostra notifica di successo
@@ -51,6 +70,7 @@ export default function AddPressRelease() {
         author: "",
         number: "",
         date: dayjs().format("YYYY-MM-DD"),
+        slug: "",
       });
 
       // 🔄 Dopo 3 secondi, reindirizza alla dashboard
@@ -87,7 +107,13 @@ export default function AddPressRelease() {
           type="text"
           placeholder="Titolo"
           value={newPress.title}
-          onChange={(e) => setNewPress({ ...newPress, title: e.target.value })}
+          onChange={(e) =>
+            setNewPress({
+              ...newPress,
+              title: e.target.value,
+              slug: generateSlug(e.target.value), // 🔹 Aggiorna slug in tempo reale
+            })
+          }
           className="border p-3 rounded w-full"
         />
         <input

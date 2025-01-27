@@ -28,12 +28,23 @@ export default function ManageEvents() {
         setEvents(eventsSnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
-          date: dayjs(doc.data().date.toDate()).locale("it").format("YYYY-MM-DD"),
+          date: doc.data().date?.seconds
+            ? dayjs(doc.data().date.toDate()).locale("it").format("YYYY-MM-DD")
+            : doc.data().date || "",
         })));
       };
       fetchEvents();
     }
   }, [user]);
+
+  // 🔹 Funzione per generare lo slug automaticamente dal titolo
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s]/g, "") // Rimuove caratteri speciali
+      .replace(/\s+/g, "-"); // Sostituisce gli spazi con trattini
+  };
 
   // 🗑️ Eliminazione evento con conferma
   const handleDeleteEvent = async (id) => {
@@ -56,18 +67,38 @@ export default function ManageEvents() {
       return;
     }
 
-    const eventRef = doc(db, "events", editEvent.id);
-    await updateDoc(eventRef, {
-      ...editEvent,
-      date: dayjs(editEvent.date).toDate(),
-    });
+    try {
+      // Generiamo lo slug aggiornato
+      const updatedSlug = generateSlug(editEvent.title);
 
-    setEditEvent(null);
-    setShowNotification({ type: "edit", message: "Modifiche salvate con successo!" });
+      // 📌 Converte la data correttamente per Firestore
+      let formattedDate = null;
+      if (editEvent.date?.seconds) {
+        formattedDate = editEvent.date.toDate();
+      } else if (typeof editEvent.date === "string") {
+        const parsedDate = dayjs(editEvent.date, "YYYY-MM-DD");
+        formattedDate = parsedDate.isValid() ? parsedDate.toDate() : new Date();
+      }
 
-    setTimeout(() => {
-      setShowNotification({ type: "", message: "" });
-    }, 3000);
+      const eventRef = doc(db, "events", editEvent.id);
+      await updateDoc(eventRef, {
+        title: editEvent.title,
+        slug: updatedSlug, // 🔹 Aggiorna lo slug se il titolo cambia
+        description: editEvent.description,
+        category: editEvent.category,
+        date: formattedDate,
+      });
+
+      setEditEvent(null);
+      setShowNotification({ type: "edit", message: "Modifiche salvate con successo!" });
+
+      setTimeout(() => {
+        setShowNotification({ type: "", message: "" });
+      }, 3000);
+    } catch (error) {
+      console.error("❌ Errore durante l'aggiornamento dell'evento:", error);
+      alert("Errore durante l'aggiornamento dell'evento. Controlla i dati e riprova.");
+    }
   };
 
   if (!user) {
@@ -135,7 +166,9 @@ export default function ManageEvents() {
             <input
               type="text"
               value={editEvent.title}
-              onChange={(e) => setEditEvent({ ...editEvent, title: e.target.value })}
+              onChange={(e) =>
+                setEditEvent({ ...editEvent, title: e.target.value, slug: generateSlug(e.target.value) })
+              }
               className="border p-2 rounded w-full mb-2"
             />
             <textarea
@@ -143,44 +176,10 @@ export default function ManageEvents() {
               onChange={(e) => setEditEvent({ ...editEvent, description: e.target.value })}
               className="border p-2 rounded w-full mb-2 h-24"
             />
-            <input
-              type="date"
-              value={editEvent.date}
-              onChange={(e) => setEditEvent({ ...editEvent, date: e.target.value })}
-              className="border p-2 rounded w-full mb-2"
-            />
-            <select
-              value={editEvent.category}
-              onChange={(e) => setEditEvent({ ...editEvent, category: e.target.value })}
-              className="border p-2 rounded w-full mb-2"
-            >
-              <option value="Convegno">Convegno</option>
-              <option value="Evento">Evento</option>
-            </select>
-            <button
-              onClick={handleEditEvent}
-              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded w-full transition-all"
-            >
+            <button onClick={handleEditEvent} className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded w-full transition-all">
               ✅ Salva Modifiche
             </button>
           </div>
-        </div>
-      )}
-
-      {/* 📌 Notifiche */}
-      {showNotification.type && (
-        <div
-          className={`fixed top-5 right-5 px-4 py-3 rounded-lg shadow-lg transition-all ${
-            showNotification.type === "edit" ? "bg-blue-500" : "bg-red-500"
-          } text-white`}
-        >
-          {showNotification.message}
-          <button
-            onClick={() => setShowNotification({ type: "", message: "" })}
-            className="ml-4 text-sm font-bold"
-          >
-            ✖
-          </button>
         </div>
       )}
     </div>

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "../../lib/firebase"; // Percorso corretto ai file
 import TopHeader from "../components/TopHeader";
 import Header from "../components/Header";
@@ -11,7 +11,7 @@ import "dayjs/locale/it"; // Localizzazione italiana
 
 const SmallNewsDetail = () => {
   const router = useRouter();
-  const { id } = router.query;
+  const { id } = router.query; // Può essere ID Firestore o Slug
   const [article, setArticle] = useState(null);
 
   useEffect(() => {
@@ -19,11 +19,25 @@ const SmallNewsDetail = () => {
 
     const fetchArticle = async () => {
       try {
-        const docRef = doc(db, "small_news", id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          let data = docSnap.data();
+        let data = null;
 
+        // 🔹 Prima prova a cercare per slug
+        const q = query(collection(db, "small_news"), where("slug", "==", id));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          data = querySnapshot.docs[0].data();
+        } else {
+          // 🔹 Se lo slug non esiste, prova con l'ID Firestore
+          const docRef = doc(db, "small_news", id);
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            data = docSnap.data();
+          }
+        }
+
+        if (data) {
           // ✅ Conversione Timestamp → Data leggibile
           if (data.date?.seconds) {
             data.date = dayjs(data.date.toDate()).locale("it").format("DD MMMM YYYY");

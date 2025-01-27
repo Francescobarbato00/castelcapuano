@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { checkAuth } from "../lib/auth";
 import { db } from "../lib/firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 import dayjs from "dayjs";
 import "dayjs/locale/it"; // Localizzazione italiana
 
@@ -15,7 +15,7 @@ export default function AddSmallNews() {
     date: dayjs().format("YYYY-MM-DD"),
   });
 
-  const [showNotification, setShowNotification] = useState(false); // Stato per la notifica
+  const [showNotification, setShowNotification] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -23,32 +23,53 @@ export default function AddSmallNews() {
     return () => unsubscribe();
   }, []);
 
+  // 🔹 Funzione per generare lo slug automaticamente dal titolo
+  const generateSlug = (title) => {
+    return title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s]/g, "") // Rimuove caratteri speciali
+      .replace(/\s+/g, "-"); // Sostituisce gli spazi con trattini
+  };
+
   const handleAddArticle = async () => {
     if (!newArticle.title || !newArticle.description || !newArticle.author) {
       alert("Compila tutti i campi!");
       return;
     }
 
-    // Formattiamo la data prima di salvarla
-    const formattedDate = dayjs(newArticle.date).locale("it").format("DD MMMM YYYY");
+    try {
+      // 📌 Generiamo lo slug dal titolo
+      const slug = generateSlug(newArticle.title);
 
-    await addDoc(collection(db, "small_news"), { ...newArticle, date: formattedDate });
+      // 📌 Salviamo la data come **Timestamp di Firestore**
+      const formattedDate = Timestamp.fromDate(dayjs(newArticle.date).toDate());
 
-    // Mostra la notifica di successo
-    setShowNotification(true);
+      // ✅ Salviamo la small news nel database con lo slug generato e il timestamp
+      await addDoc(collection(db, "small_news"), {
+        ...newArticle,
+        slug: slug,
+        date: formattedDate, // 🔹 Salviamo come Timestamp
+      });
 
-    // Pulisce il form dopo l'aggiunta
-    setNewArticle({
-      title: "",
-      description: "",
-      author: "",
-      date: dayjs().format("YYYY-MM-DD"),
-    });
+      // ✅ Mostra la notifica di successo
+      setShowNotification(true);
 
-    // Dopo 3 secondi, reindirizza alla dashboard
-    setTimeout(() => {
-      router.push("/admin");
-    }, 3000);
+      // ✅ Pulisce il form dopo l'aggiunta
+      setNewArticle({
+        title: "",
+        description: "",
+        author: "",
+        date: dayjs().format("YYYY-MM-DD"),
+      });
+
+      // ✅ Dopo 3 secondi, reindirizza alla dashboard
+      setTimeout(() => {
+        router.push("/admin");
+      }, 3000);
+    } catch (error) {
+      console.error("❌ Errore nell'aggiunta della small news:", error);
+    }
   };
 
   if (!user) {
