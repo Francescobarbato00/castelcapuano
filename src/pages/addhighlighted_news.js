@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { checkAuth } from "../lib/auth";
 import { db } from "../lib/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, Timestamp } from "firebase/firestore";
 import dayjs from "dayjs";
 import "dayjs/locale/it"; // Localizzazione italiana
 
@@ -14,7 +14,7 @@ export default function AddHighlightedNews() {
     image: "",
     content: "",
     category: "",
-    date: dayjs().format("YYYY-MM-DD"),
+    date: dayjs().format("YYYY-MM-DD"), // Mantiene il formato corretto
   });
 
   const [showNotification, setShowNotification] = useState(false);
@@ -25,7 +25,7 @@ export default function AddHighlightedNews() {
     return () => unsubscribe();
   }, []);
 
-  // 🔹 Funzione per creare lo slug in automatico dal titolo
+  // 🔹 Funzione per generare lo slug automaticamente dal titolo
   const generateSlug = (title) => {
     return title
       .toLowerCase()
@@ -40,19 +40,18 @@ export default function AddHighlightedNews() {
       return;
     }
 
-    // 📌 Formattiamo la data prima di salvarla
-    const formattedDate = dayjs(newArticle.date).locale("it").format("DD MMMM YYYY");
+    // ✅ Converte la data in TIMESTAMP Firestore
+    const formattedDate = Timestamp.fromDate(new Date(newArticle.date));
 
-    // 🔹 Creiamo lo slug automaticamente
+    // ✅ Genera lo slug automaticamente
     const slug = generateSlug(newArticle.title);
 
-    // ✅ Salviamo la notizia in evidenza su Firestore con lo slug generato
     await addDoc(collection(db, "highlighted_news"), {
       ...newArticle,
-      slug: slug, // 🔹 Salviamo lo slug
-      date: formattedDate,
-      createdAt: serverTimestamp(), // Timestamp per ordinamento
-      content: newArticle.content.replace(/\n/g, "<br>"), // Mantenere gli a capo
+      slug: slug,
+      date: formattedDate, // ✅ Ora viene salvata come TIMESTAMP
+      createdAt: serverTimestamp(),
+      content: newArticle.content.replace(/\n/g, "<br>"),
     });
 
     // ✅ Mostra la notifica di successo
@@ -148,7 +147,6 @@ export default function AddHighlightedNews() {
         </button>
       </div>
 
-      {/* 📌 NOTIFICA DI SUCCESSO */}
       {showNotification && (
         <div className="fixed top-5 right-5 bg-green-500 text-white px-4 py-3 rounded-lg shadow-lg animate-bounce">
           ✅ Notizia in evidenza aggiunta con successo!
