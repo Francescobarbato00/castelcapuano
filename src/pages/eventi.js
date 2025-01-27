@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import EventiFuturi from './components/EventiFuturi';
 import MobileHeader from './components/MobileHeader';
 import ScrollableMenu from './components/ScrollableMenu';
+import ChatBot from './components/ChatBot';
 
 export default function Eventi() {
   return (
@@ -26,6 +27,8 @@ export default function Eventi() {
       {/* Sezione Eventi */}
       <EventiFuturi />
 
+      <ChatBot  />
+  
       {/* Footer */}
       <Footer />
     </div>

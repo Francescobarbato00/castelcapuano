@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import Doc from './components/Doc';
 import MobileHeader from './components/MobileHeader';
 import ScrollableMenu from './components/ScrollableMenu';
+import ChatBot from './components/ChatBot';
 
 export default function Documenti() {
   return (
@@ -25,6 +26,8 @@ export default function Documenti() {
 
       {/* Sezione Documenti */}
       <Doc />
+
+      <ChatBot />
 
       {/* Footer */}
       <Footer />

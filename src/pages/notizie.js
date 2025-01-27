@@ -5,6 +5,7 @@ import NotizieList from './components/NotizieList';
 import NewsBrevi from './components/NewsBrevi';
 import MobileHeader from './components/MobileHeader';
 import ScrollableMenu from './components/ScrollableMenu';
+import ChatBot from './components/ChatBot';
 
 export default function Notizie() {
   return (
@@ -30,6 +31,8 @@ export default function Notizie() {
 
       {/* Sezione News Brevi */}
       <NewsBrevi />
+
+      <ChatBot />
 
       {/* Footer */}
       <Footer />

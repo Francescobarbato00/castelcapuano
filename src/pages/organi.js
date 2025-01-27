@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import Organi from './components/OrganiContent';
 import MobileHeader from './components/MobileHeader';
 import ScrollableMenu from './components/ScrollableMenu';
+import ChatBot from './components/ChatBot';
 
 export default function OrganiPage() {
   return (
@@ -25,6 +26,9 @@ export default function OrganiPage() {
 
       {/* Sezione Organi */}
       <Organi />
+
+      < ChatBot />
+
 
       {/* Footer */}
       <Footer />

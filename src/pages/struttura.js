@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import StrutturaContent from './components/StrutturaContent';
 import MobileHeader from './components/MobileHeader';
 import ScrollableMenu from './components/ScrollableMenu';
+import ChatBot from './components/ChatBot';
 
 export default function Struttura() {
   return (
@@ -25,6 +26,9 @@ export default function Struttura() {
 
       {/* Sezione Struttura */}
       <StrutturaContent />
+
+      < ChatBot />
+
 
       {/* Footer */}
       <Footer />
