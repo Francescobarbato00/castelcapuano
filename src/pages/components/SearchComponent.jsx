@@ -72,6 +72,15 @@ const SearchComponent = ({ onClose }) => {
     }
   };
 
+  // Blocca lo scrolling quando il componente di ricerca è aperto
+  useEffect(() => {
+    document.body.classList.add("overflow-hidden");
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, []);
+
   return (
     <div className="fixed inset-0 bg-white z-[100] flex flex-col items-center justify-center p-6 animate-fade-in">
       <button

@@ -28,6 +28,18 @@ const ChatBot = () => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    if (isMobile && isOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [isOpen, isMobile]);
+
   const toggleChat = () => setIsOpen((prev) => !prev);
 
   const sendMessage = (message) => {

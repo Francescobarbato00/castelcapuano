@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Menu, X } from 'lucide-react';
 import SearchComponent from './SearchComponent';
 
@@ -8,6 +8,19 @@ const ScrollableMenu = () => {
 
   const toggleMobileMenu = () => setShowMobileMenu(!showMobileMenu);
   const toggleSearch = () => setShowSearch(!showSearch);
+
+  // Blocca lo scrolling quando il menu è aperto
+  useEffect(() => {
+    if (showMobileMenu) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    return () => {
+      document.body.classList.remove('overflow-hidden');
+    };
+  }, [showMobileMenu]);
 
   return (
     <>

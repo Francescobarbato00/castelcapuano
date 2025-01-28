@@ -13,6 +13,19 @@ const MobileHeader = () => {
   const toggleSearch = () => setShowSearch(!showSearch);
   const toggleMobileMenu = () => setShowMobileMenu(!showMobileMenu);
 
+  // Blocca lo scrolling quando il menu è aperto
+  useEffect(() => {
+    if (showMobileMenu) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [showMobileMenu]);
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY === 0) {
