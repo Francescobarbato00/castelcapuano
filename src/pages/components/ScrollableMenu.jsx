@@ -12,63 +12,78 @@ const ScrollableMenu = () => {
   return (
     <>
       {/* HEADER MOBILE FISSO */}
-      <div className="fixed top-[36px] left-0 w-full bg-white text-blue-900 shadow-lg py-4 z-[50] transition-all duration-500 ease-out transform translate-y-0 opacity-100 animate-slide-down">
-        <div className="container mx-auto flex items-center justify-between px-8">
-          {/* Logo */}
-          <div className="text-xl font-bold tracking-wide">
+      <div className="fixed top-[36px] left-0 w-full bg-white text-blue-900 shadow-md py-3 z-[50] transition-all duration-500 ease-out transform translate-y-0 opacity-100 animate-slide-down">
+        <div className="container mx-auto flex items-center justify-between px-6">
+          {/* Logo piccolo per il menu scorrevole */}
+          <div className="text-lg font-semibold">
             Fondazione Castel Capuano
           </div>
 
-          {/* Pulsanti per Desktop */}
-          <div className="hidden md:flex items-center gap-8">
-            {["Home", "Notizie", "Eventi", "Documenti", "Organi", "Struttura"].map((item, index) => (
-              <a
-                key={index}
-                href={`/${item.toLowerCase()}`}
-                className="text-blue-900 font-medium transition hover:text-blue-700"
-              >
-                {item}
-              </a>
-            ))}
+          {/* Pulsanti per Desktop allineati a sinistra */}
+          <div className="hidden md:flex items-center gap-6 ml-0">
+            <a href="/" className="text-blue-900 font-semibold hover:underline">Home</a>
+            <a href="/notizie" className="text-blue-900 font-semibold hover:underline">Notizie</a>
+            <a href="/eventi" className="text-blue-900 font-semibold hover:underline">Eventi</a>
+            <a href="/documenti" className="text-blue-900 font-semibold hover:underline">Documenti</a>
+            <a href="/organi" className="text-blue-900 font-semibold hover:underline">Organi</a>
+            <a href="/struttura" className="text-blue-900 font-semibold hover:underline">Struttura</a>
           </div>
 
-          {/* Pulsanti Mobile */}
-          <div className="flex items-center gap-4">
-            <button onClick={toggleSearch} className="text-blue-900 hover:text-blue-700">
-              <Search size={24} strokeWidth={2} />
+          {/* Pulsante Ricerca e Menu Mobile */}
+          <div className="flex items-center gap-3">
+            {/* Bottone Ricerca per Mobile */}
+            <button onClick={toggleSearch} className="text-blue-900">
+              <Search size={22} strokeWidth={2} />
             </button>
-            <button onClick={toggleMobileMenu} className="md:hidden text-blue-900 hover:text-blue-700">
-              {showMobileMenu ? <X size={28} strokeWidth={2} /> : <Menu size={28} strokeWidth={2} />}
+
+            {/* Pulsante Menu per Mobile */}
+            <button
+              onClick={toggleMobileMenu}
+              className="md:hidden text-blue-900"
+            >
+              {showMobileMenu ? <X size={26} strokeWidth={2} /> : <Menu size={26} strokeWidth={2} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* MENU MOBILE */}
+      {/* MENU MOBILE A TUTTO SCHERMO CON ANIMAZIONE DA SINISTRA */}
       <div
-        className={`fixed inset-0 bg-white text-blue-900 z-[100] flex flex-col items-start pl-10 pt-16 transition-transform duration-300 shadow-lg ${
+        className={`fixed inset-0 bg-white text-blue-900 z-[100] flex flex-col justify-start items-start pl-8 transition-transform duration-300 ${
           showMobileMenu ? "translate-x-0" : "-translate-x-full"
         }`}
       >
+        {/* Pulsante Chiudi in alto a destra */}
         <button
           onClick={toggleMobileMenu}
-          className="absolute top-6 right-6 text-blue-900 hover:text-blue-700"
+          className="absolute top-6 right-6 text-blue-900 text-3xl focus:outline-none"
           aria-label="Chiudi menu"
         >
-          <X size={32} />
+          <X size={30} />
         </button>
 
-        <h2 className="text-3xl font-semibold mt-8">Fondazione Castel Capuano</h2>
+        {/* Titolo Allineato a Sinistra */}
+        <h2 className="absolute top-16 left-8 text-2xl font-bold">
+          Fondazione Castel Capuano
+        </h2>
 
-        <nav className="w-full flex flex-col space-y-6 mt-12">
-          {["Home", "Notizie", "Eventi", "Documenti", "Organi", "Struttura"].map((item, index) => (
+        {/* Link del menu con sottolineatura */}
+        <nav className="w-full h-full flex flex-col justify-center space-y-6 mt-24 text-left">
+          {[
+            { href: "/", label: "Home" },
+            { href: "/notizie", label: "Notizie" },
+            { href: "/eventi", label: "Eventi" },
+            { href: "/documenti", label: "Documenti" },
+            { href: "/organi", label: "Organi" },
+            { href: "/struttura", label: "Struttura" },
+          ].map((item, index) => (
             <a
               key={index}
-              href={`/${item.toLowerCase()}`}
-              className="block text-xl font-medium transition hover:text-blue-700"
+              href={item.href}
+              className="block w-full py-3 text-xl font-semibold text-blue-900 transition relative hover:underline hover:underline-offset-4 hover:decoration-blue-500 active:underline active:underline-offset-4 active:decoration-blue-500"
               onClick={toggleMobileMenu}
             >
-              {item}
+              {item.label}
             </a>
           ))}
         </nav>
@@ -77,6 +92,7 @@ const ScrollableMenu = () => {
       {/* MODALE DI RICERCA */}
       {showSearch && <SearchComponent onClose={toggleSearch} />}
 
+      {/* Stili per animazione */}
       <style jsx>{`
         @keyframes slide-down {
           from {
@@ -90,6 +106,18 @@ const ScrollableMenu = () => {
         }
         .animate-slide-down {
           animation: slide-down 0.4s ease-out forwards;
+        }
+
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        .animate-fade-in {
+          animation: fade-in 0.3s ease-out forwards;
         }
       `}</style>
     </>
