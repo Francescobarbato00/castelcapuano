@@ -29,7 +29,7 @@ const ChatBot = () => {
   }, [messages]);
 
   useEffect(() => {
-    if (isMobile && isOpen) {
+    if (isOpen) {
       document.body.classList.add("overflow-hidden");
     } else {
       document.body.classList.remove("overflow-hidden");
@@ -38,7 +38,7 @@ const ChatBot = () => {
     return () => {
       document.body.classList.remove("overflow-hidden");
     };
-  }, [isOpen, isMobile]);
+  }, [isOpen]);
 
   const toggleChat = () => setIsOpen((prev) => !prev);
 
