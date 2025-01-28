@@ -8,7 +8,6 @@ const SearchComponent = ({ onClose }) => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
 
-  // ✅ Mappatura delle categorie con i nickname (Agenda rimossa)
   const categoryNames = {
     events: "Eventi",
     highlighted_news: "Notizie in evidenza",
@@ -24,7 +23,7 @@ const SearchComponent = ({ onClose }) => {
     }
 
     const fetchData = async () => {
-      const collections = Object.keys(categoryNames); // Usa le chiavi della mappatura
+      const collections = Object.keys(categoryNames);
       let allResults = [];
 
       try {
@@ -32,9 +31,9 @@ const SearchComponent = ({ onClose }) => {
           const snapshot = await getDocs(collection(db, col));
           const data = snapshot.docs.map((doc) => ({
             id: doc.id,
-            slug: doc.data().slug || doc.id, // ✅ Usa lo slug, se disponibile
+            slug: doc.data().slug || doc.id,
             title: doc.data().title,
-            category: categoryNames[col] || col, // Usa il nickname o il nome originale
+            category: categoryNames[col] || col,
             date: doc.data().date?.seconds
               ? new Date(doc.data().date.seconds * 1000).toLocaleDateString("it-IT")
               : doc.data().date || "Senza data",
@@ -56,7 +55,6 @@ const SearchComponent = ({ onClose }) => {
     fetchData();
   }, [query]);
 
-  // ✅ Funzione per determinare il percorso corretto in base alla categoria (usando lo slug)
   const getCorrectPath = (category, slug) => {
     switch (category) {
       case "News":
@@ -90,7 +88,7 @@ const SearchComponent = ({ onClose }) => {
         placeholder="Cerca..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="w-3/4 md:w-1/2 px-6 py-3 border border-gray-300 rounded-full text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-3/4 md:w-1/2 px-6 py-3 border border-gray-300 rounded-full text-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
 
       <div className="mt-6 w-3/4 md:w-1/2 bg-white shadow-lg rounded-lg max-h-[300px] overflow-y-auto">
