@@ -67,7 +67,7 @@ const ScrollableMenu = () => {
         <div className="flex items-center justify-between px-6 py-4 border-b">
           <h2 className="text-xl font-semibold">Fondazione Castel Capuano</h2>
           <button onClick={toggleMobileMenu} className="text-blue-900 flex items-center justify-center">
-            <X size={30} />
+            <X size={26} />
           </button>
         </div>
 
