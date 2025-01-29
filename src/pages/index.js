@@ -9,6 +9,7 @@ import Footer from './components/Footer';
 import ComunicatiAgenda from './components/ComunicatiAgenda';
 import StrutturaSection from './components/StrutturaSection';
 import ChatBot from './components/ChatBot';
+import DownFooter from "./components/DownFooter";
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
@@ -52,6 +53,8 @@ export default function Home() {
 
       <Footer />
 
+      <DownFooter />
+    
       <ChatBot />
     </div>
   );
