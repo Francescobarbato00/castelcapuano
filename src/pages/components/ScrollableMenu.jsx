@@ -24,7 +24,7 @@ const ScrollableMenu = () => {
 
   return (
     <>
-      {/* HEADER MOBILE FISSO */}
+      {/* HEADER MOBILE */}
       <div className="fixed top-[36px] left-0 w-full bg-white text-blue-900 shadow-md py-3 z-[50] transition-all duration-500 ease-out transform translate-y-0 opacity-100 animate-slide-down">
         <div className="container mx-auto flex items-center justify-between px-6">
           {/* Logo piccolo per il menu scorrevole */}
@@ -32,8 +32,8 @@ const ScrollableMenu = () => {
             Fondazione Castel Capuano
           </div>
 
-          {/* Pulsanti per Desktop allineati a sinistra */}
-          <div className="hidden md:flex items-center gap-6 ml-0">
+          {/* Menu Desktop */}
+          <div className="hidden md:flex items-center gap-6">
             <a href="/" className="text-blue-900 font-semibold hover:underline">Home</a>
             <a href="/notizie" className="text-blue-900 font-semibold hover:underline">Notizie</a>
             <a href="/eventi" className="text-blue-900 font-semibold hover:underline">Eventi</a>
@@ -42,58 +42,50 @@ const ScrollableMenu = () => {
             <a href="/struttura" className="text-blue-900 font-semibold hover:underline">Struttura</a>
           </div>
 
-          {/* Pulsante Ricerca e Menu Mobile */}
+          {/* Pulsanti Mobile */}
           <div className="flex items-center gap-3">
-            {/* Bottone Ricerca per Mobile */}
+            {/* Bottone Ricerca */}
             <button onClick={toggleSearch} className="text-blue-900">
               <Search size={22} strokeWidth={2} />
             </button>
 
-            {/* Pulsante Menu per Mobile */}
-            <button
-              onClick={toggleMobileMenu}
-              className="md:hidden text-blue-900"
-            >
+            {/* Bottone Menu Mobile */}
+            <button onClick={toggleMobileMenu} className="md:hidden text-blue-900">
               {showMobileMenu ? <X size={26} strokeWidth={2} /> : <Menu size={26} strokeWidth={2} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* MENU MOBILE A TUTTO SCHERMO CON ANIMAZIONE DA SINISTRA */}
+      {/* MENU MOBILE SCORREVOLE DA SINISTRA */}
       <div
-        className={`fixed inset-0 bg-white text-blue-900 z-[100] flex flex-col justify-start items-start pl-8 transition-transform duration-300 ${
+        className={`fixed inset-0 bg-white text-blue-900 z-[100] flex flex-col transition-transform duration-300 w-[80%] sm:w-[60%] md:hidden shadow-lg ${
           showMobileMenu ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* Pulsante Chiudi in alto a destra */}
-        <button
-          onClick={toggleMobileMenu}
-          className="absolute top-6 right-6 text-blue-900 text-3xl focus:outline-none"
-          aria-label="Chiudi menu"
-        >
-          <X size={30} />
-        </button>
+        {/* Header del menu */}
+        <div className="flex items-center justify-between px-6 py-4 border-b">
+          <img src="/logo.png" alt="Logo" className="h-10" />
+          <button onClick={toggleMobileMenu} className="text-blue-900">
+            <X size={30} />
+          </button>
+        </div>
 
-        {/* Titolo Allineato a Sinistra */}
-        <h2 className="absolute top-16 left-8 text-2xl font-bold">
-          Fondazione Castel Capuano
-        </h2>
-
-        {/* Link del menu con sottolineatura */}
-        <nav className="w-full h-full flex flex-col justify-center space-y-6 mt-24 text-left">
+        {/* Link del menu */}
+        <nav className="flex flex-col space-y-4 mt-6 pl-6">
           {[
-            { href: "/", label: "Home" },
-            { href: "/notizie", label: "Notizie" },
-            { href: "/eventi", label: "Eventi" },
-            { href: "/documenti", label: "Documenti" },
-            { href: "/organi", label: "Organi" },
-            { href: "/struttura", label: "Struttura" },
+            { href: "/", label: "Ministero" },
+            { href: "/staff", label: "Ministro e Staff" },
+            { href: "/documenti", label: "Documenti e Pubblicazioni" },
+            { href: "/servizi", label: "Servizi" },
+            { href: "/contatti", label: "Comunica con noi" },
+            { href: "/trasparenza", label: "Trasparenza" },
+            { href: "/pnrr", label: "PNRR" },
           ].map((item, index) => (
             <a
               key={index}
               href={item.href}
-              className="block w-full py-3 text-xl font-semibold text-blue-900 transition relative hover:underline hover:underline-offset-4 hover:decoration-blue-500 active:underline active:underline-offset-4 active:decoration-blue-500"
+              className="text-lg font-semibold text-blue-900 hover:underline"
               onClick={toggleMobileMenu}
             >
               {item.label}
@@ -119,18 +111,6 @@ const ScrollableMenu = () => {
         }
         .animate-slide-down {
           animation: slide-down 0.4s ease-out forwards;
-        }
-
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-        .animate-fade-in {
-          animation: fade-in 0.3s ease-out forwards;
         }
       `}</style>
     </>
