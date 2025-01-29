@@ -6,21 +6,16 @@ const ScrollableMenu = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
 
-  const toggleMobileMenu = () => setShowMobileMenu(!showMobileMenu);
-  const toggleSearch = () => setShowSearch(!showSearch);
-
-  // Blocca lo scrolling quando il menu è aperto
-  useEffect(() => {
-    if (showMobileMenu) {
-      document.body.classList.add('overflow-hidden');
+  const toggleMobileMenu = () => {
+    setShowMobileMenu(!showMobileMenu);
+    if (!showMobileMenu) {
+      document.body.style.overflow = "hidden"; // Blocca lo scrolling
     } else {
-      document.body.classList.remove('overflow-hidden');
+      document.body.style.overflow = "auto"; // Ripristina lo scrolling
     }
+  };
 
-    return () => {
-      document.body.classList.remove('overflow-hidden');
-    };
-  }, [showMobileMenu]);
+  const toggleSearch = () => setShowSearch(!showSearch);
 
   return (
     <>
@@ -32,7 +27,7 @@ const ScrollableMenu = () => {
             Fondazione Castel Capuano
           </div>
 
-          {/* Menu Desktop */}
+          {/* Pulsanti per Desktop */}
           <div className="hidden md:flex items-center gap-6">
             <a href="/" className="text-blue-900 font-semibold hover:underline">Home</a>
             <a href="/notizie" className="text-blue-900 font-semibold hover:underline">Notizie</a>
@@ -65,7 +60,9 @@ const ScrollableMenu = () => {
       >
         {/* Header del menu */}
         <div className="flex items-center justify-between px-6 py-4 border-b">
-          <img src="/logo.png" alt="Logo" className="h-10" />
+          <h2 className="text-xl font-semibold">
+            Fondazione Castel Capuano
+          </h2>
           <button onClick={toggleMobileMenu} className="text-blue-900">
             <X size={30} />
           </button>
@@ -74,18 +71,17 @@ const ScrollableMenu = () => {
         {/* Link del menu */}
         <nav className="flex flex-col space-y-4 mt-6 pl-6">
           {[
-            { href: "/", label: "Ministero" },
-            { href: "/staff", label: "Ministro e Staff" },
-            { href: "/documenti", label: "Documenti e Pubblicazioni" },
-            { href: "/servizi", label: "Servizi" },
-            { href: "/contatti", label: "Comunica con noi" },
-            { href: "/trasparenza", label: "Trasparenza" },
-            { href: "/pnrr", label: "PNRR" },
+            { href: "/", label: "Home" },
+            { href: "/notizie", label: "Notizie" },
+            { href: "/eventi", label: "Eventi" },
+            { href: "/documenti", label: "Documenti" },
+            { href: "/organi", label: "Organi" },
+            { href: "/struttura", label: "Struttura" },
           ].map((item, index) => (
             <a
               key={index}
               href={item.href}
-              className="text-lg font-semibold text-blue-900 hover:underline"
+              className="text-lg font-medium text-blue-900 py-4 px-4 hover:underline"
               onClick={toggleMobileMenu}
             >
               {item.label}
