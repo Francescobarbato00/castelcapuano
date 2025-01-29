@@ -5,6 +5,7 @@ import Doc from './components/Doc';
 import MobileHeader from './components/MobileHeader';
 import ScrollableMenu from './components/ScrollableMenu';
 import ChatBot from './components/ChatBot';
+import DownFooter from './components/DownFooter';
 
 export default function Documenti() {
   return (
@@ -31,6 +32,8 @@ export default function Documenti() {
 
       {/* Footer */}
       <Footer />
+    
+      <DownFooter />
     </div>
   );
 }

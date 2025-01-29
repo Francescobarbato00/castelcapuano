@@ -5,6 +5,7 @@ import StrutturaContent from './components/StrutturaContent';
 import MobileHeader from './components/MobileHeader';
 import ScrollableMenu from './components/ScrollableMenu';
 import ChatBot from './components/ChatBot';
+import DownFooter from './components/DownFooter';
 
 export default function Struttura() {
   return (
@@ -32,6 +33,8 @@ export default function Struttura() {
 
       {/* Footer */}
       <Footer />
+    
+      < DownFooter />
     </div>
   );
 }

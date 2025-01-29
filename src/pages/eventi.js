@@ -5,6 +5,7 @@ import EventiFuturi from './components/EventiFuturi';
 import MobileHeader from './components/MobileHeader';
 import ScrollableMenu from './components/ScrollableMenu';
 import ChatBot from './components/ChatBot';
+import DownFooter from './components/DownFooter';
 
 export default function Eventi() {
   return (
@@ -31,6 +32,7 @@ export default function Eventi() {
   
       {/* Footer */}
       <Footer />
+      <DownFooter />
     </div>
   );
 }

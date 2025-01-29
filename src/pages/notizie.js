@@ -6,6 +6,7 @@ import NewsBrevi from './components/NewsBrevi';
 import MobileHeader from './components/MobileHeader';
 import ScrollableMenu from './components/ScrollableMenu';
 import ChatBot from './components/ChatBot';
+import DownFooter from './components/DownFooter';
 
 export default function Notizie() {
   return (
@@ -36,6 +37,9 @@ export default function Notizie() {
 
       {/* Footer */}
       <Footer />
+    
+      < DownFooter />
+
     </div>
   );
 }

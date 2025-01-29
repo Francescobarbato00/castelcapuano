@@ -5,6 +5,7 @@ import Organi from './components/OrganiContent';
 import MobileHeader from './components/MobileHeader';
 import ScrollableMenu from './components/ScrollableMenu';
 import ChatBot from './components/ChatBot';
+import DownFooter from './components/DownFooter';
 
 export default function OrganiPage() {
   return (
@@ -32,6 +33,9 @@ export default function OrganiPage() {
 
       {/* Footer */}
       <Footer />
+    
+      <DownFooter />
+    
     </div>
   );
 }
