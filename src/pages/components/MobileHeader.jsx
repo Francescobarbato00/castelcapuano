@@ -11,20 +11,15 @@ const MobileHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const toggleSearch = () => setShowSearch(!showSearch);
-  const toggleMobileMenu = () => setShowMobileMenu(!showMobileMenu);
 
-  // Blocca lo scrolling quando il menu è aperto
-  useEffect(() => {
-    if (showMobileMenu) {
-      document.body.classList.add("overflow-hidden");
+  const toggleMobileMenu = () => {
+    setShowMobileMenu(!showMobileMenu);
+    if (!showMobileMenu) {
+      document.body.style.overflow = "hidden"; // Blocca lo scrolling
     } else {
-      document.body.classList.remove("overflow-hidden");
+      document.body.style.overflow = "auto"; // Ripristina lo scrolling
     }
-
-    return () => {
-      document.body.classList.remove("overflow-hidden");
-    };
-  }, [showMobileMenu]);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,6 +38,11 @@ const MobileHeader = () => {
 
   return (
     <>
+      {/* Sfondo oscurato quando il menu è aperto */}
+      {showMobileMenu && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-[90]" onClick={toggleMobileMenu}></div>
+      )}
+
       {/* Spazio per evitare sovrapposizioni */}
       <div className="h-[60px] md:hidden"></div>
 
@@ -53,20 +53,12 @@ const MobileHeader = () => {
             {/* Logo o Titolo */}
             <h1 className="text-lg font-semibold">Fondazione Castel Capuano</h1>
 
-            {/* Icone di Azione con Spaziatura Sistemata */}
-            <div className="flex items-center gap-3">
-              <button
-                onClick={toggleSearch}
-                className="focus:outline-none"
-                aria-label="Cerca"
-              >
+            {/* Icone di Azione (ora allineate perfettamente) */}
+            <div className="flex items-center gap-4">
+              <button onClick={toggleSearch} className="focus:outline-none flex items-center justify-center">
                 <Search size={22} />
               </button>
-              <button
-                onClick={toggleMobileMenu}
-                className="focus:outline-none"
-                aria-label="Menu"
-              >
+              <button onClick={toggleMobileMenu} className="focus:outline-none flex items-center justify-center">
                 {showMobileMenu ? <X size={26} /> : <Menu size={26} />}
               </button>
             </div>
@@ -79,26 +71,20 @@ const MobileHeader = () => {
 
       {/* Menu Mobile con Animazione da Sinistra a Destra */}
       <div
-        className={`fixed inset-0 bg-blue-900 text-white z-[100] flex flex-col justify-center items-center transform transition-transform duration-300 ${
+        className={`fixed top-0 left-0 h-full bg-white text-blue-900 z-[100] flex flex-col transition-transform duration-300 w-[75%] sm:w-[60%] md:hidden shadow-lg ${
           showMobileMenu ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* Pulsante Chiudi in alto a destra */}
-        <button
-          onClick={toggleMobileMenu}
-          className="absolute top-6 right-6 text-white text-3xl focus:outline-none"
-          aria-label="Chiudi menu"
-        >
-          <X size={30} />
-        </button>
+        {/* Header del menu con titolo e X allineati */}
+        <div className="flex items-center justify-between px-6 py-4 border-b w-full">
+          <h2 className="text-lg font-bold">Fondazione Castel Capuano</h2>
+          <button onClick={toggleMobileMenu} className="text-blue-900">
+            <X size={24} />
+          </button>
+        </div>
 
-        {/* Titolo con Spaziatura Migliorata */}
-        <h2 className="absolute top-16 text-2xl font-bold text-center w-full">
-          Fondazione Castel Capuano
-        </h2>
-
-        {/* Link del menu con sottolineatura al passaggio */}
-        <nav className="w-full h-full flex flex-col justify-center space-y-6 text-center">
+        {/* Link del menu */}
+        <nav className="flex flex-col space-y-4 mt-6 pl-6">
           {[
             { href: "/", label: "Home" },
             { href: "/notizie", label: "Notizie" },
@@ -110,7 +96,7 @@ const MobileHeader = () => {
             <Link
               key={index}
               href={item.href}
-              className="block w-full py-3 text-xl font-semibold transition relative hover:underline"
+              className="block text-[18px] text-blue-900 py-3 px-4 hover:underline"
               onClick={toggleMobileMenu}
             >
               {item.label}
