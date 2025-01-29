@@ -59,15 +59,15 @@ const ScrollableMenu = () => {
 
       {/* MENU MOBILE SCORREVOLE DA SINISTRA */}
       <div
-        className={`fixed inset-0 bg-white text-blue-900 z-[100] flex flex-col transition-transform duration-300 w-[80%] sm:w-[60%] md:hidden shadow-lg ${
+        className={`fixed top-0 left-0 h-full bg-white text-blue-900 z-[100] flex flex-col transition-transform duration-300 w-[75%] sm:w-[60%] md:hidden shadow-lg ${
           showMobileMenu ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Header del menu con titolo e X allineati */}
-        <div className="flex items-center justify-between px-6 py-4 border-b">
-          <h2 className="text-xl font-semibold">Fondazione Castel Capuano</h2>
-          <button onClick={toggleMobileMenu} className="text-blue-900 flex items-center justify-center">
-            <X size={26} />
+        <div className="flex items-center justify-between px-6 py-4 border-b w-full">
+          <h2 className="text-lg font-bold">Fondazione Castel Capuano</h2>
+          <button onClick={toggleMobileMenu} className="text-blue-900">
+            <X size={24} />
           </button>
         </div>
 
@@ -84,7 +84,7 @@ const ScrollableMenu = () => {
             <a
               key={index}
               href={item.href}
-              className="text-lg font-medium text-blue-900 py-4 px-4 hover:underline"
+              className="block text-[18px] text-blue-900 py-3 px-4 hover:underline"
               onClick={toggleMobileMenu}
             >
               {item.label}
